@@ -1,0 +1,6 @@
+
+# DB 가설계
+
+![DB](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/8ff20ada-6d9a-487a-8c09-cf86a8e7f499/%EC%BA%A1%EC%B2%98.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220714%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220714T135044Z&X-Amz-Expires=86400&X-Amz-Signature=2279cadd039b9b7c3cf5ed0756ee1d846c9dbf077c3338254e46a6ce7d7f3759&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22%25EC%25BA%25A1%25EC%25B2%2598.PNG.png%22&x-id=GetObject)
+
+![DB](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/fffcb61b-e6d6-445b-ae7d-d98aaaba9667/%EC%BA%A1%EC%B2%982.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220714%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220714T135147Z&X-Amz-Expires=86400&X-Amz-Signature=641f086591b7d1f0e51a0aa0aca89bbd4000d4e8063d5af4cd8d3cc6b090f138&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22%25EC%25BA%25A1%25EC%25B2%25982.PNG.png%22&x-id=GetObject)
