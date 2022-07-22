@@ -1,10 +1,12 @@
 package com.ssafy.hoydia.domain;
 
+import com.ssafy.hoydia.util.SHA256;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.security.NoSuchAlgorithmException;
 
 @Entity
 @Getter @Setter
@@ -27,5 +29,25 @@ public class Sticker {
 
     private String path;
 
+    public static Sticker createSticker(Page page, String type, String posX, String posY, String path){ // 암호화 방식 미수정 상태;
+
+        Sticker sticker = new Sticker();
+
+        SHA256 sha256 = new SHA256();
+
+        try {
+            sticker.id = sha256.encrypt(type+path);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        sticker.page   = page;
+        sticker.type   = type;
+        sticker.posX   = posX;
+        sticker.posY   = posY;
+        sticker.path   = path;
+
+        return sticker;
+    }
 
 }

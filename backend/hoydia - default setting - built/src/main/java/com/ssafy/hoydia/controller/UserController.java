@@ -24,7 +24,6 @@ public class UserController {
     public TempResponseDto registUser(@RequestBody RegistUserRequestDto request){
 
         User user = User.createUser(
-                request.id,
                 request.nickname,
                 request.gender,
                 request.birth);

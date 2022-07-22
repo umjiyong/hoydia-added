@@ -1,11 +1,13 @@
 package com.ssafy.hoydia.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ssafy.hoydia.util.SHA256;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,5 +42,36 @@ public class Diary {
     @OneToMany(mappedBy = "diary")
     @JsonIgnore
     private List<Page> pages = new ArrayList<>();
+
+    public static Diary createDiary (User user,
+                                                   LocalDateTime regTime,
+                                                   String ownerId,
+                                                   String pairId,
+                                                   boolean own,
+                                                   String diaryColor,
+                                                   Integer drawn,
+                                                   List<Page> pages){
+
+        Diary diary = new Diary();
+
+        SHA256 sha256 = new SHA256();
+
+        try {
+            diary.id = sha256.encrypt(ownerId+pairId+regTime);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        diary.user = user;
+        diary.regTime = regTime;
+        diary.ownerId = ownerId;
+        diary.pairId = pairId;
+        diary.own = own;
+        diary.diaryColor = diaryColor;
+        diary.drawn = drawn;
+        diary.pages = pages;
+
+        return diary;
+    }
 
 }
