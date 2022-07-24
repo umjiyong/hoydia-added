@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
@@ -27,6 +28,8 @@ public class Sticker {
     private String posX;
     private String posY;
 
+    private LocalDateTime regTime;
+
     private String path;
 
     public static Sticker createSticker(Page page, String type, String posX, String posY, String path){ // 암호화 방식 미수정 상태;
@@ -45,6 +48,7 @@ public class Sticker {
         sticker.type   = type;
         sticker.posX   = posX;
         sticker.posY   = posY;
+        sticker.regTime = LocalDateTime.now();
         sticker.path   = path;
 
         return sticker;

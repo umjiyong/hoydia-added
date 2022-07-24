@@ -19,14 +19,18 @@ public class DiaryRepository {
 
         em.persist(diary);
 
-        return diary.getId();
+        return "Loc-Repository : "+diary.getId();
 
     }
 
-    private Object findById(String id) {
+    public Diary findById(String id) {
 
         return em.find(Diary.class,id);
 
+    }
+
+    public List<Diary> findAllDiaryOrderByRegTime(){
+        return em.createQuery("SELECT d from Diary d WHERE d.secret = false ORDER BY d.regTime DESC", Diary.class).getResultList();
     }
 
 

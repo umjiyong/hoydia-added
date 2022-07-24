@@ -18,10 +18,10 @@ public class UserRepository {
 
         em.persist(user);
 
-        return user.getId();
+        return "Loc-Repository : "+user.getId();
     }
 
-    private User findById(String id){  // User를 암호화 된 id로 찾는다. Match되는 User가 없는 Id라면 null 을 return.
+    public User findById(String id){  // User를 암호화 된 id로 찾는다. Match되는 User가 없는 Id라면 null 을 return.
 
         return em.find(User.class,id);
 
