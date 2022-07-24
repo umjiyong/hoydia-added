@@ -93,7 +93,7 @@ public class JwtService {
     }
 
     public String getUserId() {
-        return (String) this.getData().get("uid");
+        return (String) this.getData().get("userId");
     }
 
 

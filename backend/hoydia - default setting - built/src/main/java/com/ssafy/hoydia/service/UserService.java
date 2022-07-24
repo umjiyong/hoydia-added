@@ -4,6 +4,7 @@ import com.ssafy.hoydia.domain.Diary;
 import com.ssafy.hoydia.domain.Gender;
 import com.ssafy.hoydia.domain.User;
 import com.ssafy.hoydia.exception.InvalidApproachException;
+import com.ssafy.hoydia.exception.LoginException;
 import com.ssafy.hoydia.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,17 @@ public class UserService {
     private final UserRepository userRepository;
 
     /* 로그인 기능은 OAUTH 적용 후 수정 */
+    public User login(String id) {
+        User user = userRepository.findById(id);
+        if (user == null) {
+            throw new LoginException("존재하지 않는 유저입니다.");
+        }
 
+        else {
+                return user;
+            }
+
+    }
 
     @Transactional
     public String regist (User user) {
