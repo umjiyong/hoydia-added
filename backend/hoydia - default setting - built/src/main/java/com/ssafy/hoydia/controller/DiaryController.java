@@ -80,8 +80,8 @@ public class DiaryController {
 
     }
 
-    @GetMapping("/user/{uid}")
-    public ResultDto readDiaryByUserId(@PathVariable("uid") String user_id) {
+    @GetMapping("/user/{userId}")
+    public ResultDto readDiaryByUserId(@PathVariable("userId") String user_id) {
 
         if (!jwtService.isValidUser())
             throw new InvalidApproachException("인증 실패");

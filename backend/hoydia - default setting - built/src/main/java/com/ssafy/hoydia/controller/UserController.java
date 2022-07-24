@@ -3,17 +3,17 @@ package com.ssafy.hoydia.controller;
 
 import com.ssafy.hoydia.domain.Gender;
 import com.ssafy.hoydia.domain.User;
+import com.ssafy.hoydia.dto.MessageResponseDto;
+import com.ssafy.hoydia.exception.InvalidApproachException;
 import com.ssafy.hoydia.exception.LoginException;
+import com.ssafy.hoydia.exception.UnauthorizedException;
 import com.ssafy.hoydia.service.JwtService;
 import com.ssafy.hoydia.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -47,32 +47,50 @@ public class UserController {
     }
 
     @PostMapping
-    public TempResponseDto registUser(@RequestBody RegistUserRequestDto request){
+    public MessageResponseDto registUser(@RequestBody RegistUserRequestDto request){
 
         User user = User.createUser(
-                request.nickname,
-                request.gender,
-                request.birth);
+                request.getNickname(),
+                request.getGender(),
+                request.getBirth());
 
         userService.regist(user);
 
-        return new TempResponseDto("회원가입 완료");
+        return new MessageResponseDto("회원가입 완료");
+    }
+
+    // 회원 탈퇴
+    @DeleteMapping("/{userId}")
+    public MessageResponseDto deleteUser(@PathVariable("userId") String userId){
+
+        if (!jwtService.isValidUser())
+            throw new InvalidApproachException("사용자 인증 실패");
+
+        String currentUid = jwtService.getUserId();
+
+        boolean isMine = currentUid.equals(userId);
+
+        if(!isMine) throw new UnauthorizedException();
+
+        User user = userService.searchById(userId);
+
+        userService.delete(userId);
+        return new MessageResponseDto("회원 탈퇴가 완료되었습니다.");
+
     }
 
     @Data
     static class RegistUserRequestDto {
 
-        private String id;
+        @NotBlank
         private String nickname;
+
+        @NotBlank
         private Gender gender;
+
+        @NotBlank
         private Integer birth;
 
-    }
-
-    @Data
-    @AllArgsConstructor
-    static class TempResponseDto {
-        private String msg;
     }
 
     @Data
