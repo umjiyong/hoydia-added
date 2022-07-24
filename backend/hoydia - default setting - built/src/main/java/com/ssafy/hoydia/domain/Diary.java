@@ -49,8 +49,7 @@ public class Diary {
                                                    String pairId,
                                                    boolean own,
                                                    String diaryColor,
-                                                   Integer drawn,
-                                                   List<Page> pages){
+                                                   Integer drawn){
 
         Diary diary = new Diary();
 
@@ -69,7 +68,6 @@ public class Diary {
         diary.own = own;
         diary.diaryColor = diaryColor;
         diary.drawn = drawn;
-        diary.pages = pages;
 
         return diary;
     }
