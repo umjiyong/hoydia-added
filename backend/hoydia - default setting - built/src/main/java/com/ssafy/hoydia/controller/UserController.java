@@ -59,6 +59,23 @@ public class UserController {
         return new MessageResponseDto("회원가입 완료");
     }
 
+    @PutMapping("/{userId}")
+    public String updateUser(@PathVariable("userId")String userId, @RequestBody UpdateUserRequestDto request){
+
+        if (!jwtService.isValidUser())
+            throw new InvalidApproachException("사용자 인증 실패");
+
+        String currentUid = jwtService.getUserId();
+
+        boolean isMine = currentUid.equals(userId);
+
+        if(!isMine) throw new UnauthorizedException("로그인 아이디와 요청 아이디가 일치하지 않습니다.");
+
+        userService.update(userId, request.getNickname());
+
+        return "Loc-Controller : "+userId;
+    }
+
     // 회원 탈퇴
     @DeleteMapping("/{userId}")
     public MessageResponseDto deleteUser(@PathVariable("userId") String userId){
@@ -97,6 +114,13 @@ public class UserController {
     static class LoginRequestDto {
         @NotBlank
         private String userId;
+    }
+
+    @Data
+    static class UpdateUserRequestDto {
+
+        private String nickname;
+
     }
 
 

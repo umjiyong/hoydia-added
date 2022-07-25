@@ -50,7 +50,7 @@ public class UserService {
     }
 
     @Transactional
-    public void update(String id, String name)  {        // 닉네임만 변경 가능.
+    public void update(String id, String nickname)  {        // 닉네임만 변경 가능.
 
         User user = userRepository.findById(id);
 
@@ -59,7 +59,7 @@ public class UserService {
         }
         else {
 
-            user.setNickname(name);
+            user.setNickname(nickname);
 
         }
     }
