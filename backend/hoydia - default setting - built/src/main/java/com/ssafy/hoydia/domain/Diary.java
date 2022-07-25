@@ -43,6 +43,8 @@ public class Diary {
     @JsonIgnore
     private List<Page> pages = new ArrayList<>();
 
+
+
     public static Diary createDiary (User user,
                                                    LocalDateTime regTime,
                                                    String ownerId,
