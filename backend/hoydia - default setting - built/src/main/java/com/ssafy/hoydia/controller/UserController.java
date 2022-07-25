@@ -56,7 +56,7 @@ public class UserController {
 
         userService.regist(user);
 
-        return new MessageResponseDto("회원가입 완료");
+        return new MessageResponseDto("회원가입 완료 userId : "+ user.getId());
     }
 
     @PutMapping("/{userId}")

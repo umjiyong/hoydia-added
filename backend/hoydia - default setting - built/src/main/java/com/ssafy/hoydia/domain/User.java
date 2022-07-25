@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,7 @@ public class User {
     @JsonIgnore
     private List<MatchingNote> matchingNotes = new ArrayList<>();
 
-    public static User createUser(String nickname, Gender gender, Integer birth){ // 암호화 방식 미수정 상태;
+    public static User createUser( String nickname, Gender gender, Integer birth){ // 암호화 방식 미수정 상태;
 
         User user = new User();
 
