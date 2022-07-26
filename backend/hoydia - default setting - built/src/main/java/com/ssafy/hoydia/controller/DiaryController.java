@@ -8,6 +8,8 @@ import com.ssafy.hoydia.exception.UnauthorizedException;
 import com.ssafy.hoydia.service.DiaryService;
 import com.ssafy.hoydia.service.JwtService;
 import com.ssafy.hoydia.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @RequestMapping("/diary")
 @Slf4j
+@Api (value = "DiaryController", description = ("일기 컨트롤러"))
 public class DiaryController {
 
     private final JwtService jwtService;
@@ -34,6 +37,7 @@ public class DiaryController {
     private final UserService userService;
 
     @PostMapping
+    @ApiOperation(value="일기 작성", notes = "사용자 두 명의 고유 id와 color를 body에 request 후 작성.")
     public CreateDiaryResponseDto createDiary(@RequestBody @Valid CreateDiaryRequestDto request) {
 
         if (!jwtService.isValidUser())
