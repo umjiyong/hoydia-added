@@ -45,7 +45,6 @@ public class DiaryController {
 
         Diary diary = Diary.createDiary(
                 userService.searchById(jwtService.getUserId()),
-                LocalDateTime.now(),
                 request.getOwnerId(),
                 request.getPairId(),
                 true,

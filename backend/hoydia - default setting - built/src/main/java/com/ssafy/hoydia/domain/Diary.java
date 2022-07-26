@@ -46,7 +46,6 @@ public class Diary {
 
 
     public static Diary createDiary (User user,
-                                                   LocalDateTime regTime,
                                                    String ownerId,
                                                    String pairId,
                                                    boolean own,
@@ -58,13 +57,13 @@ public class Diary {
         SHA256 sha256 = new SHA256();
 
         try {
-            diary.id = sha256.encrypt(ownerId+pairId+regTime);
+            diary.id = sha256.encrypt(ownerId+pairId+LocalDateTime.now());
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
 
         diary.user = user;
-        diary.regTime = regTime;
+        diary.regTime = LocalDateTime.now();
         diary.ownerId = ownerId;
         diary.pairId = pairId;
         diary.own = own;
