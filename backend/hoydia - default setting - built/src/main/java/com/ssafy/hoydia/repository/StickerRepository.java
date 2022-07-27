@@ -30,10 +30,10 @@ public class StickerRepository {
     }
 
 
-    public List<Sticker> findByPage(String id) { // 해당 페이지의 모든 스티커를 가져옴
+    public List<Sticker> findByPage(String pageId) { // 해당 페이지의 모든 스티커를 가져옴
 
-        List<Sticker> stickers = em.createQuery("SELECT s FROM Sticker s WHERE s.page_id = :page_id",Sticker.class)
-                .setParameter("page_id",id)
+        List<Sticker> stickers = em.createQuery("SELECT s FROM Sticker s WHERE s.page.id = :page_id",Sticker.class)
+                .setParameter("page_id",pageId)
                 .getResultList();
 
         return stickers;

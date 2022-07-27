@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -84,14 +85,14 @@ public class DiaryController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResultDto readDiaryByUserId(@PathVariable("userId") String user_id) {
+    public ResultDto readDiaryByUserId(@PathVariable("userId") String userId) {
 
         if (!jwtService.isValidUser())
             throw new InvalidApproachException("인증 실패");
 
         String currentUid = jwtService.getUserId();
 
-        boolean isMine = currentUid.equals(user_id);
+        boolean isMine = currentUid.equals(userId);
 
         List<ReadDiaryResponseDto> diaryList = new ArrayList<>();
 
@@ -99,7 +100,7 @@ public class DiaryController {
             throw new UnauthorizedException("본인의 일기가 아닙니다.");
         }
 
-        diaryList = diaryService.searchByUserId(user_id).stream().map(diary -> new ReadDiaryResponseDto(diary)).collect(Collectors.toList());
+        diaryList = diaryService.searchByUserId(userId).stream().map(diary -> new ReadDiaryResponseDto(diary)).collect(Collectors.toList());
 
         return new ResultDto(diaryList);
 
