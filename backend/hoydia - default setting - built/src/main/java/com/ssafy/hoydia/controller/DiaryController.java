@@ -1,8 +1,8 @@
 package com.ssafy.hoydia.controller;
 
 import com.ssafy.hoydia.domain.Diary;
-import com.ssafy.hoydia.dto.MessageResponseDto;
-import com.ssafy.hoydia.dto.ResultDto;
+import com.ssafy.hoydia.controller.dto.MessageResponseDto;
+import com.ssafy.hoydia.controller.dto.ResultDto;
 import com.ssafy.hoydia.exception.InvalidApproachException;
 import com.ssafy.hoydia.exception.UnauthorizedException;
 import com.ssafy.hoydia.service.DiaryService;
@@ -14,13 +14,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
