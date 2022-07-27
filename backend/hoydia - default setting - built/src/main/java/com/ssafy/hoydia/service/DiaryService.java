@@ -42,9 +42,9 @@ public class DiaryService {
         return diary;
     }
 
-    public List<Diary> searchByUserId(String user_id) {
+    public List<Diary> searchByUserId(String userId) {
 
-        List<Diary> diaryList = diaryRepository.findByUser(user_id);
+        List<Diary> diaryList = diaryRepository.findByUser(userId);
 
         return diaryList;
     }

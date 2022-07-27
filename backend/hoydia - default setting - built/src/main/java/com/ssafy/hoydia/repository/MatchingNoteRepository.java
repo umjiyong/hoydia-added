@@ -30,10 +30,10 @@ public class MatchingNoteRepository {
     }
 
 
-    public List<MatchingNote> findByUser(String id) { // 해당 유저의 MatchingNote를 가져옴
+    public List<MatchingNote> findByUser(String userId) { // 해당 유저의 MatchingNote를 가져옴
 
-        List<MatchingNote> matchingNotes = em.createQuery("SELECT m FROM MatchingNote m WHERE m.user_id = :user_id",MatchingNote.class)
-                .setParameter("user_id",id)
+        List<MatchingNote> matchingNotes = em.createQuery("SELECT m FROM MatchingNote m WHERE m.user.id = :user_id",MatchingNote.class)
+                .setParameter("user_id",userId)
                 .getResultList();
 
         return matchingNotes;

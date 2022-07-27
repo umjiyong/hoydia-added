@@ -30,14 +30,14 @@ public class DiaryRepository {
     }
 
     public List<Diary> findAllDiaryOrderByRegTime(){
-        return em.createQuery("SELECT d from Diary d WHERE d.secret = false ORDER BY d.regTime DESC", Diary.class).getResultList();
+        return em.createQuery("SELECT d from Diary d ORDER BY d.regTime DESC", Diary.class).getResultList();
     }
 
 
-    public List<Diary> findByUser(String id) { // 유저의 모든 일기를 가져옴
+    public List<Diary> findByUser(String userId) { // 유저의 모든 일기를 가져옴
 
-        List<Diary> diaries = em.createQuery("SELECT d FROM Diary d WHERE d.user_id = :user_id",Diary.class)
-                .setParameter("user_id",id)
+        List<Diary> diaries = em.createQuery("SELECT d FROM Diary d WHERE d.user.id = :user_id",Diary.class)
+                .setParameter("user_id",userId)
                 .getResultList();
 
         return diaries;

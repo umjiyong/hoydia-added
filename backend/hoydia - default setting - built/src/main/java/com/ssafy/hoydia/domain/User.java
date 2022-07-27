@@ -9,6 +9,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,10 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
+    private List<Note> notes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Diary> diaries = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
@@ -45,7 +50,7 @@ public class User {
         SHA256 sha256 = new SHA256();
 
         try {
-            user.id = sha256.encrypt(nickname);
+            user.id = sha256.encrypt(nickname+ LocalDateTime.now());
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }

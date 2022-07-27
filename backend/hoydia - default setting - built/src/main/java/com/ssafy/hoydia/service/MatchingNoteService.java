@@ -35,9 +35,9 @@ public class MatchingNoteService {
         return matchingNote;
     }
 
-    public List<MatchingNote> searchByUserId(String user_id) {
+    public List<MatchingNote> searchByUserId(String userId) {
 
-        List<MatchingNote> matchingNoteList = matchingNoteRepository.findByUser(user_id);
+        List<MatchingNote> matchingNoteList = matchingNoteRepository.findByUser(userId);
 
         return matchingNoteList;
     }
