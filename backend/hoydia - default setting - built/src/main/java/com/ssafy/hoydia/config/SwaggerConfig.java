@@ -1,4 +1,4 @@
-package com.ssafy.hoydia.controller.config;
+package com.ssafy.hoydia.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
