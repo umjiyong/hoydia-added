@@ -1,4 +1,4 @@
-package com.ssafy.hoydia.controller.dto;
+package com.ssafy.hoydia.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

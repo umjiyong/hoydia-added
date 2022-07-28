@@ -1,8 +1,8 @@
 package com.ssafy.hoydia.controller;
 
 import com.ssafy.hoydia.domain.Diary;
-import com.ssafy.hoydia.controller.dto.MessageResponseDto;
-import com.ssafy.hoydia.controller.dto.ResultDto;
+import com.ssafy.hoydia.dto.MessageResponseDto;
+import com.ssafy.hoydia.dto.ResultDto;
 import com.ssafy.hoydia.exception.InvalidApproachException;
 import com.ssafy.hoydia.exception.UnauthorizedException;
 import com.ssafy.hoydia.service.DiaryService;

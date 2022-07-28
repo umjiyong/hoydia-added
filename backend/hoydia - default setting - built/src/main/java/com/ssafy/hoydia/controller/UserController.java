@@ -3,7 +3,7 @@ package com.ssafy.hoydia.controller;
 
 import com.ssafy.hoydia.domain.Gender;
 import com.ssafy.hoydia.domain.User;
-import com.ssafy.hoydia.controller.dto.MessageResponseDto;
+import com.ssafy.hoydia.dto.MessageResponseDto;
 import com.ssafy.hoydia.exception.InvalidApproachException;
 import com.ssafy.hoydia.exception.LoginException;
 import com.ssafy.hoydia.exception.UnauthorizedException;
