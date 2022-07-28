@@ -2,6 +2,7 @@ package com.ssafy.hoydia.controller;
 
 
 import com.ssafy.hoydia.domain.Gender;
+import com.ssafy.hoydia.domain.Role;
 import com.ssafy.hoydia.domain.User;
 import com.ssafy.hoydia.dto.MessageResponseDto;
 import com.ssafy.hoydia.exception.InvalidApproachException;
@@ -49,9 +50,9 @@ public class UserController {
     public MessageResponseDto registUser(@RequestBody RegistUserRequestDto request){
 
         User user = User.createUser(
-                request.getNickname(),
-                request.getGender(),
-                request.getBirth());
+                request.getName(),
+                request.getEmail(),
+                request.getRole());
 
         userService.regist(user);
 
@@ -99,13 +100,13 @@ public class UserController {
     static class RegistUserRequestDto {
 
         @NotBlank
-        private String nickname;
+        private String name;
 
         @NotBlank
-        private Gender gender;
+        private String email;
 
         @NotBlank
-        private Integer birth;
+        private Role role;
 
     }
 

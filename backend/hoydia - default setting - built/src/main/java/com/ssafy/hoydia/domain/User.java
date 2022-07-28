@@ -23,9 +23,16 @@ public class User {
     @Setter (AccessLevel.NONE)
     private String id;
 
+    private String name;
+
     private String nickname;
 
-    private Integer birth;
+    private String birth;
+
+    private String email;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
@@ -43,21 +50,21 @@ public class User {
     @JsonIgnore
     private List<MatchingNote> matchingNotes = new ArrayList<>();
 
-    public static User createUser( String nickname, Gender gender, Integer birth){ // 암호화 방식 미수정 상태;
+    public static User createUser(String name, String email, Role role){
 
         User user = new User();
 
         SHA256 sha256 = new SHA256();
 
         try {
-            user.id = sha256.encrypt(nickname+ LocalDateTime.now());
+            user.id = sha256.encrypt(email+ LocalDateTime.now());
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
 
-        user.nickname = nickname;
-        user.birth = birth;
-        user.gender = gender;
+        user.name = name;
+        user.email = email;
+        user.role = role;
 
         return user;
     }
