@@ -30,10 +30,10 @@ public class PageRepository {
     }
 
 
-    public List<Page> findByDiary(String id) { // 해당 다이어리의 모든 페이지를 가져옴
+    public List<Page> findByDiary(String diaryId) { // 해당 다이어리의 모든 페이지를 가져옴
 
-        List<Page> pages = em.createQuery("SELECT p FROM Page p WHERE p.diary_id = :diary_id",Page.class)
-                .setParameter("diary_id",id)
+        List<Page> pages = em.createQuery("SELECT p FROM Page p WHERE p.diary.id = :diary_id",Page.class)
+                .setParameter("diary_id",diaryId)
                 .getResultList();
 
         return pages;
