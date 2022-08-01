@@ -1,37 +1,31 @@
+import MusicPlayer from 'components/MusicPlayer';
+import logo from './logo.svg';
 import './App.css';
-import styled, { keyframes } from 'styled-components';
-import BookImg from 'images/book-img.svg';
-import NoteImg from 'images/note-img.png';
 
 function App() {
   return (
     <div className="App">
-      <img src={BookImg} alt="" />
-      <Note src={NoteImg} alt="" />
+      <header className="App-header">
+        <MusicPlayer />
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit
+          {' '}
+          <code>src/App.js</code>
+          {' '}
+          and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
     </div>
   );
 }
-
-const noteFloating = keyframes`
-0% {
-  opacity: 1;
-  bottom: 250px
-}
-50% {
-  opacity: 0.2;
-  bottom: 300px;
-}
-100% {
-  opacity: 1;
-  bottom: 250px;
-}
-`;
-
-const Note = styled.img`
-  position: relative;
-  bottom: 250px;
-  right: 150px;
-  animation: ${noteFloating} 1.5s 0s Infinite linear none;
-`;
 
 export default App;
