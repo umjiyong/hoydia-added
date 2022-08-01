@@ -1,9 +1,9 @@
 /* eslint-disable react/self-closing-comp */
 import React from 'react';
 import styled from 'styled-components';
-import post from '../assets/post.png';
-import diary from '../assets/diary.png';
-import drawer from '../assets/drawer.png';
+import post from 'assets/post.png';
+import diary from 'assets/diary.png';
+import drawer from 'assets/drawer.png';
 
 const Container = styled.div`
   position: relative

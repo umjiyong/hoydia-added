@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import styled from 'styled-components';
-import Modal1 from './Modal1';
-import Modal2 from './Modal2';
-import Modal3 from './Modal3';
-import Modal4 from './Modal4';
+import Modal1 from 'components/CreateDiaryModal';
+import Modal2 from 'components/RandomMatchingQuestionModal';
+import Modal3 from 'components/MypageModal';
+import Modal4 from 'components/LogoutModal';
 
 const UlTag = styled.ul`
   display: flex;

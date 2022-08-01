@@ -4,9 +4,10 @@
 /* eslint-disable react/self-closing-comp */
 import React from 'react';
 import styled from 'styled-components';
-import loginDiary from '../assets/loginDiary.png';
-import kakaoLogin from '../assets/kakaoLogin.png';
-import naverLogin from '../assets/naverLogin.png';
+import Logo from 'components/Logo';
+import loginDiary from 'assets/loginDiary.png';
+import kakaoLogin from 'assets/kakaoLogin.png';
+import naverLogin from 'assets/naverLogin.png';
 import { Link } from 'react-router-dom';
 
 const Hoydia = styled.h1`
@@ -64,7 +65,7 @@ function loginPage() {
       <Container>
         <Hoydia>HOYDIA</Hoydia>
         <Slogan>감성 페어와 공유하는 당신의 요즈음</Slogan>
-        <Diary src={loginDiary} alt="loginDiary" />
+        <Logo />
         <BtnContainer>
           <Link to="/mainPage">
             <KakaoBtn src={kakaoLogin} />

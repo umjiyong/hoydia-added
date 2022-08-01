@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 import styled from 'styled-components';
 import Modal, { ModalProvider, BaseModalBackground } from 'styled-react-modal';
-import exit from '../assets/exit.png';
+import exit from 'assets/exit.png';
 
 const StyledModal = Modal.styled`
        
