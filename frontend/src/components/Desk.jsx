@@ -1,9 +1,10 @@
 /* eslint-disable react/self-closing-comp */
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import post from 'assets/post.png';
 import diary from 'assets/diary.png';
 import drawer from 'assets/drawer.png';
+import AlarmList from './AlarmList';
 
 const Container = styled.div`
   position: relative
@@ -54,11 +55,16 @@ const Drawer = styled.img`
 `;
 
 function desk() {
+  const [openDrop, setOpenDrop] = useState(false);
+  const openAlarm = () => {
+    setOpenDrop((prevState) => !prevState);
+  };
   return (
     <div className="desk">
       <Container>
         <Desk>
-          <PostDiv>
+          {openDrop ? <AlarmList /> : null}
+          <PostDiv onClick={openAlarm}>
             <Post src={post} alt="post" />
           </PostDiv>
           <DiaryContainer>
