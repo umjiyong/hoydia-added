@@ -2,13 +2,13 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/self-closing-comp */
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Logo from 'components/Logo';
-import loginDiary from 'assets/loginDiary.png';
 import kakaoLogin from 'assets/kakaoLogin.png';
 import naverLogin from 'assets/naverLogin.png';
-import { Link } from 'react-router-dom';
+import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+import { useNavigate } from 'react-router-dom';
 
 const Hoydia = styled.h1`
   margin: 0px;
@@ -60,6 +60,8 @@ const BtnContainer = styled.div`
 `;
 
 function loginPage() {
+  const navigate = useNavigate();
+
   return (
     <div className="login">
       <Container>
@@ -67,13 +69,19 @@ function loginPage() {
         <Slogan>감성 페어와 공유하는 당신의 요즈음</Slogan>
         <Logo />
         <BtnContainer>
-          <Link to="/mainPage">
-            <KakaoBtn src={kakaoLogin} />
-          </Link>
-
-          <Link to="/mainPage">
-            <NaverBtn src={naverLogin} />
-          </Link>
+          <GoogleOAuthProvider clientId="742116060530-q5b2iggpf11hqohctu3olf2vf829i9o7.apps.googleusercontent.com">
+            <GoogleLogin
+              onSuccess={(credentialResponse) => {
+                navigate('/mainPage');
+                console.log(credentialResponse.credential);
+              }}
+              onError={() => {
+                console.log('Login Failed');
+              }}
+            />
+          </GoogleOAuthProvider>
+          <KakaoBtn src={kakaoLogin} />
+          <NaverBtn src={naverLogin} />
         </BtnContainer>
       </Container>
     </div>
