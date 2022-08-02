@@ -49,6 +49,13 @@ public class UserService {
 
     }
 
+    public User searchByEmail(String email) {
+
+        return userRepository.findByEmail(email);
+
+    }
+
+
     @Transactional
     public void update(String id, String nickname)  {        // 닉네임만 변경 가능.
 
