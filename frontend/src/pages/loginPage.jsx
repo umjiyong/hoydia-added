@@ -8,7 +8,8 @@ import Logo from 'components/Logo';
 import loginDiary from 'assets/loginDiary.png';
 import kakaoLogin from 'assets/kakaoLogin.png';
 import naverLogin from 'assets/naverLogin.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Hoydia = styled.h1`
   margin: 0px;
@@ -60,6 +61,16 @@ const BtnContainer = styled.div`
 `;
 
 function loginPage() {
+  const navigate = useNavigate();
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    axios.post('http://localhost:8080/user/login', {}).then((res) => {
+      console.log(res);
+      console.log(res.data['access-token']);
+      localStorage.setItem('access-token', res.data['access-token']);
+      navigate('/mainPage');
+    });
+  };
   return (
     <div className="login">
       <Container>
@@ -74,6 +85,9 @@ function loginPage() {
           <Link to="/mainPage">
             <NaverBtn src={naverLogin} />
           </Link>
+          <form onSubmit={handleSubmit}>
+            <input type="submit" />
+          </form>
         </BtnContainer>
       </Container>
     </div>
