@@ -68,9 +68,10 @@ function loginPage() {
       console.log(res);
       console.log(res.data['access-token']);
       localStorage.setItem('access-token', res.data['access-token']);
-      navigate('/mainPage');
+      navigate('/temCreateDiaryPage');
     });
   };
+
   return (
     <div className="login">
       <Container>
