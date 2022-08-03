@@ -21,6 +21,62 @@ const StyledModal = Modal.styled`
   opacity: ${(props) => props.opacity};
   transition : all 0.05s ease-in-out;;`;
 
+const Title = styled.span`
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 50px;
+  justify-content: center;
+  align-items: center;
+  color: #ff8960;
+`;
+const GoButton = styled.button`
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  gap: 0.125rem;
+
+  width: 11rem;
+  height: 5rem;
+
+  background: #ffdbac;
+  border-radius: 1rem;
+`;
+
+const Atag = styled.a`
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 0.875rem 1rem;
+  text-decoration: none;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const ExitBtn = styled.img`
+  display: flex;
+  justify-content: flex-end;
+  width: 1.875rem;
+  height: 1.875rem;
+  margin: 0.938rem;
+  margin-left: 56.25rem;
+  margin-top: 1rem;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const ExitDiv = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  width: 1.875rem;
+  height: 1.875rem;
+  margin: 0.938rem;
+  margin-left: 56.25rem;
+  margin-top: 1rem;
+`;
+
 function FancyModalButton() {
   const [isOpen, setIsOpen] = useState(false);
   const [opacity, setOpacity] = useState(0);
@@ -42,61 +98,6 @@ function FancyModalButton() {
       setTimeout(resolve, 300);
     });
   }
-  const Title = styled.span`
-    font-family: 'Noto Sans KR';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 50px;
-    justify-content: center;
-    align-items: center;
-    color: #ff8960;
-  `;
-  const GoButton = styled.button`
-    justify-content: center;
-    align-items: center;
-    padding: 0.5rem 1rem;
-    gap: 0.125rem;
-
-    width: 11rem;
-    height: 5rem;
-
-    background: #ffdbac;
-    border-radius: 1rem;
-  `;
-
-  const Atag = styled.a`
-    display: block;
-    color: black;
-    text-align: center;
-    padding: 0.875rem 1rem;
-    text-decoration: none;
-    &:hover {
-      cursor: pointer;
-    }
-  `;
-
-  const ExitBtn = styled.img`
-    display: flex;
-    justify-content: flex-end;
-    width: 1.875rem;
-    height: 1.875rem;
-    margin: 0.938rem;
-    margin-left: 56.25rem;
-    margin-top: 1rem;
-    &:hover {
-      cursor: pointer;
-    }
-  `;
-
-  const ExitDiv = styled.div`
-    display: flex;
-    justify-content: flex-end;
-    width: 1.875rem;
-    height: 1.875rem;
-    margin: 0.938rem;
-    margin-left: 56.25rem;
-    margin-top: 1rem;
-  `;
 
   return (
     <div>
