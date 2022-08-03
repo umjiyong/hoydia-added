@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,7 +36,7 @@ public class FileController {
 
             String[] extension = originalFileName.split("\\.");
 
-            String customFileName = sha256.encrypt(originalFileName)+"."+extension[extension.length-1];
+            String customFileName = sha256.encrypt(originalFileName+ LocalDateTime.now())+"."+extension[extension.length-1];
 
             String savePath = System.getProperty("user.dir") + "\\files";
 

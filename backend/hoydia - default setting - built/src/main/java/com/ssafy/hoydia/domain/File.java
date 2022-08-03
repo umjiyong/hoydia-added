@@ -11,7 +11,7 @@ public class File {
 
     @Column(name= "file_id")
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String orginalFileName;
