@@ -8,12 +8,12 @@ import lombok.*;
 @NoArgsConstructor
 public class FileDto {
 
-    private String id;
+    private Long id;
     private String original;
     private String custom;
     private String path;
 
-    public File toEntity (String id, String original, String custom, String path) {
+    public File toEntity () {
         File file =File.builder()
                 .id(id)
                 .original(original)
@@ -24,7 +24,7 @@ public class FileDto {
     }
 
     @Builder
-    public FileDto (String id, String original, String custom, String path) {
+    public FileDto (Long id, String original, String custom, String path) {
         this.id = id;
         this.original = original;
         this.custom = custom;

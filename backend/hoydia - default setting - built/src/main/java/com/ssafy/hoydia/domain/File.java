@@ -2,16 +2,17 @@ package com.ssafy.hoydia.domain;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Getter @Setter
 @NoArgsConstructor (access = AccessLevel.PROTECTED)
 public class File {
 
+    @Column(name= "file_id")
     @Id
-    private String id;
+    @GeneratedValue (strategy = GenerationType.AUTO)
+    private Long id;
 
     private String orginalFileName;
 
@@ -20,7 +21,7 @@ public class File {
     private String filePath;
 
     @Builder
-    public File (String id, String original, String custom, String path) {
+    public File (Long id, String original, String custom, String path) {
 
         this.id = id;
         this.orginalFileName = original;
