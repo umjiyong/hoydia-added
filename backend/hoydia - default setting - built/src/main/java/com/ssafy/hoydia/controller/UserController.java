@@ -1,7 +1,9 @@
 package com.ssafy.hoydia.controller;
 
 
+import com.ssafy.hoydia.config.auth.dto.SessionUser;
 import com.ssafy.hoydia.domain.Gender;
+import com.ssafy.hoydia.domain.Platform;
 import com.ssafy.hoydia.domain.Role;
 import com.ssafy.hoydia.domain.User;
 import com.ssafy.hoydia.dto.MessageResponseDto;
@@ -10,11 +12,14 @@ import com.ssafy.hoydia.exception.LoginException;
 import com.ssafy.hoydia.exception.UnauthorizedException;
 import com.ssafy.hoydia.service.JwtService;
 import com.ssafy.hoydia.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.util.HashMap;
@@ -24,34 +29,51 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping("/user")
 @Slf4j
+@Api (value = "UserController", description = ("유저 컨트롤러"))
 public class UserController {
 
     private final JwtService jwtService;
     private final UserService userService;
+    private final HttpSession httpSession;
 
     @PostMapping("/login")
-    public Map login(@RequestBody @Valid LoginRequestDto request) {
+    @ApiOperation(value="소셜 로그인 후 아이디 생성", notes = "제 곧 내")
+    public Map login() {
 
-        User user = userService.login(request.getUserId());
+        SessionUser sessionUser = (SessionUser) httpSession.getAttribute("user");
 
-        if (user == null) {
+        User user = userService.searchByEmail(sessionUser.getEmail());
+
+        if (user == null) { // 없으니까 등록
+
+            user = User.createUser(sessionUser.getName(), sessionUser.getEmail(),sessionUser.getPlatform(), Role.USER);
+
+            userService.regist(user);
+
+        }
+
+        User loginuser = userService.login(user.getId());
+
+        if (loginuser == null) {
             throw new LoginException("로그인에서 심각한 오류가 발생했습니다. 재가입 요망");
         }
-        String token = jwtService.create("userId",user.getId(),"access-token");
+        String token = jwtService.create("userId",loginuser.getId(),"access-token");
 
         Map map = new HashMap();
         map.put("access-token",token);
-        map.put("userId",user.getId());
+        map.put("userId",loginuser.getId());
 
         return map;
     }
 
     @PostMapping
+    @ApiOperation(value="유저 작성", notes = "프론트 DBtest만을 위한 임시 기능, 고마워할 것")
     public MessageResponseDto registUser(@RequestBody RegistUserRequestDto request){
 
         User user = User.createUser(
                 request.getName(),
                 request.getEmail(),
+                request.getPlatform(),
                 request.getRole());
 
         userService.regist(user);
@@ -104,6 +126,9 @@ public class UserController {
 
         @NotBlank
         private String email;
+
+        @NotBlank
+        private Platform platform;
 
         @NotBlank
         private Role role;

@@ -34,6 +34,8 @@ public class UserRepository {
                 .setParameter("email",email).getResultList();
 
 
+        if (user.size()==0) return null;
+
         return user.get(0);
 
     }

@@ -24,6 +24,48 @@ const StyledModal = Modal.styled`
     opacity: ${(props) => props.opacity};
     // transition : all 0.3s ease-in-out;;`;
 
+const Title = styled.span`
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 30px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+  color: #ff8960;
+`;
+const GoButton = styled.button`
+  justify-content: center;
+  align-items: center;
+  padding: 8px 16px;
+
+  gap: 2px;
+
+  width: 176px;
+  height: 60px;
+
+  background: #ffdbac;
+  border-radius: 15px;
+`;
+
+const Atag = styled.a`
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const BtnDiv = styled.div`
+  display: flex;
+  justify-content: space-around;
+  gap: 30px;
+  flex-direction: row;
+`;
+
 function FancyModalButton() {
   const [isOpen, setIsOpen] = useState(false);
   const [opacity, setOpacity] = useState(0);
@@ -45,47 +87,6 @@ function FancyModalButton() {
       setTimeout(resolve, 300);
     });
   }
-  const Title = styled.span`
-    font-family: 'Noto Sans KR';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 30px;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 30px;
-    color: #ff8960;
-  `;
-  const GoButton = styled.button`
-    justify-content: center;
-    align-items: center;
-    padding: 8px 16px;
-
-    gap: 2px;
-
-    width: 176px;
-    height: 60px;
-
-    background: #ffdbac;
-    border-radius: 15px;
-  `;
-
-  const Atag = styled.a`
-    display: block;
-    color: black;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    &:hover {
-      cursor: pointer;
-    }
-  `;
-
-  const BtnDiv = styled.div`
-    display: flex;
-    justify-content: space-around;
-    gap: 30px;
-    flex-direction: row;
-  `;
 
   return (
     <div>
