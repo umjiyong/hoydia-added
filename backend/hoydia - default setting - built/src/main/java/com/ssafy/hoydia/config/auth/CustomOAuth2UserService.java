@@ -1,5 +1,7 @@
 package com.ssafy.hoydia.config.auth;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.ssafy.hoydia.config.auth.dto.OAuthAttributes;
 import com.ssafy.hoydia.config.auth.dto.SessionUser;
 import com.ssafy.hoydia.domain.Role;
@@ -23,7 +25,7 @@ import java.util.Collections;
 @Service
 public class CustomOAuth2UserService implements OAuth2UserService <OAuth2UserRequest, OAuth2User> {
 
-    private final UserRepository userRepository;
+
     private final HttpSession httpSession;
 
     @SneakyThrows
@@ -33,24 +35,27 @@ public class CustomOAuth2UserService implements OAuth2UserService <OAuth2UserReq
         OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
 
+//        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ-------ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+//        System.out.println(new ObjectMapper().registerModule(new JavaTimeModule()).writerWithDefaultPrettyPrinter().writeValueAsString(userRequest));
+//        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡMMMMMMMMㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+//        System.out.println(new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(oAuth2User));
+//        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ--------ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 
 
         String registrationId = userRequest.getClientRegistration().getRegistrationId(); // 어떤 플랫폼과 연동하는 것인지
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails()
-                .getUserInfoEndpoint().getUserNameAttributeName(); // User의 PK라고 생각하면 됨.
+                .getUserInfoEndpoint().getUserNameAttributeName(); // UserRequest(?)의 PK라고 생각하면 됨.
 
         OAuthAttributes userAttributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
         // 얻은 user의 attribute들을 저장할 class
 
+//        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡMMMMMMMMaㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+//        System.out.println(new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(userAttributes));
+//        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ--------ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+
         User user = saveOrUpdate(userAttributes);
 
-
-
         httpSession.setAttribute("user", new SessionUser(user)); // 세션에 사용자 정보 저장 (SessionUser라는 dto 사용)
-
-        SessionUser test1 = (SessionUser) httpSession.getAttribute("user");
-        System.out.println(test1.getName());
-        System.out.println(test1.getEmail());
 
 
         return new DefaultOAuth2User(
@@ -61,18 +66,10 @@ public class CustomOAuth2UserService implements OAuth2UserService <OAuth2UserReq
 
     private User saveOrUpdate(OAuthAttributes userAttributes) {
 
-        System.out.println("cicicivalk");
-        System.out.println("here + ::" + userAttributes.getEmail());
 
-//        User user = userRepository.findByEmail(userAttributes.getEmail());
+        User user = User.createUser(userAttributes.getName(), userAttributes.getEmail(), userAttributes.getPlatform(), Role.USER);
 
-
-        User user = User.createUser(userAttributes.getName(), userAttributes.getEmail(), Role.USER);
-//        if (user==null) {
             return user;
-//        }
-//            else return userRepository.regist(user);
-
 
     }
 
