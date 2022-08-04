@@ -56,6 +56,10 @@ public class User {
     @JsonIgnore
     private List<MatchingNote> matchingNotes = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Notice> notices = new ArrayList<>();
+
     public static User createUser(String name, String email, Platform platform, Role role){
 
         User user = new User();

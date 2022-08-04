@@ -38,7 +38,9 @@ public class UserController {
 
     @PostMapping("/login")
     @ApiOperation(value="소셜 로그인 후 아이디 생성", notes = "제 곧 내")
-    public Map login() {
+    public Map login(String code) {
+
+        userService.getAccessToken(code);
 
         SessionUser sessionUser = (SessionUser) httpSession.getAttribute("user");
 
