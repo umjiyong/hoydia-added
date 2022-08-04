@@ -28,7 +28,7 @@ public class JwtService {
     public static final Logger logger = LoggerFactory.getLogger(JwtService.class);
     private static final String SALT = "tEa MaKDEV fOC usonP oweR fulSec Ur itY sER viCe";
 
-    private static final int EXPIRE_SECONDS = 1200 ;
+    private static final int EXPIRE_SECONDS = 3600 ;
 
     public <T> String create(String key, T data, String subject) {
 
