@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ReactLoading from 'react-loading';
 import diary from 'assets/diary.png';
 import diarytable from 'assets/diaryTable.png';
@@ -37,10 +37,36 @@ const DiaryTable = styled.img`
 `;
 
 function DrawerPage() {
-  const itemList = [1, 2, 3, 4, 5, 6]; // ItemList
+  const [itemList, setItemList] = useState([1, 2, 3, 4, 5, 6]); // ItemList
+  const [list, setList] = useState([
+    <Diary src={diary} alt="diary1" />,
+    <Diary src={diary} alt="diary2" />,
+    <Diary src={diary} alt="diary3" />,
+    <Diary src={diary} alt="diary4" />,
+    <Diary src={diary} alt="diary5" />,
+  ]);
   const [target, setTarget] = useState(''); // target
   const [isLoding, setIsLoding] = useState(false); // isloding
-
+  const dragItem = useRef();
+  const dragOverItem = useRef();
+  const dragStart = (e, position) => {
+    dragItem.current = position;
+    console.log(e.type);
+  };
+  const dragEnter = (e, position) => {
+    dragOverItem.current = position;
+    console.log(e.type);
+  };
+  const drop = (e) => {
+    const copyListItems = [...list];
+    const dragItemContent = copyListItems[dragItem.current];
+    copyListItems.splice(dragItem.current, 1);
+    copyListItems.splice(dragOverItem.current, 0, dragItemContent);
+    dragItem.current = null;
+    dragOverItem.current = null;
+    setList(copyListItems);
+    console.log(e.type);
+  };
   const onIntersect = async ([entry], observer) => {
     if (entry.isIntersecting && !isLoding) {
       observer.unobserve(entry.target);
@@ -66,36 +92,49 @@ function DrawerPage() {
   return (
     <div className="App">
       <Navbar />
-      {itemList.map((item) => (
-        <div className="Item" key={item}>
-          <DrawerContainer>
-            <DiaryContainer>
-              <Colcontainer size={1}> </Colcontainer>
-              <Colcontainer size={2}>
-                <Diary src={diary} alt="diary" />
-              </Colcontainer>
-              <Colcontainer size={1}> </Colcontainer>
-              <Colcontainer size={2}>
-                <Diary src={diary} alt="diary" />
-              </Colcontainer>
-              <Colcontainer size={1}> </Colcontainer>
-              <Colcontainer size={2}>
-                <Diary src={diary} alt="diary" />
-              </Colcontainer>
-              <Colcontainer size={1}> </Colcontainer>
-            </DiaryContainer>
-            <DiaryTable src={diarytable} alt="diarytable" />
-          </DrawerContainer>
-        </div>
-      ))}
-      {isLoding ? (
-        <LoaderWrap>
-          <ReactLoading type="spin" color="#A593E0" />
-        </LoaderWrap>
-      ) : (
-        ''
-      )}
-      <div ref={setTarget}> </div>
+      <DrawerContainer>
+        {list &&
+          list.map((item, index) => (
+            <Colcontainer
+              size={2}
+              className="Item"
+              key={index}
+              onDragStart={(e) => dragStart(e, index)}
+              onDragEnter={(e) => dragEnter(e, index)}
+              onDragOver={(e) => e.preventDefault()}
+              onDragEnd={drop}
+              draggable
+            >
+              {item}
+              {/* <DrawerContainer>
+              <DiaryContainer>
+                <Colcontainer size={1}> </Colcontainer>
+                <Colcontainer size={2}>
+                  <Diary src={diary} alt="diary" />
+                </Colcontainer>
+                <Colcontainer size={1}> </Colcontainer>
+                <Colcontainer size={2}>
+                  <Diary src={diary} alt="diary" />
+                </Colcontainer>
+                <Colcontainer size={1}> </Colcontainer>
+                <Colcontainer size={2}>
+                  <Diary src={diary} alt="diary" />
+                </Colcontainer>
+                <Colcontainer size={1}> </Colcontainer>
+              </DiaryContainer>
+              <DiaryTable src={diarytable} alt="diarytable" />
+            </DrawerContainer> */}
+            </Colcontainer>
+          ))}
+        {isLoding ? (
+          <LoaderWrap>
+            <ReactLoading type="spin" color="#A593E0" />
+          </LoaderWrap>
+        ) : (
+          ''
+        )}
+        <div ref={setTarget}> </div>
+      </DrawerContainer>
     </div>
   );
 }
