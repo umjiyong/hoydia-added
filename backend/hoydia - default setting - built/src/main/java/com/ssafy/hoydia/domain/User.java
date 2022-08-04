@@ -8,6 +8,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -32,6 +34,10 @@ public class User {
     private String email;
 
     @Enumerated(EnumType.STRING)
+    @NotNull
+    private Platform platform; // enum으로 타입으로 바꾸기
+
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @Enumerated(EnumType.STRING)
@@ -50,7 +56,11 @@ public class User {
     @JsonIgnore
     private List<MatchingNote> matchingNotes = new ArrayList<>();
 
-    public static User createUser(String name, String email, Role role){
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Notice> notices = new ArrayList<>();
+
+    public static User createUser(String name, String email, Platform platform, Role role){
 
         User user = new User();
 
@@ -64,6 +74,7 @@ public class User {
 
         user.name = name;
         user.email = email;
+        user.platform = platform;
         user.role = role;
 
         return user;
