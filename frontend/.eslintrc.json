@@ -18,6 +18,7 @@
     "import/no-unresolved": "off",
     "react/react-in-jsx-scope": "off",
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-    "linebreak-style": 0
+    "linebreak-style": 0,
+    "react/jsx-one-expression-per-line": "off"
   }
 }

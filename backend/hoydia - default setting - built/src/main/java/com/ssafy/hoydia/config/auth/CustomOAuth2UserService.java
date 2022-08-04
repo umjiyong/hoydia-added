@@ -49,9 +49,9 @@ public class CustomOAuth2UserService implements OAuth2UserService <OAuth2UserReq
         OAuthAttributes userAttributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
         // 얻은 user의 attribute들을 저장할 class
 
-//        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡMMMMMMMMaㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
-//        System.out.println(new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(userAttributes));
-//        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ--------ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡMMMMMMMMaㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+        System.out.println(new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(userAttributes));
+        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ--------ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 
         User user = saveOrUpdate(userAttributes);
 
