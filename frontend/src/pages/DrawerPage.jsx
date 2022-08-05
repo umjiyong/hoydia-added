@@ -4,7 +4,10 @@ import ReactLoading from 'react-loading';
 import diary from 'assets/diary.png';
 import diarytable from 'assets/diaryTable.png';
 import Navbar from 'components/Navbar';
+<<<<<<< HEAD
 import floatingbutton from 'assets/floatingButton.png';
+=======
+>>>>>>> feature-front/login
 
 const LoaderWrap = styled.div`
   width: 100%;
@@ -16,11 +19,20 @@ const LoaderWrap = styled.div`
 `;
 const DrawerContainer = styled.div``;
 
+<<<<<<< HEAD
 const DiaryContainer = styled.div``;
 
 const Colcontainer = styled.div`
   display: flex;
   justify-content: center;
+=======
+const DiaryContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const Colcontainer = styled.div`
+>>>>>>> feature-front/login
   flex: ${(props) => props.size};
 `;
 const Diary = styled.img`
@@ -28,6 +40,7 @@ const Diary = styled.img`
   max-height: 300px;
   // margin: 40px;
 `;
+<<<<<<< HEAD
 const FloatingBtn = styled.img`
   position: fixed; //포인트!
   line-height: 63px;
@@ -41,6 +54,14 @@ const FloatingBtn = styled.img`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+=======
+
+const DiaryTable = styled.img`
+  display: flex;
+  margin-bottom: 10px;
+  width: 100%;
+  height: 178.3px;
+>>>>>>> feature-front/login
 `;
 
 function DrawerPage() {
@@ -51,6 +72,7 @@ function DrawerPage() {
     <Diary src={diary} alt="diary3" />,
     <Diary src={diary} alt="diary4" />,
     <Diary src={diary} alt="diary5" />,
+<<<<<<< HEAD
     <Diary src={diary} alt="diary5" />,
     <Diary src={diary} alt="diary5" />,
     <Diary src={diary} alt="diary5" />,
@@ -60,6 +82,8 @@ function DrawerPage() {
     <Diary src={diary} alt="diary5" />,
     <Diary src={diary} alt="diary5" />,
     <Diary src={diary} alt="diary5" />,
+=======
+>>>>>>> feature-front/login
   ]);
   const [target, setTarget] = useState(''); // target
   const [isLoding, setIsLoding] = useState(false); // isloding
@@ -81,6 +105,7 @@ function DrawerPage() {
     dragItem.current = null;
     dragOverItem.current = null;
     setList(copyListItems);
+<<<<<<< HEAD
     console.log(e);
     console.log(window.visualViewport.height);
     console.log(window.visualViewport.width);
@@ -100,6 +125,9 @@ function DrawerPage() {
     } else {
       console.log('실패');
     }
+=======
+    console.log(e.type);
+>>>>>>> feature-front/login
   };
   const onIntersect = async ([entry], observer) => {
     if (entry.isIntersecting && !isLoding) {
@@ -126,6 +154,7 @@ function DrawerPage() {
   return (
     <div className="App">
       <Navbar />
+<<<<<<< HEAD
       <DrawerContainer>
         <DiaryContainer
           style={{
@@ -178,6 +207,56 @@ function DrawerPage() {
           <div ref={setTarget}> </div>
         </DiaryContainer>
         <FloatingBtn src={floatingbutton} />
+=======
+      <DrawerContainer
+        style={{
+          display: 'grid',
+          gridTemplateRows: '1fr ',
+          gridTemplateColumns: '1fr 1fr 1fr',
+        }}
+      >
+        {list &&
+          list.map((item, index) => (
+            <Colcontainer
+              size={2}
+              className="Item"
+              key={index}
+              onDragStart={(e) => dragStart(e, index)}
+              onDragEnter={(e) => dragEnter(e, index)}
+              onDragOver={(e) => e.preventDefault()}
+              onDragEnd={drop}
+              draggable
+            >
+              {item}
+              {/* <DrawerContainer>
+              <DiaryContainer>
+                <Colcontainer size={1}> </Colcontainer>
+                <Colcontainer size={2}>
+                  <Diary src={diary} alt="diary" />
+                </Colcontainer>
+                <Colcontainer size={1}> </Colcontainer>
+                <Colcontainer size={2}>
+                  <Diary src={diary} alt="diary" />
+                </Colcontainer>
+                <Colcontainer size={1}> </Colcontainer>
+                <Colcontainer size={2}>
+                  <Diary src={diary} alt="diary" />
+                </Colcontainer>
+                <Colcontainer size={1}> </Colcontainer>
+              </DiaryContainer>
+              <DiaryTable src={diarytable} alt="diarytable" />
+            </DrawerContainer> */}
+            </Colcontainer>
+          ))}
+        {isLoding ? (
+          <LoaderWrap>
+            <ReactLoading type="spin" color="#A593E0" />
+          </LoaderWrap>
+        ) : (
+          ''
+        )}
+        <div ref={setTarget}> </div>
+>>>>>>> feature-front/login
       </DrawerContainer>
     </div>
   );

@@ -19,9 +19,13 @@
     "http-proxy-middleware": "^2.0.6",
 <<<<<<< HEAD
     "jwt-decode": "^3.1.2",
+<<<<<<< HEAD
 =======
     "moment": "^2.29.4",
 >>>>>>> 2350d2451dc4b843084cd04e524d5d735bc7cd68
+=======
+    "qs": "^6.11.0",
+>>>>>>> feature-front/login
     "react": "^18.2.0",
     "react-color": "^2.19.3",
     "react-dom": "^18.2.0",
