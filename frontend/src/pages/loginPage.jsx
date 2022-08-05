@@ -9,6 +9,7 @@ import kakaoLogin from 'assets/kakaoLogin.png';
 import naverLogin from 'assets/naverLogin.png';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Hoydia = styled.h1`
   margin: 0px;
@@ -61,6 +62,9 @@ const BtnContainer = styled.div`
 
 function loginPage() {
   const navigate = useNavigate();
+  const KAKAO_CLIENT_ID = process.env.REACT_APP_KAKAO_CLIENT_ID;
+  const REDIRECT_URI = 'http://localhost:3000/kakaoLogin';
+  const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
   return (
     <div className="login">
@@ -69,7 +73,9 @@ function loginPage() {
         <Slogan>감성 페어와 공유하는 당신의 요즈음</Slogan>
         <Logo />
         <BtnContainer>
-          <GoogleOAuthProvider clientId="742116060530-q5b2iggpf11hqohctu3olf2vf829i9o7.apps.googleusercontent.com">
+          <GoogleOAuthProvider
+            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+          >
             <GoogleLogin
               onSuccess={(credentialResponse) => {
                 navigate('/mainPage');
@@ -80,7 +86,9 @@ function loginPage() {
               }}
             />
           </GoogleOAuthProvider>
-          <KakaoBtn src={kakaoLogin} />
+          <a href={KAKAO_AUTH_URI}>
+            <KakaoBtn src={kakaoLogin} />
+          </a>
           <NaverBtn src={naverLogin} />
         </BtnContainer>
       </Container>
