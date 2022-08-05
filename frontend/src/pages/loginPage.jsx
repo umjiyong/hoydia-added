@@ -8,7 +8,7 @@ import Logo from 'components/Logo';
 import kakaoLogin from 'assets/kakaoLogin.png';
 import naverLogin from 'assets/naverLogin.png';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Hoydia = styled.h1`
@@ -73,14 +73,9 @@ function loginPage() {
         <Slogan>감성 페어와 공유하는 당신의 요즈음</Slogan>
         <Logo />
         <BtnContainer>
-<<<<<<< HEAD
-<<<<<<< HEAD
-          <GoogleOAuthProvider clientId="742116060530-q5b2iggpf11hqohctu3olf2vf829i9o7.apps.googleusercontent.com">
-=======
           <GoogleOAuthProvider
             clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
           >
->>>>>>> feature-front/login
             <GoogleLogin
               onSuccess={(credentialResponse) => {
                 navigate('/mainPage');
@@ -95,14 +90,6 @@ function loginPage() {
             <KakaoBtn src={kakaoLogin} />
           </a>
           <NaverBtn src={naverLogin} />
-=======
-          <Link to="/mainPage">
-            <KakaoBtn src={kakaoLogin} />
-          </Link>
-          <Link to="/mainPage">
-            <NaverBtn src={naverLogin} />
-          </Link>
->>>>>>> 2350d2451dc4b843084cd04e524d5d735bc7cd68
         </BtnContainer>
       </Container>
     </div>

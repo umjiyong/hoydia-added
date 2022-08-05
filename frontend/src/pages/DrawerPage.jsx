@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import React, { useState, useEffect, useRef } from 'react';
-import ReactLoading from 'react-loading';
 import diary from 'assets/diary.png';
 import diarytable from 'assets/diaryTable.png';
 import Navbar from 'components/Navbar';
@@ -147,37 +146,18 @@ function DrawerPage() {
                 draggable
               >
                 {item}
-
-                {/* <DrawerContainer>
-                <DiaryContainer>
-                  <Colcontainer size={1}> </Colcontainer>
-                  <Colcontainer size={2}>
-                    <Diary src={diary} alt="diary" />
-                  </Colcontainer>
-                  <Colcontainer size={1}> </Colcontainer>
-                  <Colcontainer size={2}>
-                    <Diary src={diary} alt="diary" />
-                  </Colcontainer>
-                  <Colcontainer size={1}> </Colcontainer>
-                  <Colcontainer size={2}>
-                    <Diary src={diary} alt="diary" />
-                  </Colcontainer>
-                  <Colcontainer size={1}> </Colcontainer>
-                </DiaryContainer>
-                <DiaryTable src={diarytable} alt="diarytable" />
-              </DrawerContainer> */}
               </Colcontainer>
             ))}
           {isLoding ? (
             <LoaderWrap>
-              <ReactLoading type="spin" color="#A593E0" />
+              {/* <ReactLoading type="spin" color="#A593E0" /> */}
             </LoaderWrap>
           ) : (
             ''
           )}
           <div ref={setTarget}> </div>
         </DiaryContainer>
-        <FloatingBtn src={floatingbutton} />
+        {/* <FloatingBtn src={floatingbutton} /> */}
       </DrawerContainer>
     </div>
   );
