@@ -69,6 +69,7 @@ function loginPage() {
         <Slogan>감성 페어와 공유하는 당신의 요즈음</Slogan>
         <Logo />
         <BtnContainer>
+<<<<<<< HEAD
           <GoogleOAuthProvider clientId="742116060530-q5b2iggpf11hqohctu3olf2vf829i9o7.apps.googleusercontent.com">
             <GoogleLogin
               onSuccess={(credentialResponse) => {
@@ -82,6 +83,14 @@ function loginPage() {
           </GoogleOAuthProvider>
           <KakaoBtn src={kakaoLogin} />
           <NaverBtn src={naverLogin} />
+=======
+          <Link to="/mainPage">
+            <KakaoBtn src={kakaoLogin} />
+          </Link>
+          <Link to="/mainPage">
+            <NaverBtn src={naverLogin} />
+          </Link>
+>>>>>>> 2350d2451dc4b843084cd04e524d5d735bc7cd68
         </BtnContainer>
       </Container>
     </div>
