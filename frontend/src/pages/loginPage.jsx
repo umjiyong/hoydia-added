@@ -70,7 +70,6 @@ function loginPage() {
           <Link to="/mainPage">
             <KakaoBtn src={kakaoLogin} />
           </Link>
-
           <Link to="/mainPage">
             <NaverBtn src={naverLogin} />
           </Link>
