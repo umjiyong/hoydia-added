@@ -4,6 +4,7 @@ import ReactLoading from 'react-loading';
 import diary from 'assets/diary.png';
 import diarytable from 'assets/diaryTable.png';
 import Navbar from 'components/Navbar';
+import floatingbutton from 'assets/floatingButton.png';
 
 const LoaderWrap = styled.div`
   width: 100%;
@@ -15,12 +16,11 @@ const LoaderWrap = styled.div`
 `;
 const DrawerContainer = styled.div``;
 
-const DiaryContainer = styled.div`
-  display: flex;
-  justify-content: center;
-`;
+const DiaryContainer = styled.div``;
 
 const Colcontainer = styled.div`
+  display: flex;
+  justify-content: center;
   flex: ${(props) => props.size};
 `;
 const Diary = styled.img`
@@ -28,12 +28,19 @@ const Diary = styled.img`
   max-height: 300px;
   // margin: 40px;
 `;
-
-const DiaryTable = styled.img`
+const FloatingBtn = styled.img`
+  position: fixed; //포인트!
+  line-height: 63px;
+  bottom: 40px; //위치
+  right: 40px; //위치
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: white;
   display: flex;
-  margin-bottom: 10px;
-  width: 100%;
-  height: 178.3px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 `;
 
 function DrawerPage() {
@@ -43,6 +50,15 @@ function DrawerPage() {
     <Diary src={diary} alt="diary2" />,
     <Diary src={diary} alt="diary3" />,
     <Diary src={diary} alt="diary4" />,
+    <Diary src={diary} alt="diary5" />,
+    <Diary src={diary} alt="diary5" />,
+    <Diary src={diary} alt="diary5" />,
+    <Diary src={diary} alt="diary5" />,
+    <Diary src={diary} alt="diary5" />,
+    <Diary src={diary} alt="diary5" />,
+    <Diary src={diary} alt="diary5" />,
+    <Diary src={diary} alt="diary5" />,
+    <Diary src={diary} alt="diary5" />,
     <Diary src={diary} alt="diary5" />,
   ]);
   const [target, setTarget] = useState(''); // target
@@ -65,7 +81,25 @@ function DrawerPage() {
     dragItem.current = null;
     dragOverItem.current = null;
     setList(copyListItems);
-    console.log(e.type);
+    console.log(e);
+    console.log(window.visualViewport.height);
+    console.log(window.visualViewport.width);
+    const visualheight1 = window.visualViewport.height - 40;
+    const visualwidth1 = window.visualViewport.width - 40;
+    const visualheight2 = window.visualViewport.height - 140;
+    const visualwidth2 = window.visualViewport.width - 140;
+    const height = e.clientY;
+    const width = e.clientX;
+    if (
+      visualheight1 >= height &&
+      height >= visualheight2 &&
+      visualwidth1 >= width &&
+      width >= visualwidth2
+    ) {
+      console.log('이동');
+    } else {
+      console.log('실패');
+    }
   };
   const onIntersect = async ([entry], observer) => {
     if (entry.isIntersecting && !isLoding) {
@@ -93,47 +127,57 @@ function DrawerPage() {
     <div className="App">
       <Navbar />
       <DrawerContainer>
-        {list &&
-          list.map((item, index) => (
-            <Colcontainer
-              size={2}
-              className="Item"
-              key={index}
-              onDragStart={(e) => dragStart(e, index)}
-              onDragEnter={(e) => dragEnter(e, index)}
-              onDragOver={(e) => e.preventDefault()}
-              onDragEnd={drop}
-              draggable
-            >
-              {item}
-              {/* <DrawerContainer>
-              <DiaryContainer>
-                <Colcontainer size={1}> </Colcontainer>
-                <Colcontainer size={2}>
-                  <Diary src={diary} alt="diary" />
-                </Colcontainer>
-                <Colcontainer size={1}> </Colcontainer>
-                <Colcontainer size={2}>
-                  <Diary src={diary} alt="diary" />
-                </Colcontainer>
-                <Colcontainer size={1}> </Colcontainer>
-                <Colcontainer size={2}>
-                  <Diary src={diary} alt="diary" />
-                </Colcontainer>
-                <Colcontainer size={1}> </Colcontainer>
-              </DiaryContainer>
-              <DiaryTable src={diarytable} alt="diarytable" />
-            </DrawerContainer> */}
-            </Colcontainer>
-          ))}
-        {isLoding ? (
-          <LoaderWrap>
-            <ReactLoading type="spin" color="#A593E0" />
-          </LoaderWrap>
-        ) : (
-          ''
-        )}
-        <div ref={setTarget}> </div>
+        <DiaryContainer
+          style={{
+            display: 'grid',
+            gridTemplateRows: '1fr ',
+            gridTemplateColumns: '1fr 1fr 1fr ',
+          }}
+        >
+          {list &&
+            list.map((item, index) => (
+              <Colcontainer
+                size={2}
+                className="Item"
+                key={index}
+                onDragStart={(e) => dragStart(e, index)}
+                onDragEnter={(e) => dragEnter(e, index)}
+                onDragOver={(e) => e.preventDefault()}
+                onDragEnd={drop}
+                draggable
+              >
+                {item}
+
+                {/* <DrawerContainer>
+                <DiaryContainer>
+                  <Colcontainer size={1}> </Colcontainer>
+                  <Colcontainer size={2}>
+                    <Diary src={diary} alt="diary" />
+                  </Colcontainer>
+                  <Colcontainer size={1}> </Colcontainer>
+                  <Colcontainer size={2}>
+                    <Diary src={diary} alt="diary" />
+                  </Colcontainer>
+                  <Colcontainer size={1}> </Colcontainer>
+                  <Colcontainer size={2}>
+                    <Diary src={diary} alt="diary" />
+                  </Colcontainer>
+                  <Colcontainer size={1}> </Colcontainer>
+                </DiaryContainer>
+                <DiaryTable src={diarytable} alt="diarytable" />
+              </DrawerContainer> */}
+              </Colcontainer>
+            ))}
+          {isLoding ? (
+            <LoaderWrap>
+              <ReactLoading type="spin" color="#A593E0" />
+            </LoaderWrap>
+          ) : (
+            ''
+          )}
+          <div ref={setTarget}> </div>
+        </DiaryContainer>
+        <FloatingBtn src={floatingbutton} />
       </DrawerContainer>
     </div>
   );
