@@ -2,9 +2,7 @@ package com.ssafy.hoydia.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.hoydia.util.SHA256;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -17,6 +15,7 @@ import java.util.List;
 
 @Entity
 @Getter @Setter
+@NoArgsConstructor
 
 public class User {
 
@@ -29,8 +28,6 @@ public class User {
 
     private String nickname;
 
-    private String birth;
-
     private String email;
 
     @Enumerated(EnumType.STRING)
@@ -40,8 +37,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
+    private String gender;
 
 
     @OneToMany(mappedBy = "user")
@@ -79,5 +75,25 @@ public class User {
 
         return user;
     }
+
+    @Builder
+    public User (String id,
+                 String name,
+                 String nickname,
+                 String email,
+                 Platform platform,
+                 Role role,
+                 String gender
+                 )
+    {
+        this.id = id;
+        this.name = name;
+        this.nickname = nickname;
+        this.email = email;
+        this.platform = platform;
+        this.role =role;
+        this.gender = gender;
+    }
+
 
 }

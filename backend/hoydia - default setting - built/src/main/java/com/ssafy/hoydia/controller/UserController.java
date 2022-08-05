@@ -1,8 +1,6 @@
 package com.ssafy.hoydia.controller;
 
 
-import com.ssafy.hoydia.config.auth.dto.SessionUser;
-import com.ssafy.hoydia.domain.Gender;
 import com.ssafy.hoydia.domain.Platform;
 import com.ssafy.hoydia.domain.Role;
 import com.ssafy.hoydia.domain.User;
@@ -20,7 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,21 +35,9 @@ public class UserController {
 
     @PostMapping("/login")
     @ApiOperation(value="소셜 로그인 후 아이디 생성", notes = "제 곧 내")
-    public Map login(String code) {
+    public Map login(User user) {
 
-        userService.getAccessToken(code);
 
-        SessionUser sessionUser = (SessionUser) httpSession.getAttribute("user");
-
-        User user = userService.searchByEmail(sessionUser.getEmail());
-
-        if (user == null) { // 없으니까 등록
-
-            user = User.createUser(sessionUser.getName(), sessionUser.getEmail(),sessionUser.getPlatform(), Role.USER);
-
-            userService.regist(user);
-
-        }
 
         User loginuser = userService.login(user.getId());
 
@@ -136,6 +121,7 @@ public class UserController {
         private Role role;
 
     }
+
 
     @Data
     static class LoginRequestDto {
