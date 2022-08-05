@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
+import AlarmAnswerModal from 'components/AlarmAnswerModal';
+// import AlarmMatchingResultModal from './AlarmMatchingResultModal';
+// import AlarmDiaryArriveModal from './AlarmDiaryArriveModal';
 
 const Container = styled.div`
   width: 30%;
@@ -26,13 +29,45 @@ const Header = styled.div`
 
 const Title = styled.p`
   margin: 0px;
+  font-weight: 700;
 `;
 
 const Date = styled.div`
-  font-weight: bold;
+  font-weight: 700;
+`;
+
+const Detail1 = styled.a`
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 0.875rem 1rem;
+  text-decoration: none;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 function AlarmList() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [opacity, setOpacity] = useState(0);
+
+  function toggleModal() {
+    setOpacity(0);
+    setIsOpen(!isOpen);
+  }
+
+  function afterOpen() {
+    setTimeout(() => {
+      setOpacity(1);
+    }, 100);
+  }
+
+  function beforeClose() {
+    return new Promise((resolve) => {
+      setOpacity(0);
+      setTimeout(resolve, 300);
+    });
+  }
   return (
     <div className="AlarmList">
       <Container>
@@ -40,7 +75,29 @@ function AlarmList() {
           <Title>알림함</Title>
           <Date>{moment().format('YYYY. M. D (ddd)')}</Date>
         </Header>
+        <Detail1 onClick={toggleModal}>Answer1</Detail1>
       </Container>
+      <AlarmAnswerModal
+        toggleModal={toggleModal}
+        afterOpen={afterOpen}
+        beforeClose={beforeClose}
+        isOpen={isOpen}
+        opacity={opacity}
+      />
+      {/* <AlarmMatchingResultModal
+        toggleModal={toggleModal}
+        afterOpen={afterOpen}
+        beforeClose={beforeClose}
+        isOpen={isOpen}
+        opacity={opacity}
+      /> */}
+      {/* <AlarmDiaryArriveModal
+        toggleModal={toggleModal}
+        afterOpen={afterOpen}
+        beforeClose={beforeClose}
+        isOpen={isOpen}
+        opacity={opacity}
+      /> */}
     </div>
   );
 }
