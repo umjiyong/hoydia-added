@@ -1,5 +1,13 @@
+@import url('https://webfontworld.github.io/seoulnamsan/SeoulNamsan.css');
+
+* {
+  font-family: 'SeoulNamsan', sans-serif;
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
+  font-family: 'SeoulNamsan';
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
