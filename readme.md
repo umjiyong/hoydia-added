@@ -1,83 +1,74 @@
+# HOYDIA  - 감성 페어와 공유하는 당신의 “요즈음”
+
+
+
 ## TEAM Member
 
-| 김현열 | 유진 | 채민진 | 엄지용 | 신용하 | 김태경 |
-| :----: | :--: | :----: | :----: | :----: | :----: |
-|  INFJ  | INTP |  INFJ  |  INFP  |  INFP  |        |
+------
+
+|  김현열  |  채민진  | 엄지용  | 신용하  |  김태경  |
+| :------: | :------: | :-----: | :-----: | :------: |
+|   INFJ   |   INFJ   |  INFP   |  INFP   |   ISTJ   |
+| Frontend | Frontend | Backend | Backend | Frontend |
 
 
 
 
 
-## Prototype
+## 프로젝트 진행 기간
 
-[figma](https://www.figma.com/file/862k6I37QBj2VbhGci50wR/Hoydia?node-id=0%3A1)
+----------
 
+2022.07.05(월) ~ 2022.08.19(금)
 
-
-## 개발 컨벤션
-
-
-
-## FE
-
-**변수** : Camel-case(lower) (ex. myDiary)
-
-**메소드** : Camel-case(lower) (ex. myDiary)
-
-**상수** : snake_case(upper) (ex. MAX_VALUE)
-
-**폴더, 파일** : kebab-case (ex. my-diary)
-
-**className, id** : kebab-case (ex. my-diary)
+SSAFY 7기 공통프로젝트
 
 
 
-## BE
+## 배경
 
-**함수, 변수** : Camel-case (lower) (ex. myDiary)
+------
 
-**DB** : Snake-case (lower) (ex. my_diary)
+관심사가 비슷한 상대와 일기를 교환하는 SNS 
 
-객체 : Pascal-case (ex. MyDiary)
+외적 요소를 제외하고 내적 요소를 공유하면서 나와 맞는 감성 친구 찾기
 
-
-
-## commit
-
-- 커밋 메시지 제목 + 본문으로 작성하기
-- 제목과 본문은 빈 행으로 구분
-- 어떻게 보다는 **무엇**과 **왜**에 초점을 두기
-- 제목 형식
-  - 영어로 작성 통일
-  - 명령문으로, 과거형 사용X
-  - 끝에는 마침표를 넣지 않음
-  - 50글자 이내로 제한
-
-```
-feat : 새로운 기능에 대한 커밋
-fix : build 관련 파일 수정에 대한 커밋
-build : 빌드 관련 파일에 대한 커밋
-chore : 그 외 자잘한 수정에 대한 커밋
-ci : CI 관련 설정 수정에 대한 커밋
-docs : 문서 수정에 대한 커밋
-style : 코드 스타일 혹은 포맷 등에 관한 커밋
-refactor : 코드 리팩토링에 대한 커밋
-test : 테스트 코드 수정에 대한 커밋
-```
-
-- 본문
-  - 최대한 자세하게 추가된 기능 모두 작성
-  - 본문의 각 행은 72글자 내로 제한
-
-ex)
-
-```
-feat: create login DB table
-
-db에 저장할 id, password 등 테이블 작성
-```
+어린시절 쓰던 교환일기 로부터 시작한 아이디어
 
 
+
+## 프로젝트 산출물
+
+-----
+
+- API
+- ERD
+- 프로토타입
+- 아키텍처
+- 컨벤션
+- 스토리보드
+
+
+
+## 프로젝트 파일 구조
+
+-----
+
+
+
+
+
+## 주요 기능
+
+-----
+
+
+
+
+
+## 주요기술
+
+-----
 
 
 
