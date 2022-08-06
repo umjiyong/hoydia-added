@@ -2,8 +2,6 @@ package com.ssafy.hoydia.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ssafy.hoydia.domain.Diary;
-import com.ssafy.hoydia.domain.Gender;
 import com.ssafy.hoydia.domain.User;
 import com.ssafy.hoydia.dto.OauthTokenDto;
 import com.ssafy.hoydia.exception.InvalidApproachException;
@@ -16,14 +14,12 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.oauth2.core.OAuth2Token;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -89,9 +85,8 @@ public class UserService {
         userRepository.delete(id);
     }
 
-
     @Transactional
-    public OauthTokenDto getAccessToken (String code) {
+    public OauthTokenDto getAccessTokenKakao (String code) {
 
         RestTemplate restTemplate = new RestTemplate(); // 통신에 좋은 객체인 RestTemplate이라고 한다..
 
@@ -102,7 +97,7 @@ public class UserService {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
         params.add("client_id", "c1a2b19a1c67960871b2d1c9d080d585");
-        params.add("redirect_uri", "http://localhost:8080/login/oauth2/code/kakao");
+        params.add("redirect_uri", "http://localhost:3000/kakaoLogin");
         params.add("code", code);
         params.add("client_secret", "Z81XEhK8E16NT1jbkqxZ3atfJvOGhBye"); // 생략 가능!
         //Http 바디가 될 부분
@@ -125,18 +120,13 @@ public class UserService {
             e.printStackTrace();
         }
 
-        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡMMMMMMMMaㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
-        System.out.println(oauthToken.getAccess_token().toString());
-        System.out.println(oauthToken.getRefresh_token().toString());
-        System.out.println(oauthToken.getRefresh_token_expires_in());
-        System.out.println(oauthToken.getToken_type().toString());
-        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ--------ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
-
         return oauthToken;
 
 
 
     }
+
+
 
 
 }

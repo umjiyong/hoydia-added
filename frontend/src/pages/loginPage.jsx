@@ -2,13 +2,14 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/self-closing-comp */
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Logo from 'components/Logo';
-import loginDiary from 'assets/loginDiary.png';
 import kakaoLogin from 'assets/kakaoLogin.png';
 import naverLogin from 'assets/naverLogin.png';
-import { Link } from 'react-router-dom';
+import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Hoydia = styled.h1`
   margin: 0px;
@@ -60,6 +61,11 @@ const BtnContainer = styled.div`
 `;
 
 function loginPage() {
+  const navigate = useNavigate();
+  const KAKAO_CLIENT_ID = process.env.REACT_APP_KAKAO_CLIENT_ID;
+  const REDIRECT_URI = 'http://localhost:3000/kakaoLogin';
+  const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+
   return (
     <div className="login">
       <Container>
@@ -67,13 +73,23 @@ function loginPage() {
         <Slogan>감성 페어와 공유하는 당신의 요즈음</Slogan>
         <Logo />
         <BtnContainer>
-          <Link to="/mainPage">
+          <GoogleOAuthProvider
+            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+          >
+            <GoogleLogin
+              onSuccess={(credentialResponse) => {
+                navigate('/mainPage');
+                console.log(credentialResponse.credential);
+              }}
+              onError={() => {
+                console.log('Login Failed');
+              }}
+            />
+          </GoogleOAuthProvider>
+          <a href={KAKAO_AUTH_URI}>
             <KakaoBtn src={kakaoLogin} />
-          </Link>
-
-          <Link to="/mainPage">
-            <NaverBtn src={naverLogin} />
-          </Link>
+          </a>
+          <NaverBtn src={naverLogin} />
         </BtnContainer>
       </Container>
     </div>

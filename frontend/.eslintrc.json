@@ -14,11 +14,20 @@
   },
   "plugins": ["react"],
   "rules": {
-    "linebreak-style": 0,
     "import/no-unresolved": "off",
     "react/react-in-jsx-scope": "off",
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "no-unused-vars": [
+      "off",
+      "error",
+      { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }
+    ],
     "linebreak-style": 0,
-    "react/jsx-one-expression-per-line": "off"
+    "react/jsx-no-bind": 0,
+    "operator-linebreak": "off",
+    "react/no-array-index-key": "off",
+    "react/prop-types": "off",
+    "react/jsx-props-no-spreading": "off"
   }
 }
