@@ -1,5 +1,6 @@
 package com.ssafy.hoydia.dto;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,9 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AuthResponse {
+public class LoginResponse {
 
-    private String id;
-    private Boolean isNewMember;
+    public String jwt;
 
 }
