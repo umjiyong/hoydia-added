@@ -1,9 +1,10 @@
 /* eslint-disable react/jsx-no-bind */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import styled from 'styled-components';
 import Modal, { ModalProvider, BaseModalBackground } from 'styled-react-modal';
 import exit from 'assets/exit.png';
+import Toast from 'components/Toast';
 
 const StyledModal = Modal.styled`
   width: 800px;
@@ -21,15 +22,18 @@ const StyledModal = Modal.styled`
   `;
 
 const ExitDiv = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  width: 800px;
+  // display: flex;
+  // justify-content: flex-end;
+  width: 1.875rem;
+  height: 1.875rem;
+  // margin-left: 740px;
+  // margin-top: 24px;
+  margin: 24px 24px 0px 740px;
 `;
 
 const ExitBtn = styled.img`
   width: 1.875rem;
   height: 1.875rem;
-  margin: 24px 24px 0 0;
   &:hover {
     cursor: pointer;
   }
@@ -79,6 +83,8 @@ const Yes = styled.button`
   color: #ffffff;
   font-size: 30px;
   font-weight: 700;
+  // text-shadow: -1px 0px #ff8960, 0px 1px #ff8960, 1px 0px #ff8960,
+  //   0px -1px #ff8960;
   -webkit-text-stroke: 1px #ff8960;
   &:hover {
     cursor: pointer;
@@ -98,6 +104,8 @@ const No = styled.button`
   color: #ffffff;
   font-size: 30px;
   font-weight: 400;
+  // text-shadow: -1px 0px #d43e3c, 0px 1px #d43e3c, 1px 0px #d43e3c,
+  //   0px -1px #d43e3c;
   -webkit-text-stroke: 1px #d43e3c;
   &:hover {
     cursor: pointer;
@@ -112,6 +120,15 @@ function FancyModalButton({
   isOpen,
   opacity,
 }) {
+  const [ToastStatus, setToastStatus] = useState(false);
+  const handleToast = () => {
+    setToastStatus(true);
+  };
+  useEffect(() => {
+    if (ToastStatus) {
+      setTimeout(() => setToastStatus(false), 2000);
+    }
+  }, [ToastStatus]);
   return (
     <StyledModal
       isOpen={isOpen}
@@ -130,9 +147,12 @@ function FancyModalButton({
       <Answer>대답 어쩌구저쩌구</Answer>
       <Pair>페어가 되길 원하시나요?</Pair>
       <PairBtn>
-        <Yes>네</Yes>
-        <No>아니오</No>
+        <Yes onClick={handleToast}>네</Yes>
+        <No onClick={toggleModal}>아니오</No>
       </PairBtn>
+      {ToastStatus && (
+        <Toast msg="감성 페어와 매칭이 완료될 때까지 기다려주세요! ⏳" />
+      )}
     </StyledModal>
   );
 }
