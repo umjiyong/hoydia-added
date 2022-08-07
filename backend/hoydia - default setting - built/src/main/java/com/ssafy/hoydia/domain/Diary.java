@@ -3,6 +3,7 @@ package com.ssafy.hoydia.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.hoydia.util.SHA256;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,7 +36,11 @@ public class Diary {
 
     private boolean own;
 
+    private String title;
+
     private String diaryColor;
+
+    private String buttonColor;
 
     private Integer drawn;
 
@@ -43,34 +48,34 @@ public class Diary {
     @JsonIgnore
     private List<Page> pages = new ArrayList<>();
 
-
-
-    public static Diary createDiary (User user,
-                                                   String ownerId,
-                                                   String pairId,
-                                                   boolean own,
-                                                   String diaryColor,
-                                                   Integer drawn){
-
-        Diary diary = new Diary();
-
+    @Builder
+    public Diary (
+            User user,
+            String ownerId,
+            String pairId,
+            boolean own,
+            String title,
+            String diaryColor,
+            String buttonColor,
+            Integer drawn
+    )
+    {
         SHA256 sha256 = new SHA256();
 
         try {
-            diary.id = sha256.encrypt(ownerId+pairId+LocalDateTime.now());
+            this.id = sha256.encrypt(ownerId+pairId+LocalDateTime.now());
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-
-        diary.user = user;
-        diary.regTime = LocalDateTime.now();
-        diary.ownerId = ownerId;
-        diary.pairId = pairId;
-        diary.own = own;
-        diary.diaryColor = diaryColor;
-        diary.drawn = drawn;
-
-        return diary;
+        this.user = user;
+        this.regTime = LocalDateTime.now();
+        this.ownerId = ownerId;
+        this.pairId = pairId;
+        this.own = own;
+        this.title = title;
+        this.diaryColor = diaryColor;
+        this.buttonColor = buttonColor;
+        this.drawn = drawn;
     }
 
 }

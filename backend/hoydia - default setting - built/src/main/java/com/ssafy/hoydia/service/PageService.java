@@ -37,15 +37,15 @@ public class PageService {
         return page;
     }
 
-    public List<Page> searchByDiaryId(String diary_id) {
+    public List<Page> searchByDiaryId(String diaryId) {
 
-        List<Page> pageList = pageRepository.findByDiary(diary_id);
+        List<Page> pageList = pageRepository.findByDiary(diaryId);
 
         return pageList;
     }
 
     @Transactional
-    public String update (String id, Title title, Content content, String bgm) {
+    public String update (String id, Title title, Content content, String bgmPath, String location) {
 
         Page page = pageRepository.findById(id);
 
@@ -54,9 +54,11 @@ public class PageService {
         }
         else{
 
+
             page.setTitle(title);
             page.setContent(content);
-            page.setBgmPath(bgm);
+            page.setBgmPath(bgmPath);
+            page.setLocation(location);
 
             return "Loc-Service : "+page.getId();
         }

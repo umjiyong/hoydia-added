@@ -96,5 +96,6 @@ public class JwtService {
         return (String) this.getData().get("userId");
     }
 
+    public int getExpireSeconds() { return (int) this.getData().get("expireSeconds");}
 
 }

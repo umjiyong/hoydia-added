@@ -14,7 +14,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
@@ -29,9 +28,9 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    /* 로그인 기능은 OAUTH 적용 후 수정 */
     public User login(String id) {
         User user = userRepository.findById(id);
+
         if (user == null) {
             throw new LoginException("존재하지 않는 유저입니다.");
         }
@@ -99,7 +98,7 @@ public class UserService {
         params.add("client_id", "c1a2b19a1c67960871b2d1c9d080d585");
         params.add("redirect_uri", "http://localhost:3000/kakaoLogin");
         params.add("code", code);
-        params.add("client_secret", "Z81XEhK8E16NT1jbkqxZ3atfJvOGhBye"); // 생략 가능!
+        params.add("client_secret", "Z81XEhK8E16NT1jbkqxZ3atfJvOGhBye");
         //Http 바디가 될 부분
 
         HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = new HttpEntity<>(params, headers);
