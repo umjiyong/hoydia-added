@@ -35,20 +35,21 @@ public class DiaryController {
     private final UserService userService;
 
     @PostMapping
-    @ApiOperation(value="일기 작성", notes = "사용자 두 명의 고유 id와 color를 body에 request 후 작성.")
+    @ApiOperation(value="일기 작성", notes = "사용자 두 명에 해당하는 고유 id와 color들을 body에 request 후 작성.")
     public CreateDiaryResponseDto createDiary(@RequestBody @Valid CreateDiaryRequestDto request) {
 
         if (!jwtService.isValidUser())
             throw new InvalidApproachException("사용자 인증 실패");
 
-        Diary diary = Diary.createDiary(
-                userService.searchById(jwtService.getUserId()),
-                request.getOwnerId(),
-                request.getPairId(),
-                true,
-                request.getDiaryColor(),
-                0
-                );
+        Diary diary = Diary.builder()
+                .user(userService.searchById(jwtService.getUserId()))
+                .ownerId(request.getOwnerId())
+                .pairId(request.getPairId())
+                .own(true)
+                .diaryColor(request.getDiaryColor())
+                .buttonColor(request.getButtonColor())
+                .drawn(0)
+                .build();
 
         diaryService.regist(diary);
 
@@ -56,12 +57,14 @@ public class DiaryController {
     }
 
     @GetMapping("/list")
+    @ApiOperation(value="모든 다이어리 확인", notes = "모든 다이어리 리스트를 가져오는 관리자 전용(예정) 기능")
     public ResultDto readAllDiary(){          // 모든 다이어리를 읽어오는 관리자 전용 기능
         List<ReadDiaryResponseDto> diaryList = diaryService.searchAllDiaryOrderByRegTime().stream().map(diary -> new ReadDiaryResponseDto(diary)).collect(Collectors.toList());
         return new ResultDto(diaryList);
     }
 
     @GetMapping("/{id}")
+    @ApiOperation(value="다이어리 확인", notes = "id에 해당하는 다이어리를 가져옴 urI에 pathVariable로 request")
     public ResultDto readDiaryById(@PathVariable("id") String id) {
 
         if (!jwtService.isValidUser())
@@ -82,6 +85,7 @@ public class DiaryController {
     }
 
     @GetMapping("/user/{userId}")
+    @ApiOperation(value="해당 유저의 모든 다이어리 확인", notes = "userId에 해당하는 유저의 모든 다이어리 리스트를 가져옴 urI에 pathVariable로 request")
     public ResultDto readDiaryByUserId(@PathVariable("userId") String userId) {
 
         if (!jwtService.isValidUser())
@@ -104,6 +108,7 @@ public class DiaryController {
     }
 
     @PutMapping("/{diaryId}")
+    @ApiOperation(value="다이어리를 업데이트", notes = "diaryId에 해당하는 diary의 title,color,drawn 등을 수정 가능 (variable은 body로 request) id는 pathVariable로 request")
     public MessageResponseDto updateDiary(@PathVariable("diaryId") String id, @RequestBody @Valid UpdateDiaryRequestDto request) {
 
         if (!jwtService.isValidUser())
@@ -117,13 +122,14 @@ public class DiaryController {
 
         if(!isMine) throw new UnauthorizedException("본인의 일기가 아닙니다.");
 
-        diaryService.update(id,request.getColor());
+        diaryService.update(id,request.getTitle(),request.getDiaryColor(),request.getButtonColor(), request.getDrawn());
 
         return new MessageResponseDto("수정 완료");
     }
 
 
     @DeleteMapping("{diaryId}")
+    @ApiOperation(value="다이어리를 삭제", notes = "diaryId에 해당하는 diary 제거 / id는 pathVariable로 request")
     public MessageResponseDto deleteDiary(@PathVariable("diaryId") String id) {
 
         if (!jwtService.isValidUser())
@@ -154,6 +160,10 @@ public class DiaryController {
 
         @NotBlank
         private String diaryColor;
+
+        @NotBlank
+        private String buttonColor;
+
     }
 
     @Data
@@ -181,7 +191,11 @@ public class DiaryController {
 
         private boolean own;
 
+        private String title;
+
         private String diaryColor;
+
+        private String buttonColor;
 
         private Integer drawn;
 
@@ -194,7 +208,9 @@ public class DiaryController {
             this.ownerId = diary.getOwnerId();
             this.pairId = diary.getPairId();
             this.own = diary.isOwn();
+            this.title = diary.getTitle();
             this.diaryColor = diary.getDiaryColor();
+            this.buttonColor = diary.getButtonColor();
             this.drawn = diary.getDrawn();
 
         }
@@ -204,7 +220,17 @@ public class DiaryController {
     static class UpdateDiaryRequestDto {
 
         @NotBlank
-        private String color;
+        private String title;
+
+        @NotBlank
+        private String diaryColor;
+
+        @NotBlank
+        private String buttonColor;
+
+        @NotBlank
+        private int drawn;
+
 
     }
 

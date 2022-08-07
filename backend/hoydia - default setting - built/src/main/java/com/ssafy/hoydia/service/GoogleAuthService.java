@@ -35,7 +35,7 @@ public class GoogleAuthService { // public class GoogleAuthService
         }
 
         return AuthResponse.builder() // /auth/kakao와 /auth/google의 응답의 body로 AccessToken(AppToken)을 보내주기위해 builder 사용
-                .appToken(appToken.getToken())
+                .id(id)
                 .isNewMember(isNewUser)
                 .build();
     }

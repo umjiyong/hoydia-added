@@ -53,7 +53,7 @@ public class DiaryService {
 
 
     @Transactional
-    public void update(String id, String color)  {
+    public void update(String id, String title, String diaryColor, String buttonColor, int drawn)  {
 
         Diary diary = diaryRepository.findById(id);
 
@@ -62,21 +62,9 @@ public class DiaryService {
         }
         else {
 
-            diary.setDiaryColor(color);
-
-        }
-    }
-
-    @Transactional
-    public void updateDrawnState(String id, Integer drawn)  {
-
-        Diary diary = diaryRepository.findById(id);
-
-        if( diary == null ){
-            throw new InvalidApproachException("존재하지 않는 일기입니다.");
-        }
-        else {
-
+            diary.setTitle(title);
+            diary.setDiaryColor(diaryColor);
+            diary.setButtonColor(buttonColor);
             diary.setDrawn(drawn);
 
         }
