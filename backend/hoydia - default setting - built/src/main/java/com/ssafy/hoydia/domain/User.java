@@ -31,11 +31,9 @@ public class User {
     private String email;
 
     @Enumerated(EnumType.STRING)
-    @NotBlank
     private Platform platform;
 
     @Enumerated(EnumType.STRING)
-    @NotBlank
     private Role role;
 
     private String gender;
