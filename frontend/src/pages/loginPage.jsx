@@ -78,8 +78,24 @@ function loginPage() {
           >
             <GoogleLogin
               onSuccess={(credentialResponse) => {
-                navigate('/mainPage');
-                console.log(credentialResponse.credential);
+                const authRequest = {
+                  accessToken: credentialResponse.credential,
+                };
+                const async = async () => {
+                  try {
+                    const res = await axios.post(
+                      'http://localhost:8080/auth/google',
+                      authRequest,
+                    );
+                    console.log(res.data.appToken);
+                    // window.localStorage.setItem('token', token);
+                    navigate('/mainPage');
+                  } catch (e) {
+                    console.error(e);
+                    navigate('/');
+                  }
+                };
+                async();
               }}
               onError={() => {
                 console.log('Login Failed');
