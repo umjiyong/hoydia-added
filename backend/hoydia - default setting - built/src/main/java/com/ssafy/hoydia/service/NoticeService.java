@@ -1,11 +1,14 @@
 package com.ssafy.hoydia.service;
 
+import com.ssafy.hoydia.domain.Note;
 import com.ssafy.hoydia.domain.Notice;
+import com.ssafy.hoydia.exception.InvalidApproachException;
 import com.ssafy.hoydia.repository.NoticeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -35,6 +38,25 @@ public class NoticeService {
         List<Notice> noticeList = noticeRepository.findByUserId(userId);
 
         return noticeList;
+    }
+
+    @Transactional
+    public String update (Long id, String title, String content) {
+
+        Notice notice = noticeRepository.findById(id);
+
+        if(notice == null) {
+            throw new InvalidApproachException("잘못된 접근입니다.");
+        }
+        else{
+
+            notice.setTitle(title);
+
+            notice.setContent(content);
+
+            return "Loc-noticeService : "+notice.getId();
+        }
+
     }
 
     @Transactional
