@@ -64,7 +64,8 @@ public class UserController {
 
         if(!isMine) throw new UnauthorizedException("로그인 아이디와 요청 아이디가 일치하지 않습니다.");
 
-        userService.update(userId, request.getNickname());
+        userService.update(userId,
+                request.getNickname());
 
         return "Loc-UserController : "+userId;
     }
@@ -124,7 +125,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    @ApiOperation(value="로그인 후 아이디 생성 기능", notes = "FE에서 DB Test 편의성을 위해 임시로 존재하는 기능 / DB 존재하는 userId만 넣으면 로그인 성공 및 Authorized된 access-token 발급")
+    @ApiOperation(value="테스트용 로그인 기능 액세스 토큰 발급", notes = "FE에서 DB Test 편의성을 위해 임시로 존재하는 기능 / DB 존재하는 userId만 넣으면 로그인 성공 및 Authorized된 access-token 발급")
     public Map login(String userId) {
 
 

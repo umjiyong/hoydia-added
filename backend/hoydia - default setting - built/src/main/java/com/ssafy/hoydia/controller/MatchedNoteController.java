@@ -1,4 +1,4 @@
 package com.ssafy.hoydia.controller;
 
-public class MatchingNoteController {
+public class MatchedNoteController {
 }
