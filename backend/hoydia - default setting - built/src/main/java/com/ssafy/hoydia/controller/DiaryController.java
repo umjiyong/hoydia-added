@@ -95,11 +95,11 @@ public class DiaryController {
 
         boolean isMine = currentUid.equals(userId);
 
-        List<ReadDiaryResponseDto> diaryList = new ArrayList<>();
-
         if (!isMine) {
             throw new UnauthorizedException("본인의 일기가 아닙니다.");
         }
+
+        List<ReadDiaryResponseDto> diaryList = new ArrayList<>();
 
         diaryList = diaryService.searchByUserId(userId).stream().map(diary -> new ReadDiaryResponseDto(diary)).collect(Collectors.toList());
 

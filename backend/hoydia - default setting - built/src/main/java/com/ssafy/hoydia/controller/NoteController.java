@@ -89,11 +89,11 @@ public class NoteController {
 
         boolean isMine = currentUid.equals(userId);
 
-        List<ReadNoteResponseDto> noteList = new ArrayList<>();
-
         if (!isMine) {
             throw new UnauthorizedException("본인의 노트가 아닙니다.");
         }
+
+        List<ReadNoteResponseDto> noteList = new ArrayList<>();
 
         noteList = noteService.searchByUserId(userId).stream().map(note -> new ReadNoteResponseDto(note)).collect(Collectors.toList());
 

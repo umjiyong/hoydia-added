@@ -30,7 +30,7 @@ public class NoticeRepository {
     }
 
 
-    public List<Notice> findByUserId(String userId) { // 해당 다이어리의 모든 페이지를 가져옴
+    public List<Notice> findByUserId(String userId) { // 해당 유저의 모든 알람을 가져옴
 
         List<Notice> notices = em.createQuery("SELECT n FROM Notice n WHERE n.user.id = :user_id",Notice.class)
                 .setParameter("user_id",userId)

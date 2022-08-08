@@ -129,7 +129,6 @@ public class UserController {
     public Map login(String userId) {
 
 
-
         User loginuser = userService.login(userId);
 
         if (loginuser == null) {
