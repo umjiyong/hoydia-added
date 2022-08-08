@@ -72,7 +72,7 @@ public class PageController {
 
     @GetMapping("/{id}")
     @ApiOperation(value="페이지 확인", notes = "id에 해당하는 페이지를 가져옴 urI에 pathVariable로 request")
-    public ResultDto readDiaryById(@PathVariable("id") String id) {
+    public ResultDto readPageById(@PathVariable("id") String id) {
 
         if (!jwtService.isValidUser())
             throw new InvalidApproachException("사용자 인증 실패");
@@ -106,11 +106,11 @@ public class PageController {
 
         boolean isMine = currentUid.equals(diary.getOwnerId())||currentUid.equals(diary.getPairId()); // 현재 로그인 된 id와 사용자 2의 id check
 
-        List<ReadPageResponseDto> pageList = new ArrayList<>();
-
         if (!isMine) {
             throw new UnauthorizedException("본인의 일기가 아닙니다.");
         }
+
+        List<ReadPageResponseDto> pageList = new ArrayList<>();
 
         pageList = pageService.searchByDiaryId(diaryId).stream().map(page -> new ReadPageResponseDto(page)).collect(Collectors.toList());
 
