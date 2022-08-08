@@ -1,10 +1,12 @@
 package com.ssafy.hoydia.controller;
 
 
+import com.ssafy.hoydia.domain.Diary;
 import com.ssafy.hoydia.domain.Platform;
 import com.ssafy.hoydia.domain.Role;
 import com.ssafy.hoydia.domain.User;
 import com.ssafy.hoydia.dto.MessageResponseDto;
+import com.ssafy.hoydia.dto.ResultDto;
 import com.ssafy.hoydia.exception.InvalidApproachException;
 import com.ssafy.hoydia.exception.LoginException;
 import com.ssafy.hoydia.exception.UnauthorizedException;
@@ -12,15 +14,21 @@ import com.ssafy.hoydia.service.JwtService;
 import com.ssafy.hoydia.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -49,6 +57,25 @@ public class UserController {
         userService.regist(user);
 
         return new MessageResponseDto(user.getId());
+    }
+
+    @GetMapping("/list")
+    @ApiOperation(value="모든 유저 확인", notes = "모든 유저의 리스트를 가져오는 관리자 전용(예정) 기능")
+    public ResultDto readAllUser(){          // 모든 유저를 읽어오는 관리자 전용 기능
+        List<ReadUserResponseDto> userList = userService.searchAllUserOrderById().stream().map(user -> new ReadUserResponseDto(user)).collect(Collectors.toList());
+        return new ResultDto(userList);
+    }
+    @GetMapping
+    @ApiOperation(value="유저 확인", notes = "현재 접속해 있는 유저의 정보 확인")
+    public ResultDto readUser() {
+
+        if (!jwtService.isValidUser())
+            throw new InvalidApproachException("사용자 인증 실패");
+
+        String currentUid = jwtService.getUserId();
+
+        return new ResultDto(new ReadUserResponseDto(userService.searchById(currentUid)));
+
     }
 
     @PutMapping("/{userId}")
@@ -84,8 +111,6 @@ public class UserController {
 
         if(!isMine) throw new UnauthorizedException();
 
-        User user = userService.searchById(userId);
-
         userService.delete(userId);
         return new MessageResponseDto("회원 탈퇴가 완료되었습니다.");
 
@@ -96,7 +121,6 @@ public class UserController {
         @NotBlank
         private String id;
 
-        @NotBlank
         private String nickname;
 
         @NotBlank
@@ -122,6 +146,34 @@ public class UserController {
 
         private String nickname;
 
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class ReadUserResponseDto {
+
+        private String id;
+
+        private String nickname;
+
+        private String email;
+
+        private Platform platform;
+
+        private Role role;
+
+        private String gender;
+        public ReadUserResponseDto(User user) {
+
+            this.id = user.getId();
+            this.nickname = user.getNickname();
+            this.email = user.getEmail();
+            this.platform = user.getPlatform();
+            this.role = user.getRole();
+            this.gender = user.getGender();
+
+
+        }
     }
 
     @PostMapping("/login")
