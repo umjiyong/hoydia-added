@@ -137,7 +137,11 @@ public class PageController {
             throw new UnauthorizedException("본인의 일기가 아닙니다.");
         }
 
-        pageService.update(id,request.getTitle(),request.getContent(),request.getBgmPath(), request.getLocation());
+        pageService.update(id,
+                request.getTitle(),
+                request.getContent(),
+                request.getBgmPath(),
+                request.getLocation());
 
         return new MessageResponseDto("수정 완료");
     }

@@ -1,9 +1,7 @@
 package com.ssafy.hoydia.domain;
 
 import com.ssafy.hoydia.util.SHA256;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.security.NoSuchAlgorithmException;
@@ -11,6 +9,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
+@NoArgsConstructor
+
 public class Note {
 
     @Column (name = "note_id")
@@ -29,27 +29,26 @@ public class Note {
 
     private LocalDateTime regTime;
 
-    public static Note createNote (User user, String question, String answer) {
 
-        Note note = new Note();
+    @Builder
+    public Note (
+            User user,
+            String question,
+            String answer
+    )
+    {
 
         SHA256 sha256 = new SHA256();
 
         try {
-            note.id = sha256.encrypt(user.getId()+LocalDateTime.now());
+            this.id = sha256.encrypt(user.getId()+ LocalDateTime.now());
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-
-        note.user = user;
-
-        note.regTime = LocalDateTime.now();
-
-        note.question = question;
-
-        note.answer = answer;
-
-        return note;
+        this.user = user;
+        this.regTime = LocalDateTime.now();
+        this.question = question;
+        this.answer = answer;
 
     }
 

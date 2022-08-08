@@ -122,7 +122,11 @@ public class DiaryController {
 
         if(!isMine) throw new UnauthorizedException("본인의 일기가 아닙니다.");
 
-        diaryService.update(id,request.getTitle(),request.getDiaryColor(),request.getButtonColor(), request.getDrawn());
+        diaryService.update(id,
+                request.getTitle(),
+                request.getDiaryColor(),
+                request.getButtonColor(),
+                request.getDrawn());
 
         return new MessageResponseDto("수정 완료");
     }
