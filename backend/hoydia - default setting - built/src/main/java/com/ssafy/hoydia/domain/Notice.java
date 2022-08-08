@@ -13,7 +13,7 @@ public class Notice {
     @Column (name = "notice_id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; // 다른 Entity와는 다르게 id type을 Long으로 했으므로 주의!
 
     @JoinColumn(name = "user_id")
     @ManyToOne (fetch= FetchType.LAZY)

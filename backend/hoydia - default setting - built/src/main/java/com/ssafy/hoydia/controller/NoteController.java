@@ -124,7 +124,7 @@ public class NoteController {
     }
 
     @DeleteMapping("{noteId}")
-    @ApiOperation(value="노트를 삭제", notes = "noteId에 해당하는 diary 제거 / id는 pathVariable로 request")
+    @ApiOperation(value="노트를 삭제", notes = "noteId에 해당하는 note 제거 / id는 pathVariable로 request")
     public MessageResponseDto deleteNote(@PathVariable("noteId") String id) {
 
         if (!jwtService.isValidUser())
@@ -179,10 +179,6 @@ public class NoteController {
         private String question;
 
         private String answer;
-
-
-
-
         public ReadNoteResponseDto(Note note) {
 
             this.id = note.getId();
