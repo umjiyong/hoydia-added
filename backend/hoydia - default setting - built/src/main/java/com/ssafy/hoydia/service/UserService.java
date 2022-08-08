@@ -2,6 +2,7 @@ package com.ssafy.hoydia.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssafy.hoydia.domain.Diary;
 import com.ssafy.hoydia.domain.User;
 import com.ssafy.hoydia.dto.OauthTokenDto;
 import com.ssafy.hoydia.exception.InvalidApproachException;
@@ -19,6 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -48,6 +51,11 @@ public class UserService {
 
        return "Loc-Service : "+user.getId();
     }
+
+    public List<User> searchAllUserOrderById(){        // 관리자용 서비스 - 모든 유저 불러오기 (ID 순)
+        return userRepository.findAllUserOrderById();
+    }
+
 
     public User searchById(String id) {
 
