@@ -13,8 +13,8 @@ const Kakao = () => {
         const res = await axios.post(
           `http://localhost:8080/auth/kakao?code= + ${code}`,
         );
-        console.log(res.data['access-token']);
-        window.localStorage.setItem('token', res.data['access-token']);
+        window.localStorage.setItem('access-token', res.data['access-token']);
+        window.localStorage.setItem('userId', res.data.userId);
         navigate('/mainPage');
       } catch (e) {
         console.error(e);

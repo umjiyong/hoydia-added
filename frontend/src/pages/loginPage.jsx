@@ -2,15 +2,14 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/self-closing-comp */
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Logo from 'components/Logo';
 import kakaoLogin from 'assets/kakaoLogin.png';
 import naverLogin from 'assets/naverLogin.png';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import UserActionsContext from 'App';
 
 const Hoydia = styled.h1`
   margin: 0px;
@@ -28,11 +27,6 @@ const Slogan = styled.p`
   font-weight: 400;
   font-size: 30px;
   color: #000000;
-`;
-
-const Diary = styled.img`
-  max-width: 100%;
-  height: auto;
 `;
 
 const KakaoBtn = styled.img`
@@ -66,11 +60,6 @@ function loginPage() {
   const KAKAO_CLIENT_ID = process.env.REACT_APP_KAKAO_CLIENT_ID;
   const REDIRECT_URI = 'http://localhost:3000/kakaoLogin';
   const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-  // function useUserActions() {
-  //   const value = useContext(UserActionsContext);
-  //   return value;
-  // }
-  // const actions = useUserActions();
   return (
     <div className="login">
       <Container>
@@ -86,19 +75,17 @@ function loginPage() {
                 const authRequest = {
                   accessToken: credentialResponse.credential,
                 };
-                console.log(authRequest);
                 const async = async () => {
                   try {
                     const res = await axios.post(
                       'http://localhost:8080/auth/google',
                       authRequest,
                     );
-                    console.log(res.data['access-token']);
-                    // actions.login();
                     window.localStorage.setItem(
-                      'token',
+                      'access-token',
                       res.data['access-token'],
                     );
+                    window.localStorage.setItem('userId', res.data.userId);
                     navigate('/mainPage');
                   } catch (e) {
                     console.error(e);
