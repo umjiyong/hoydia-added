@@ -66,11 +66,11 @@ function loginPage() {
   const KAKAO_CLIENT_ID = process.env.REACT_APP_KAKAO_CLIENT_ID;
   const REDIRECT_URI = 'http://localhost:3000/kakaoLogin';
   const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-  function useUserActions() {
-    const value = useContext(UserActionsContext);
-    return value;
-  }
-  const actions = useUserActions();
+  // function useUserActions() {
+  //   const value = useContext(UserActionsContext);
+  //   return value;
+  // }
+  // const actions = useUserActions();
   return (
     <div className="login">
       <Container>
@@ -93,9 +93,12 @@ function loginPage() {
                       'http://localhost:8080/auth/google',
                       authRequest,
                     );
-                    console.log(res);
-                    actions.login();
-                    // window.localStorage.setItem('token', token);
+                    console.log(res.data['access-token']);
+                    // actions.login();
+                    window.localStorage.setItem(
+                      'token',
+                      res.data['access-token'],
+                    );
                     navigate('/mainPage');
                   } catch (e) {
                     console.error(e);
