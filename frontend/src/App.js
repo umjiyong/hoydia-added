@@ -7,6 +7,7 @@ import MainPage from 'pages/mainPage';
 import DrawerPage from 'pages/DrawerPage'; // eslint-disable-line no-unused-vars
 import DiaryEdit from 'pages/diaryEdit';
 import KakaoLogin from 'pages/kakaoPage';
+import CreateDiary from 'pages/createDiary';
 import DiaryDetailPage from 'pages/DiaryDetailPage';
 import axios from 'axios';
 
@@ -36,6 +37,7 @@ function App() {
         <Route path="/drawerPage" element={<DrawerPage />} />
         <Route path="/diaryEdit" element={<DiaryEdit />} />
         <Route path="/kakaologin" element={<KakaoLogin />} />
+        <Route path="/createDiary" element={<CreateDiary />} />
         <Route path="/diaryDetailPage" element={<DiaryDetailPage />} />
       </Routes>
     </div>

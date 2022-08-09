@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const FirstP = styled.p`
   font-family: 'Nanum Pen Script', sans-serif;
-  font-size: 20px;
+  font-size: 17px;
   &:hover {
     cursor: pointer;
   }
@@ -12,7 +12,7 @@ const FirstP = styled.p`
 
 const SecondP = styled.p`
   font-family: 'Black Han Sans', sans-serif;
-  font-size: 20px;
+  font-size: 17px;
   &:hover {
     cursor: pointer;
   }
@@ -20,21 +20,21 @@ const SecondP = styled.p`
 
 const ThirdP = styled.p`
   font-family: 'Jua', sans-serif;
-  font-size: 20px;
+  font-size: 17px;
   &:hover {
     cursor: pointer;
   }
 `;
 const FourthP = styled.p`
   font-family: 'Cute Font', sans-serif;
-  font-size: 20px;
+  font-size: 17px;
   &:hover {
     cursor: pointer;
   }
 `;
 const FifthP = styled.p`
   font-family: sans-serif;
-  font-size: 20px;
+  font-size: 17px;
   &:hover {
     cursor: pointer;
   }
