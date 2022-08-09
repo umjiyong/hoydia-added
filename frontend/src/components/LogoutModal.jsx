@@ -88,6 +88,9 @@ function FancyModalButton() {
     });
   }
 
+  function deleteLocal() {
+    window.localStorage.clear();
+  }
   return (
     <div>
       <Atag onClick={toggleModal}>로그아웃</Atag>
@@ -104,7 +107,7 @@ function FancyModalButton() {
 
         <BtnDiv>
           <Link to="/">
-            <GoButton type="button" onClick={toggleModal}>
+            <GoButton type="button" onClick={(toggleModal, deleteLocal)}>
               예 로그아웃 합니다
             </GoButton>
           </Link>
