@@ -1,6 +1,7 @@
 package com.ssafy.hoydia.repository;
 
 
+import com.ssafy.hoydia.domain.Diary;
 import com.ssafy.hoydia.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -26,6 +27,10 @@ public class UserRepository {
 
         return em.find(User.class,id);
 
+    }
+
+    public List<User> findAllUserOrderById(){
+        return em.createQuery("SELECT u from User u ORDER BY u.id DESC", User.class).getResultList();
     }
 
     public User findByEmail(String email) {

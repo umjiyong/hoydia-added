@@ -29,15 +29,14 @@ const Title = styled.span`
 `;
 
 const ExitDiv = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  width: 600px;
+  width: 1.875rem;
+  height: 1.875rem;
+  margin: 24px 24px 0px 545px;
 `;
 
 const ExitBtn = styled.img`
   width: 1.875rem;
   height: 1.875rem;
-  margin: 24px 24px 0 0;
   &:hover {
     cursor: pointer;
   }
@@ -118,11 +117,11 @@ function FancyModalButton({
         <ExitBtn src={exit} />
       </ExitDiv>
       <Title>매칭결과</Title>
-      <Message>매칭이 완료되었습니다.</Message>
+      <Message>감성 페어와 매칭이 완료되었습니다.</Message>
       <Pair>교환 일기를 시작하시겠습니까?</Pair>
       <PairBtn>
         <Yes>네</Yes>
-        <No>아니오</No>
+        <No onClick={toggleModal}>아니오</No>
       </PairBtn>
     </StyledModal>
   );

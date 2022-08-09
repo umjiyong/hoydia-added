@@ -35,16 +35,16 @@ public class StickerService {
         return sticker;
     }
 
-    public List<Sticker> searchByPageId(String page_id) {
+    public List<Sticker> searchByPageId(String pageId) {
 
-        List<Sticker> stickerList = stickerRepository.findByPage(page_id);
+        List<Sticker> stickerList = stickerRepository.findByPage(pageId);
 
         return stickerList;
     }
 
 
     @Transactional
-    public String update (String id, String posX, String posY, String type) {
+    public String update (String id, String type, String posX, String posY) {
 
         Sticker sticker = stickerRepository.findById(id);
 
@@ -54,9 +54,10 @@ public class StickerService {
         else{
 
             sticker.setRegTime(LocalDateTime.now());        // update시에 항상 갱신.
+            sticker.setType(type);
             sticker.setPosX(posX);
             sticker.setPosY(posY);
-            sticker.setType(type);
+
 
             return "Loc-Service : "+sticker.getId();
         }

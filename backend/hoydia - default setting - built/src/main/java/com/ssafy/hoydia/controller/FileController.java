@@ -38,7 +38,7 @@ public class FileController {
 
             String customFileName = sha256.encrypt(originalFileName+ LocalDateTime.now())+"."+extension[extension.length-1];
 
-            String savePath = System.getProperty("user.dir") + "\\files";
+            String savePath = System.getProperty("user.dir") + "\\files";      // 저장되는 위치
 
             if (!new File(savePath).exists()) {
                 try{

@@ -66,11 +66,9 @@ function DrawerPage() {
   const dragOverItem = useRef();
   const dragStart = (e, position) => {
     dragItem.current = position;
-    console.log(e.type);
   };
   const dragEnter = (e, position) => {
     dragOverItem.current = position;
-    console.log(e.type);
   };
   const drop = (e) => {
     const copyListItems = [...list];
@@ -80,9 +78,6 @@ function DrawerPage() {
     dragItem.current = null;
     dragOverItem.current = null;
     setList(copyListItems);
-    console.log(e);
-    console.log(window.visualViewport.height);
-    console.log(window.visualViewport.width);
     const visualheight1 = window.visualViewport.height - 40;
     const visualwidth1 = window.visualViewport.width - 40;
     const visualheight2 = window.visualViewport.height - 140;

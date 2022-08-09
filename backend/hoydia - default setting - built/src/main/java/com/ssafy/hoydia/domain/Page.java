@@ -2,11 +2,10 @@ package com.ssafy.hoydia.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.hoydia.util.SHA256;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -14,20 +13,27 @@ import java.util.List;
 
 @Entity
 @Getter @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 
 public class Page {
 
     @Column(name= "page_id")
     @Id
     @Setter (AccessLevel.NONE)
+    @NotBlank
     private String id;
 
     @JoinColumn(name = "diary_id")
     @ManyToOne(fetch= FetchType.LAZY)
     @Setter (AccessLevel.NONE)
+    @NotBlank
     private Diary diary;
 
+    @Setter (AccessLevel.NONE)
+    private LocalDateTime regTime;
+
     @Embedded
+    @NotBlank
     private Title title;
 
     @Embedded
@@ -40,25 +46,31 @@ public class Page {
     @JsonIgnore
     private List<Sticker> stickers = new ArrayList<>();
 
-    public static Page createPage(Diary diary, Title title, Content content, String bgmPath, String location){
-
-        Page page = new Page();
+    @Builder
+    public Page (
+            Diary diary,
+            Title title,
+            Content content,
+            String bgmPath,
+            String location
+    )
+    {
 
         SHA256 sha256 = new SHA256();
 
         try {
-            page.id = sha256.encrypt(diary.getId()+ LocalDateTime.now());
+            this.id = sha256.encrypt(diary.getId()+ LocalDateTime.now());
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
+        this.diary = diary;
+        this.regTime = LocalDateTime.now();
+        this.title = title;
+        this.content = content;
+        this.bgmPath = bgmPath;
+        this.location = location;
 
-        page.diary = diary;
-        page.title = title;
-        page.content = content;
-        page.bgmPath = bgmPath;
-        page.location = location;
-
-        return page;
     }
+
 
 }
