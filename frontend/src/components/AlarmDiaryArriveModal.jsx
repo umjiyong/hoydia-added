@@ -29,27 +29,18 @@ const Title = styled.span`
   color: #ff8960;
 `;
 
-const ExitBtn = styled.img`
-  // display: inline-flex;
-  // justify-content: flex-end;
+const ExitDiv = styled.div`
   width: 1.875rem;
   height: 1.875rem;
-  margin: 24px;
-  // margin: 0.938rem;
-  // margin-left: 46.875rem;
-  // margin-top: 1rem;
+  margin: 24px 24px 0px 545px;
+`;
+
+const ExitBtn = styled.img`
+  width: 1.875rem;
+  height: 1.875rem;
   &:hover {
     cursor: pointer;
   }
-`;
-
-const ExitDiv = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  width: 600px;
-  // margin: 0.938rem;
-  // margin-left: 46.875rem;
-  // margin-top: 1rem;
 `;
 
 const Message = styled.p`

@@ -59,4 +59,18 @@ public class AuthToken {
         }
         return null;
     }
+
+    public String getId(String token) {
+        try{
+            return String.valueOf(Jwts.parser().setSigningKey(key)
+                    .parseClaimsJws(token)
+                    .getBody()
+                    .get("socialId"));
+
+        }catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
 }

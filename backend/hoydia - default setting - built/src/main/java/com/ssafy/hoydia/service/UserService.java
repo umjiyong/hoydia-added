@@ -2,6 +2,7 @@ package com.ssafy.hoydia.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssafy.hoydia.domain.Diary;
 import com.ssafy.hoydia.domain.User;
 import com.ssafy.hoydia.dto.OauthTokenDto;
 import com.ssafy.hoydia.exception.InvalidApproachException;
@@ -14,12 +15,13 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -29,9 +31,9 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    /* 로그인 기능은 OAUTH 적용 후 수정 */
     public User login(String id) {
         User user = userRepository.findById(id);
+
         if (user == null) {
             throw new LoginException("존재하지 않는 유저입니다.");
         }
@@ -49,6 +51,11 @@ public class UserService {
 
        return "Loc-Service : "+user.getId();
     }
+
+    public List<User> searchAllUserOrderById(){        // 관리자용 서비스 - 모든 유저 불러오기 (ID 순)
+        return userRepository.findAllUserOrderById();
+    }
+
 
     public User searchById(String id) {
 
@@ -99,7 +106,7 @@ public class UserService {
         params.add("client_id", "c1a2b19a1c67960871b2d1c9d080d585");
         params.add("redirect_uri", "http://localhost:3000/kakaoLogin");
         params.add("code", code);
-        params.add("client_secret", "Z81XEhK8E16NT1jbkqxZ3atfJvOGhBye"); // 생략 가능!
+        params.add("client_secret", "Z81XEhK8E16NT1jbkqxZ3atfJvOGhBye");
         //Http 바디가 될 부분
 
         HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = new HttpEntity<>(params, headers);

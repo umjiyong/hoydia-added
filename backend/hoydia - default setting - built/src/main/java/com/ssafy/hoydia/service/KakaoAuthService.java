@@ -13,9 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class KakaoAuthService { // public class GoogleAuthService
+public class KakaoAuthService {
 
-    private final ClientKakao clientKakao; // private final ClientGoogle clientGoogle;
+    private final ClientKakao clientKakao;
     private final AuthTokenProvider authTokenProvider;
     private final UserRepository userRepository;
 
@@ -34,7 +34,7 @@ public class KakaoAuthService { // public class GoogleAuthService
         }
 
         return AuthResponse.builder() // /auth/kakao와 /auth/google의 응답의 body로 AccessToken(AppToken)을 보내주기위해 builder 사용
-                .appToken(appToken.getToken())
+                .id(id)
                 .isNewMember(isNewUser)
                 .build();
     }
