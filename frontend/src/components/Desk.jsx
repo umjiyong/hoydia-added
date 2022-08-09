@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import post from 'assets/post.png';
-import diary from 'assets/diary.png';
+import Diary from 'components/DiaryCompo';
 import drawer from 'assets/drawer.png';
 import AlarmList from './AlarmList';
 
@@ -36,16 +36,16 @@ const Post = styled.img`
 const DiaryContainer = styled.div`
   display: flex;
   justify-content: space-around;
-  margin: 30px;
+  margin: 5px;
 `;
 
-const Diary = styled.img`
-  width: 20%;
-  height: 25%;
-  max-width: 240px;
-  max-height: 300px;
-  // margin: 40px;
-`;
+// const Diary = styled.img`
+//   width: 20%;
+//   height: 25%;
+//   max-width: 240px;
+//   max-height: 300px;
+//   // margin: 40px;
+// `;
 
 const Drawer = styled.img`
   position: absolute;
@@ -53,6 +53,15 @@ const Drawer = styled.img`
   max-width: 100%;
   height: auto;
 `;
+
+const DiaryInfo = {
+  color1: '#4269f5',
+  color2: '#a61f3d',
+  color3: '#d1aa2a',
+  title: '안녕하세요',
+  font: 'Jua',
+  fontsize: 24,
+};
 
 function desk() {
   const [openDrop, setOpenDrop] = useState(false);
@@ -68,9 +77,9 @@ function desk() {
             <Post src={post} alt="post" />
           </PostDiv>
           <DiaryContainer>
-            <Diary src={diary} alt="diary" />
-            <Diary src={diary} alt="diary" />
-            <Diary src={diary} alt="diary" />
+            <Diary DiaryInfo={DiaryInfo} />
+            <Diary DiaryInfo={DiaryInfo} />
+            <Diary DiaryInfo={DiaryInfo} />
           </DiaryContainer>
         </Desk>
         <Drawer src={drawer} alt="drawer" />

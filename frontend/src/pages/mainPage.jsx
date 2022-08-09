@@ -8,6 +8,7 @@ function mainPage() {
   return (
     <div className="main">
       <Navbar />
+
       <Desk />
       <Link to="/drawerPage">
         <Drawer />
