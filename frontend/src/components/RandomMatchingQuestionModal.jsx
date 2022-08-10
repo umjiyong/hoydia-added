@@ -1,9 +1,11 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable react/jsx-no-bind */
 import React, { useState } from 'react';
 
 import styled from 'styled-components';
 import Modal, { ModalProvider, BaseModalBackground } from 'styled-react-modal';
 import exit from 'assets/exit.png';
+import axios from 'axios';
 
 const StyledModal = Modal.styled`
        
@@ -92,11 +94,64 @@ const ExitDiv = styled.div`
   margin-top: 1rem;
 `;
 
+const QuestDiv = styled.div``;
+
 function FancyModalButton() {
   const [isOpen, setIsOpen] = useState(false);
   const [opacity, setOpacity] = useState(0);
+  const [questionPost, setquestionrPost] = useState('');
+
+  // const randomNum = Math.floor(Math.random() * 5);
+  const [num, setNum] = useState(0);
+
+  const answerChange = (event) => {
+    const value = event.target.value;
+    setquestionrPost(value);
+  };
+  const questList = [
+    '당신이 좋아 하는 영화는 무엇이며 이유를 설명해주세요.',
+    '당신이 추천하거나 가고 싶은 여행지는 어디이며 이유를 설명해주세요.',
+    '당신이 추천하거나 먹고 싶은 음식은 무엇이며 이유를 설명해주세요.',
+    '당신이 좋아하는 계절은 무엇이며 이유를 설명해주세요.',
+    '당신이 일기를 쓰고 싶은 이유와 어떤 사람인지 설명해주세요.',
+  ];
 
   function toggleModal() {
+    setOpacity(0);
+    setIsOpen(!isOpen);
+    setNum(Math.floor(Math.random() * 5));
+    console.log(isOpen);
+  }
+
+  function toggleOn() {
+    setOpacity(0);
+    setIsOpen(!isOpen);
+    setNum(Math.floor(Math.random() * 5));
+  }
+
+  function toggleOff() {
+    setOpacity(0);
+    setIsOpen(!isOpen);
+  }
+
+  function togglePost() {
+    axios({
+      headers: {
+        'access-token': `${localStorage.getItem('access-token')}`,
+      },
+      url: 'http://localhost:8080/note',
+      method: 'POST',
+      data: {
+        answer: `${questList[num]}`,
+        question: `${questionPost}`,
+      },
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     setOpacity(0);
     setIsOpen(!isOpen);
   }
@@ -116,23 +171,31 @@ function FancyModalButton() {
 
   return (
     <div>
-      <Atag onClick={toggleModal}>감성 페어 찾기</Atag>
+      <Atag onClick={toggleOn}>감성 페어 찾기</Atag>
       <StyledModal
         isOpen={isOpen}
         afterOpen={afterOpen}
         beforeClose={beforeClose}
-        onBackgroundClick={toggleModal}
-        onEscapeKeydown={toggleModal}
+        onBackgroundClick={toggleOff}
+        onEscapeKeydown={toggleOff}
         opacity={opacity}
         backgroundProps={{ opacity }}
       >
-        <ExitDiv onClick={toggleModal}>
+        <ExitDiv onClick={toggleOff}>
           <ExitBtn src={exit} />
         </ExitDiv>
         <Title>Q&A</Title>
 
-        <InputQ type="textarea" id="InputQ" autoFocus />
-        <GoButton type="button" onClick={toggleModal}>
+        <QuestDiv>{questList[num]}</QuestDiv>
+
+        <InputQ
+          type="textarea"
+          id="InputQ"
+          value={questionPost || ''}
+          onChange={answerChange}
+          autoFocus
+        />
+        <GoButton type="button" onClick={togglePost}>
           GO!GO!
         </GoButton>
       </StyledModal>
