@@ -6,6 +6,8 @@ import lombok.*;
 import javax.persistence.*;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -29,7 +31,6 @@ public class Note {
 
     private LocalDateTime regTime;
 
-
     @Builder
     public Note (
             User user,
@@ -49,7 +50,6 @@ public class Note {
         this.regTime = LocalDateTime.now();
         this.question = question;
         this.answer = answer;
-
     }
 
 

@@ -3,6 +3,7 @@ package com.ssafy.hoydia.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.hoydia.util.SHA256;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,6 +28,8 @@ public class MatchingNote {
     @Setter (AccessLevel.NONE)
     private User user;
 
+    private LocalDateTime regTime;
+
     private String ownerId;
     private String pairId;
 
@@ -36,33 +39,42 @@ public class MatchingNote {
     private String ownerAnswer;
     private String pairAnswer;
 
-    public static MatchingNote createMatchingNote (User user,
-    String ownerId,
-    String pairId,
-    String ownerQuestion,
-    String pairQuestion,
-    String ownerAnswer,
-    String pairAnswer){
+    private int ownerPermit;
+    private int pairPermit;
 
-        MatchingNote matchingNote = new MatchingNote();
+    @Builder
+    public MatchingNote (
+            User user,
+            String ownerId,
+            String pairId,
+
+            String ownerQuestion,
+            String pairQuestion,
+
+            String ownerAnswer,
+            String pairAnswer
+    )
+    {
 
         SHA256 sha256 = new SHA256();
 
         try {
-            matchingNote.id = sha256.encrypt(ownerId+pairId);
+            this.id = sha256.encrypt(user.getId()+ LocalDateTime.now());
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
 
-        matchingNote.user = user;
-        matchingNote.ownerId = ownerId;
-        matchingNote.pairId = pairId;
-        matchingNote.ownerQuestion = ownerQuestion;
-        matchingNote.pairQuestion = pairQuestion;
-        matchingNote.ownerAnswer = ownerAnswer;
-        matchingNote.pairAnswer = pairAnswer;
+        this.user = user;
+        this.regTime = LocalDateTime.now();
+        this.ownerId = ownerId;
+        this.pairId = pairId;
+        this.ownerQuestion = ownerQuestion;
+        this.pairQuestion = pairQuestion;
+        this.ownerAnswer = ownerAnswer;
+        this.pairAnswer = pairAnswer;
+        this.ownerPermit = 0;
+        this.pairPermit = 0;
 
-        return matchingNote;
     }
 
 }
