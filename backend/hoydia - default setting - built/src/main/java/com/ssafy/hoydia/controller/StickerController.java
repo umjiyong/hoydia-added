@@ -34,6 +34,7 @@ public class StickerController {
     private final JwtService jwtService;
 
     private final DiaryService diaryService;
+
     private final PageService pageService;
 
     private final StickerService stickerService;

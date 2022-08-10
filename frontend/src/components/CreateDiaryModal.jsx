@@ -7,45 +7,53 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Modal, { ModalProvider, BaseModalBackground } from 'styled-react-modal';
 import exit from 'assets/exit.png';
+import hedgehogs from 'assets/hedgehogs.png';
 
 const StyledModal = Modal.styled`
-       
+  width: 50.25rem;
+  height: 32.25rem;
+  background: #FFFFFF;
+  box-shadow: 0rem 0.25rem 0.25rem  rgba(0, 0, 0, 0.25), 0rem 0.125rem 0.25rem  rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(0.25rem );
+  border-radius: 2.188rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around
+  opacity: ${(props) => props.opacity};
+  transition : all 0.05s ease-in-out;;`;
 
-  
-        width: 50.25rem;
-        height: 32.25rem;
-        background: #FFFFFF;
-        box-shadow: 0rem 0.25rem 0.25rem  rgba(0, 0, 0, 0.25), 0rem 0.125rem 0.25rem  rgba(0, 0, 0, 0.25);
-        backdrop-filter: blur(0.25rem );
-        border-radius: 2.188rem;
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        opacity: ${(props) => props.opacity};
-        transition : all 0.05s ease-in-out;;`;
+const Mascot = styled.img`
+  width: 400px;
+  height: auto;
+`;
 
 const Title = styled.span`
-  font-family: 'Noto Sans KR';
-  font-style: normal;
-  font-weight: 700;
+  font-weight: 800;
   font-size: 50px;
   justify-content: center;
   align-items: center;
-  margin-bottom: 6.25rem;
   color: #ff8960;
 `;
 const GoButton = styled.button`
   justify-content: center;
   align-items: center;
-  padding: 0.5rem 1rem;
-
-  gap: 0.125rem;
-
-  width: 11rem;
-  height: 3.75rem;
-
+  padding: 8px 16px;
+  width: 176px;
+  height: 60px;
   background: #ffdbac;
-  border-radius: 0.938rem;
+  border-radius: 15px;
+  border: none;
+  color: #ffffff;
+  font-size: 30px;
+  font-weight: 700;
+  -webkit-text-stroke: 1px #ff8960;
+  text-shadow: -1px 0px #ff8960, 0px 1px #ff8960, 1px 0px #ff8960,
+    0px -1px #ff8960;
+  &:hover {
+    cursor: pointer;
+    background-color: #ff8960;
+  }
 `;
 
 const Atag = styled.a`
@@ -60,39 +68,35 @@ const Atag = styled.a`
 `;
 const InputCode = styled.input`
   box-sizing: border-box;
-  margin-bottom: 100px;
+  margin-bottom: 20px;
   padding: 0.5rem 1rem;
-  gap: 0.125rem;
-
-  width: 38.563rem;
-  height: 5rem;
-
+  width: 600px;
+  height: 60px;
   background: #ffffff;
   border: 0.125rem solid #dfba88;
   border-radius: 1rem;
+  &:active,
+  &:focus {
+    outline-color: #ff8960;
+  }
+  &::placeholder {
+    color: #888888;
+  }
+  font-size: 20px;
 `;
 
 const ExitBtn = styled.img`
-  display: flex;
-  justify-content: flex-end;
   width: 1.875rem;
   height: 1.875rem;
-  margin: 0.938rem;
-  margin-left: 46.875rem;
-  margin-top: 1rem;
   &:hover {
     cursor: pointer;
   }
 `;
 
 const ExitDiv = styled.div`
-  display: flex;
-  justify-content: flex-end;
   width: 1.875rem;
   height: 1.875rem;
-  margin: 0.938rem;
-  margin-left: 46.875rem;
-  margin-top: 1rem;
+  margin: 24px 24px 0px 750px;
 `;
 
 function FancyModalButton() {
@@ -133,6 +137,7 @@ function FancyModalButton() {
           <ExitBtn src={exit} />
         </ExitDiv>
         <Title>친구랑 일기 만들기</Title>
+        <Mascot src={hedgehogs} />
         <form>
           <InputCode
             type="text"

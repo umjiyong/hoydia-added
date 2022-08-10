@@ -1,9 +1,11 @@
 package com.ssafy.hoydia.controller;
 
 import com.ssafy.hoydia.domain.Diary;
+import com.ssafy.hoydia.domain.Font;
 import com.ssafy.hoydia.dto.MessageResponseDto;
 import com.ssafy.hoydia.dto.ResultDto;
 import com.ssafy.hoydia.exception.InvalidApproachException;
+import com.ssafy.hoydia.exception.LoginException;
 import com.ssafy.hoydia.exception.UnauthorizedException;
 import com.ssafy.hoydia.service.DiaryService;
 import com.ssafy.hoydia.service.JwtService;
@@ -36,19 +38,20 @@ public class DiaryController {
 
     @PostMapping
     @ApiOperation(value="일기 작성", notes = "사용자 두 명에 해당하는 고유 id와 color들을 body에 request 후 작성.")
-    public CreateDiaryResponseDto createDiary(@RequestBody @Valid CreateDiaryRequestDto request) {
+    public CreateDiaryResponseDto createDiary (@RequestBody @Valid CreateDiaryRequestDto request) {
 
         if (!jwtService.isValidUser())
             throw new InvalidApproachException("사용자 인증 실패");
 
+        if(userService.searchById(request.getPairId()) == null)
+            throw new InvalidApproachException("존재하지 않는 친구 코드입니다.");
+
         Diary diary = Diary.builder()
                 .user(userService.searchById(jwtService.getUserId()))
-                .ownerId(request.getOwnerId())
+                .ownerId(jwtService.getUserId())
                 .pairId(request.getPairId())
-                .own(true)
                 .diaryColor(request.getDiaryColor())
                 .buttonColor(request.getButtonColor())
-                .drawn(0)
                 .build();
 
         diaryService.regist(diary);
@@ -126,6 +129,7 @@ public class DiaryController {
                 request.getTitle(),
                 request.getDiaryColor(),
                 request.getButtonColor(),
+                request.getFont(),
                 request.getDrawn());
 
         return new MessageResponseDto("수정 완료");
@@ -157,15 +161,10 @@ public class DiaryController {
     static class CreateDiaryRequestDto {
 
         @NotBlank
-        private String ownerId;
-
-        @NotBlank
         private String pairId;
 
-        @NotBlank
         private String diaryColor;
 
-        @NotBlank
         private String buttonColor;
 
     }
@@ -201,6 +200,8 @@ public class DiaryController {
 
         private String buttonColor;
 
+        private Font font;
+
         private Integer drawn;
 
         public ReadDiaryResponseDto(Diary diary) {
@@ -215,6 +216,7 @@ public class DiaryController {
             this.title = diary.getTitle();
             this.diaryColor = diary.getDiaryColor();
             this.buttonColor = diary.getButtonColor();
+            this.font = diary.getFont();
             this.drawn = diary.getDrawn();
 
         }
@@ -233,8 +235,10 @@ public class DiaryController {
         private String buttonColor;
 
         @NotBlank
-        private int drawn;
+        private Font font;
 
+        @NotBlank
+        private int drawn;
 
     }
 

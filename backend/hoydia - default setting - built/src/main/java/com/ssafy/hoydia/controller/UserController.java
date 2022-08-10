@@ -65,6 +65,7 @@ public class UserController {
         List<ReadUserResponseDto> userList = userService.searchAllUserOrderById().stream().map(user -> new ReadUserResponseDto(user)).collect(Collectors.toList());
         return new ResultDto(userList);
     }
+
     @GetMapping
     @ApiOperation(value="유저 확인", notes = "현재 접속해 있는 유저의 정보 확인")
     public ResultDto readUser() {
@@ -118,6 +119,7 @@ public class UserController {
 
     @Data
     static class RegistUserRequestDto {
+
         @NotBlank
         private String id;
 

@@ -40,6 +40,13 @@ public class Diary {
 
     private String buttonColor;
 
+    @Embedded
+    @AttributeOverrides({@AttributeOverride(name= "size",column = @Column(name = "diary_font_size")),
+            @AttributeOverride(name="style",column = @Column(name = "diary_font_style")),
+            @AttributeOverride(name="color",column = @Column(name = "diary_font_color"))})
+
+    private Font font;
+
     private Integer drawn;
 
     @OneToMany(mappedBy = "diary")
@@ -51,11 +58,10 @@ public class Diary {
             User user,
             String ownerId,
             String pairId,
-            boolean own,
             String title,
             String diaryColor,
             String buttonColor,
-            Integer drawn
+            Font font
     )
     {
         SHA256 sha256 = new SHA256();
@@ -69,11 +75,12 @@ public class Diary {
         this.regTime = LocalDateTime.now();
         this.ownerId = ownerId;
         this.pairId = pairId;
-        this.own = own;
+        this.own = true;
         this.title = title;
         this.diaryColor = diaryColor;
         this.buttonColor = buttonColor;
-        this.drawn = drawn;
+        this.font = font;
+        this.drawn = 0;
     }
 
 }
