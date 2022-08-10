@@ -1,6 +1,7 @@
 package com.ssafy.hoydia.service;
 
 import com.ssafy.hoydia.domain.Diary;
+import com.ssafy.hoydia.domain.Font;
 import com.ssafy.hoydia.domain.User;
 import com.ssafy.hoydia.exception.InvalidApproachException;
 import com.ssafy.hoydia.repository.DiaryRepository;
@@ -53,7 +54,7 @@ public class DiaryService {
 
 
     @Transactional
-    public void update(String id, String title, String diaryColor, String buttonColor, int drawn)  {
+    public void update(String id, String title, String diaryColor, String buttonColor, Font font, int drawn)  {
 
         Diary diary = diaryRepository.findById(id);
 
@@ -65,6 +66,7 @@ public class DiaryService {
             diary.setTitle(title);
             diary.setDiaryColor(diaryColor);
             diary.setButtonColor(buttonColor);
+            diary.setFont(font);
             diary.setDrawn(drawn);
 
         }

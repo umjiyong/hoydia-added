@@ -1,6 +1,7 @@
 package com.ssafy.hoydia.controller;
 
 import com.ssafy.hoydia.domain.Diary;
+import com.ssafy.hoydia.domain.Font;
 import com.ssafy.hoydia.dto.MessageResponseDto;
 import com.ssafy.hoydia.dto.ResultDto;
 import com.ssafy.hoydia.exception.InvalidApproachException;
@@ -128,6 +129,7 @@ public class DiaryController {
                 request.getTitle(),
                 request.getDiaryColor(),
                 request.getButtonColor(),
+                request.getFont(),
                 request.getDrawn());
 
         return new MessageResponseDto("수정 완료");
@@ -198,6 +200,8 @@ public class DiaryController {
 
         private String buttonColor;
 
+        private Font font;
+
         private Integer drawn;
 
         public ReadDiaryResponseDto(Diary diary) {
@@ -212,6 +216,7 @@ public class DiaryController {
             this.title = diary.getTitle();
             this.diaryColor = diary.getDiaryColor();
             this.buttonColor = diary.getButtonColor();
+            this.font = diary.getFont();
             this.drawn = diary.getDrawn();
 
         }
@@ -230,8 +235,10 @@ public class DiaryController {
         private String buttonColor;
 
         @NotBlank
-        private int drawn;
+        private Font font;
 
+        @NotBlank
+        private int drawn;
 
     }
 
