@@ -41,14 +41,6 @@ const Deskcontainer = styled.div`
 
 const DiaryContainer = styled.div``;
 
-// const Diary = styled.img`
-//   width: 20%;
-//   height: 25%;
-//   max-width: 240px;
-//   max-height: 300px;
-//   // margin: 40px;
-// `;
-
 const Drawer = styled.img`
   display: flex;
   bottom: 0;
@@ -116,12 +108,7 @@ function desk() {
           'access-token': accessToken,
         },
         data: {
-          buttonColor: dragItemContent.buttonColor,
-          diaryColor: dragItemContent.diaryColor,
           drawn: 0,
-          font: dragItemContent.font,
-          fontColor: dragItemContent.fontColor,
-          fontSize: dragItemContent.fontSize,
           title: dragItemContent.title,
         },
       });

@@ -5,14 +5,6 @@ import Navbar from 'components/Navbar';
 import floatingbutton from 'assets/floatingButton.png';
 import axios from 'axios';
 
-const LoaderWrap = styled.div`
-  width: 100%;
-  height: 80%;
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  align-items: center;
-`;
 const DrawerContainer = styled.div``;
 
 const DiaryContainer = styled.div`
@@ -38,31 +30,6 @@ const FloatingBtn = styled.img`
   align-items: center;
   cursor: pointer;
 `;
-
-const DiaryInfo1 = {
-  color1: '#4269f5',
-  color2: '#a61f3d',
-  color3: '#d1aa2a',
-  title: '안녕하세요1',
-  font: 'Jua',
-  fontsize: 24,
-};
-const DiaryInfo2 = {
-  color1: '#34d8eb',
-  color2: '#a61f3d',
-  color3: '#d1aa2a',
-  title: '안녕하세요2',
-  font: 'Jua',
-  fontsize: 24,
-};
-const DiaryInfo3 = {
-  color1: '#695140',
-  color2: '#a61f8d',
-  color3: '#d1aa2a',
-  title: '안녕하세요3',
-  font: 'Jua',
-  fontsize: 24,
-};
 
 const userId = window.localStorage.getItem('userId');
 const accessToken = window.localStorage.getItem('access-token');
@@ -125,12 +92,7 @@ function DrawerPage() {
           'access-token': accessToken,
         },
         data: {
-          buttonColor: dragItemContent.buttonColor,
-          diaryColor: dragItemContent.diaryColor,
           drawn: 1,
-          font: dragItemContent.font,
-          fontColor: dragItemContent.fontColor,
-          fontSize: dragItemContent.fontSize,
           title: dragItemContent.title,
         },
       });
