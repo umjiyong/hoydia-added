@@ -11,6 +11,7 @@ import com.ssafy.hoydia.service.NoticeService;
 import com.ssafy.hoydia.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -116,6 +117,8 @@ public class NoticeController {
 
     }
 
+    @Data
+    @AllArgsConstructor
     static class ReadNoticeResponseDto {
         private Long id;
 

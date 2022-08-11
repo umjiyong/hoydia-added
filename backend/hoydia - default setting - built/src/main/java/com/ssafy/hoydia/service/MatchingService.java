@@ -48,7 +48,8 @@ public class MatchingService {
 
             matchingNoteRepository.regist(matchingNote);
 
-            sendNotice( note1.getUser() , note2.getUser() , "매칭 완료" , "님과 매칭이 연결되었습니다." );
+            sendNotice( note1.getUser() , note2.getUser() , "매칭중! 위치 : " + matchingNote.getId() , "님과 매칭이 연결되었습니다." );
+
 
             noteRepository.delete(note1.getId());
             noteRepository.delete(note2.getId());
