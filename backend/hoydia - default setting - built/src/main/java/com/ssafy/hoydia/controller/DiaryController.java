@@ -112,7 +112,7 @@ public class DiaryController {
 
     @PutMapping("/{diaryId}")
     @ApiOperation(value="다이어리를 업데이트", notes = "diaryId에 해당하는 diary의 title,color,drawn 등을 수정 가능 (variable은 body로 request) id는 pathVariable로 request")
-    public MessageResponseDto updateDiary(@PathVariable("diaryId") String id, @RequestBody @Valid UpdateDiaryRequestDto request) {
+    public MessageResponseDto updateDiary(@PathVariable("diaryId") String id, @RequestBody UpdateDiaryRequestDto request) {
 
         if (!jwtService.isValidUser())
             throw new InvalidApproachException("사용자 인증 실패");
@@ -200,7 +200,7 @@ public class DiaryController {
 
         private String buttonColor;
 
-        private Font font;
+        private String font;
 
         private Integer drawn;
 
@@ -234,7 +234,7 @@ public class DiaryController {
         @NotBlank
         private String buttonColor;
 
-        @NotBlank
+
         private Font font;
 
         @NotBlank

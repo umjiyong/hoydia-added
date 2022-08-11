@@ -2,6 +2,7 @@ package com.ssafy.hoydia.controller;
 
 import com.ssafy.hoydia.dto.MessageResponseDto;
 import com.ssafy.hoydia.service.*;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/match")
 @Slf4j
+@Api(value = "RandomMatchingController", description = ("랜덤 매칭 컨트롤러"))
 public class RandomMatchingController {
 
     private final MatchingService matchingService;
