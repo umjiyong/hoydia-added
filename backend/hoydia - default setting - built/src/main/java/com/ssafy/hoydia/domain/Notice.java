@@ -30,9 +30,8 @@ public class Notice {
 
 
     @Builder
-    public Notice (Long id, User user, String title, String content) {
+    public Notice (User user, String title, String content) {
 
-        this.id = id;
         this.user = user;
         this.regTime = LocalDateTime.now();
         this.title = title;

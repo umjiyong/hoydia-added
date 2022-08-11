@@ -13,6 +13,7 @@ public class Content {
     @AttributeOverrides({@AttributeOverride(name= "size",column = @Column(name = "content_font_size")),
             @AttributeOverride(name="style",column = @Column(name = "content_font_style")),
             @AttributeOverride(name="color",column = @Column(name = "content_font_color"))})
+
     private Font font;
 
 

@@ -2,13 +2,13 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/self-closing-comp */
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Logo from 'components/Logo';
 import kakaoLogin from 'assets/kakaoLogin.png';
 import naverLogin from 'assets/naverLogin.png';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Hoydia = styled.h1`
@@ -27,11 +27,6 @@ const Slogan = styled.p`
   font-weight: 400;
   font-size: 30px;
   color: #000000;
-`;
-
-const Diary = styled.img`
-  max-width: 100%;
-  height: auto;
 `;
 
 const KakaoBtn = styled.img`
@@ -65,7 +60,6 @@ function loginPage() {
   const KAKAO_CLIENT_ID = process.env.REACT_APP_KAKAO_CLIENT_ID;
   const REDIRECT_URI = 'http://localhost:3000/kakaoLogin';
   const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-
   return (
     <div className="login">
       <Container>
@@ -78,8 +72,27 @@ function loginPage() {
           >
             <GoogleLogin
               onSuccess={(credentialResponse) => {
-                navigate('/mainPage');
-                console.log(credentialResponse.credential);
+                const authRequest = {
+                  accessToken: credentialResponse.credential,
+                };
+                const async = async () => {
+                  try {
+                    const res = await axios.post(
+                      'http://localhost:8080/auth/google',
+                      authRequest,
+                    );
+                    window.localStorage.setItem(
+                      'access-token',
+                      res.data['access-token'],
+                    );
+                    window.localStorage.setItem('userId', res.data.userId);
+                    navigate('/mainPage');
+                  } catch (e) {
+                    console.error(e);
+                    navigate('/');
+                  }
+                };
+                async();
               }}
               onError={() => {
                 console.log('Login Failed');

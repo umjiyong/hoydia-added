@@ -35,7 +35,9 @@ public class AuthController {
     private final UserService userService;
 
     private final KakaoAuthService kakaoAuthService;
+
     private final GoogleAuthService googleAuthService;
+
     private final JwtService jwtService;
 
     /**

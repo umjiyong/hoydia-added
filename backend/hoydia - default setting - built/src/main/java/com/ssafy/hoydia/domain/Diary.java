@@ -40,6 +40,12 @@ public class Diary {
 
     private String buttonColor;
 
+    private String font;
+
+    private String fontColor;
+
+    private Integer fontSize;
+
     private Integer drawn;
 
     @OneToMany(mappedBy = "diary")
@@ -51,11 +57,12 @@ public class Diary {
             User user,
             String ownerId,
             String pairId,
-            boolean own,
             String title,
             String diaryColor,
             String buttonColor,
-            Integer drawn
+            String font,
+            String fontColor,
+            Integer fontSize
     )
     {
         SHA256 sha256 = new SHA256();
@@ -69,11 +76,14 @@ public class Diary {
         this.regTime = LocalDateTime.now();
         this.ownerId = ownerId;
         this.pairId = pairId;
-        this.own = own;
+        this.own = true;
         this.title = title;
         this.diaryColor = diaryColor;
         this.buttonColor = buttonColor;
-        this.drawn = drawn;
+        this.font = font;
+        this.fontColor = fontColor;
+        this.fontSize = fontSize;
+        this.drawn = 0;
     }
 
 }

@@ -26,7 +26,7 @@ function MusicPlayer() {
 
   return (
     <MusicPlayerWrapper>
-      <audio src={music} ref={audioPlayer} onTimeUpdate={onPlaying} />
+      {/* <audio src={music} ref={audioPlayer} onTimeUpdate={onPlaying} /> */}
     </MusicPlayerWrapper>
   );
 }

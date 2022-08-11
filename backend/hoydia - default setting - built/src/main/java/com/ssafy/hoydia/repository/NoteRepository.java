@@ -1,5 +1,6 @@
 package com.ssafy.hoydia.repository;
 
+import com.ssafy.hoydia.domain.Diary;
 import com.ssafy.hoydia.domain.MatchingNote;
 import com.ssafy.hoydia.domain.Note;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,11 @@ public class NoteRepository {
         return notes;
 
     }
+
+    public List<Note> findAllNoteOrderById(){
+        return em.createQuery("SELECT n from Note n ORDER BY n.id DESC", Note.class).getResultList();
+    }
+
 
     public void delete (String id) {
 
