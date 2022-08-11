@@ -33,7 +33,6 @@ public class Page {
     private LocalDateTime regTime;
 
     @Embedded
-    @NotBlank
     private Title title;
 
     @Embedded

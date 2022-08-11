@@ -2,6 +2,7 @@ package com.ssafy.hoydia.controller;
 
 import com.ssafy.hoydia.domain.Diary;
 import com.ssafy.hoydia.domain.Font;
+import com.ssafy.hoydia.domain.User;
 import com.ssafy.hoydia.dto.MessageResponseDto;
 import com.ssafy.hoydia.dto.ResultDto;
 import com.ssafy.hoydia.exception.InvalidApproachException;
@@ -46,8 +47,12 @@ public class DiaryController {
         if(userService.searchById(request.getPairId()) == null)
             throw new InvalidApproachException("존재하지 않는 친구 코드입니다.");
 
+        User owner = userService.searchById(jwtService.getUserId());
+        User pair = userService.searchById(request.getPairId());
+
         Diary diary = Diary.builder()
                 .user(userService.searchById(jwtService.getUserId()))
+                .title("제목")
                 .ownerId(jwtService.getUserId())
                 .pairId(request.getPairId())
                 .diaryColor(request.getDiaryColor())
@@ -236,10 +241,8 @@ public class DiaryController {
         @NotBlank
         private String title;
 
-        @NotBlank
         private String diaryColor;
 
-        @NotBlank
         private String buttonColor;
 
         private String font;

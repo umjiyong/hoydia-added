@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import React, { useState, useEffect, useRef } from 'react';
-import diary from 'assets/diary.png';
-import diarytable from 'assets/diaryTable.png';
+import Diary from 'components/DiaryCompo';
 import Navbar from 'components/Navbar';
+import floatingbutton from 'assets/floatingButton.png';
+import axios from 'axios';
 
 const LoaderWrap = styled.div`
   width: 100%;
@@ -22,11 +23,7 @@ const DiaryContainer = styled.div`
 const Colcontainer = styled.div`
   flex: ${(props) => props.size};
 `;
-const Diary = styled.img`
-  max-width: 240px;
-  max-height: 300px;
-  // margin: 40px;
-`;
+
 const FloatingBtn = styled.img`
   position: fixed; //포인트!
   line-height: 63px;
@@ -42,26 +39,36 @@ const FloatingBtn = styled.img`
   cursor: pointer;
 `;
 
+const DiaryInfo1 = {
+  color1: '#4269f5',
+  color2: '#a61f3d',
+  color3: '#d1aa2a',
+  title: '안녕하세요1',
+  font: 'Jua',
+  fontsize: 24,
+};
+const DiaryInfo2 = {
+  color1: '#34d8eb',
+  color2: '#a61f3d',
+  color3: '#d1aa2a',
+  title: '안녕하세요2',
+  font: 'Jua',
+  fontsize: 24,
+};
+const DiaryInfo3 = {
+  color1: '#695140',
+  color2: '#a61f8d',
+  color3: '#d1aa2a',
+  title: '안녕하세요3',
+  font: 'Jua',
+  fontsize: 24,
+};
+
 function DrawerPage() {
-  const [itemList, setItemList] = useState([1, 2, 3, 4, 5, 6]); // ItemList
-  const [list, setList] = useState([
-    <Diary src={diary} alt="diary1" />,
-    <Diary src={diary} alt="diary2" />,
-    <Diary src={diary} alt="diary3" />,
-    <Diary src={diary} alt="diary4" />,
-    <Diary src={diary} alt="diary5" />,
-    <Diary src={diary} alt="diary5" />,
-    <Diary src={diary} alt="diary5" />,
-    <Diary src={diary} alt="diary5" />,
-    <Diary src={diary} alt="diary5" />,
-    <Diary src={diary} alt="diary5" />,
-    <Diary src={diary} alt="diary5" />,
-    <Diary src={diary} alt="diary5" />,
-    <Diary src={diary} alt="diary5" />,
-    <Diary src={diary} alt="diary5" />,
-  ]);
-  const [target, setTarget] = useState(''); // target
-  const [isLoding, setIsLoding] = useState(false); // isloding
+  const userId = window.localStorage.getItem('userId');
+  const accessToken = window.localStorage.getItem('access-token');
+
+  const [list, setList] = useState([DiaryInfo1, DiaryInfo2, DiaryInfo3]);
   const dragItem = useRef();
   const dragOverItem = useRef();
   const dragStart = (e, position) => {
@@ -70,6 +77,9 @@ function DrawerPage() {
   const dragEnter = (e, position) => {
     dragOverItem.current = position;
   };
+  // const dragfloating = () => {
+  //   axios.put(`http://localhost:8080/diary/${diaryId}`, )
+  // };
   const drop = (e) => {
     const copyListItems = [...list];
     const dragItemContent = copyListItems[dragItem.current];
@@ -90,33 +100,23 @@ function DrawerPage() {
       visualwidth1 >= width &&
       width >= visualwidth2
     ) {
-      console.log('이동');
+      console.log('성공');
     } else {
       console.log('실패');
     }
   };
-  const onIntersect = async ([entry], observer) => {
-    if (entry.isIntersecting && !isLoding) {
-      observer.unobserve(entry.target);
-      setIsLoding(true);
-      // 데이터를 가져오는 부분
-      setIsLoding(false);
-      observer.observe(entry.target);
-    }
+  const consoletest = () => {
+    console.log(1);
   };
-
   useEffect(() => {
-    let observer;
-    if (target) {
-      // callback 함수, option
-      observer = new IntersectionObserver(onIntersect, {
-        threshold: 0.4,
-      });
-      observer.observe(target); // 타겟 엘리먼트 지정
-    }
-    return () => observer && observer.disconnect();
-  }, [target]);
-
+    axios({
+      method: 'get',
+      url: `http://localhost:8080/diary/user/${userId}`,
+      headers: {
+        'access-token': accessToken,
+      },
+    }).then((res) => console.log(res));
+  });
   return (
     <div className="App">
       <Navbar />
@@ -140,19 +140,11 @@ function DrawerPage() {
                 onDragEnd={drop}
                 draggable
               >
-                {item}
+                <Diary DiaryInfo={item} />
               </Colcontainer>
             ))}
-          {isLoding ? (
-            <LoaderWrap>
-              {/* <ReactLoading type="spin" color="#A593E0" /> */}
-            </LoaderWrap>
-          ) : (
-            ''
-          )}
-          <div ref={setTarget}> </div>
         </DiaryContainer>
-        {/* <FloatingBtn src={floatingbutton} /> */}
+        <FloatingBtn src={floatingbutton} />
       </DrawerContainer>
     </div>
   );
