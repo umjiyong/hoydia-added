@@ -104,6 +104,7 @@ public class MatchingService {
             if(matchingNote.getOwnerPermit() == 1 && matchingNote.getPairPermit() == 1){ // 둘 다 수락인 경우
                 Diary diary = Diary.builder()
                         .user(matchingNote.getUser())
+                        .title("제목")
                         .ownerId(matchingNote.getOwnerId())
                         .pairId(matchingNote.getPairId())
                         .build();
