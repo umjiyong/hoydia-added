@@ -152,6 +152,7 @@ function FancyModalButton() {
       .catch((err) => {
         console.log(err);
       });
+    setquestionrPost('');
     setOpacity(0);
     setIsOpen(!isOpen);
   }
