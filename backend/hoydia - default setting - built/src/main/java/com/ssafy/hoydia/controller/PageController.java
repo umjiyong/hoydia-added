@@ -67,6 +67,8 @@ public class PageController {
 
         pageService.regist(page);
 
+        diaryService.searchById(page.getDiary().getId()).setOwn(!diaryService.searchById(page.getDiary().getId()).isOwn()); // 페이지가 위치한 다이어리의 소유주 상태를 전환해줌.
+
         return new CreatePageResponseDto(page.getId(),page.getRegTime());
     }
 
@@ -119,7 +121,7 @@ public class PageController {
     }
 
     @PutMapping("/{pageId}")
-    @ApiOperation(value="페이지를 업데이트", notes = "pageId에 대응되는 page의 value들을 수정. (variable은 body로 request) id는 pathVariable로 request")
+    @ApiOperation(value="페이지를 업데이트", notes = "pageId에 대응되는 page의 value들을 수정. (variable은 body로 request) id는 pathVariable로 request - 죽은 기능(update 하지 않기로 함)")
     public MessageResponseDto updatePage(@PathVariable("pageId") String id, @RequestBody @Valid UpdatePageRequestDto request) {
 
         if (!jwtService.isValidUser())
