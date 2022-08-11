@@ -44,7 +44,7 @@ public class Diary {
 
     private String fontColor;
 
-    private int fontSize;
+    private Integer fontSize;
 
     private Integer drawn;
 
@@ -62,7 +62,7 @@ public class Diary {
             String buttonColor,
             String font,
             String fontColor,
-            int fontSize
+            Integer fontSize
     )
     {
         SHA256 sha256 = new SHA256();
