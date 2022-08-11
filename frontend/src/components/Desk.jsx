@@ -1,10 +1,11 @@
 /* eslint-disable react/self-closing-comp */
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import post from 'assets/post.png';
 import Diary from 'components/DiaryCompo';
 import drawer from 'assets/drawer.png';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import AlarmList from './AlarmList';
 
 const Container = styled.div`
@@ -55,37 +56,30 @@ const Drawer = styled.img`
   height: auto;
 `;
 
-const DiaryInfo1 = {
-  color1: '#4269f5',
-  color2: '#a61f3d',
-  color3: '#d1aa2a',
-  title: '안녕하세요1',
-  font: 'Jua',
-  fontsize: 24,
-};
-const DiaryInfo2 = {
-  color1: '#34d8eb',
-  color2: '#a61f3d',
-  color3: '#d1aa2a',
-  title: '안녕하세요2',
-  font: 'Jua',
-  fontsize: 24,
-};
-const DiaryInfo3 = {
-  color1: '#695140',
-  color2: '#a61f8d',
-  color3: '#d1aa2a',
-  title: '안녕하세요3',
-  font: 'Jua',
-  fontsize: 24,
-};
+const userId = window.localStorage.getItem('userId');
+const accessToken = window.localStorage.getItem('access-token');
 
 function desk() {
-  const [diaryList, setDiaryList] = useState([
-    DiaryInfo1,
-    DiaryInfo2,
-    DiaryInfo3,
-  ]);
+  const [diaryList, setDiaryList] = useState([]);
+  const DiaryAsync = async () => {
+    try {
+      axios({
+        method: 'get',
+        url: `http://localhost:8080/diary/user/${userId}`,
+        headers: {
+          'access-token': accessToken,
+        },
+      }).then((res) => {
+        setDiaryList(res.data.data);
+        console.log(res);
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  };
+  useEffect(() => {
+    DiaryAsync();
+  }, []);
   const dragItem = useRef();
   const dragOverItem = useRef();
   const dragStart = (e, position) => {
@@ -115,6 +109,22 @@ function desk() {
       width >= visualwidth2
     ) {
       console.log('성공');
+      axios({
+        method: 'put',
+        url: `http://localhost:8080/diary/${dragItemContent.id}`,
+        header: {
+          'access-token': accessToken,
+        },
+        data: {
+          buttonColor: dragItemContent.buttonColor,
+          diaryColor: dragItemContent.diaryColor,
+          drawn: 0,
+          font: dragItemContent.font,
+          fontColor: dragItemContent.fontColor,
+          fontSize: dragItemContent.fontSize,
+          title: dragItemContent.title,
+        },
+      });
     } else {
       console.log('실패');
     }

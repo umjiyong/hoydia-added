@@ -64,11 +64,30 @@ const DiaryInfo3 = {
   fontsize: 24,
 };
 
-function DrawerPage() {
-  const userId = window.localStorage.getItem('userId');
-  const accessToken = window.localStorage.getItem('access-token');
+const userId = window.localStorage.getItem('userId');
+const accessToken = window.localStorage.getItem('access-token');
 
-  const [list, setList] = useState([DiaryInfo1, DiaryInfo2, DiaryInfo3]);
+function DrawerPage() {
+  const [list, setList] = useState([]);
+  const DiaryAsync = async () => {
+    try {
+      axios({
+        method: 'get',
+        url: `http://localhost:8080/diary/user/${userId}`,
+        headers: {
+          'access-token': accessToken,
+        },
+      }).then((res) => {
+        setList(res.data.data);
+        console.log(res);
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  };
+  useEffect(() => {
+    DiaryAsync();
+  }, []);
   const dragItem = useRef();
   const dragOverItem = useRef();
   const dragStart = (e, position) => {
@@ -77,9 +96,6 @@ function DrawerPage() {
   const dragEnter = (e, position) => {
     dragOverItem.current = position;
   };
-  // const dragfloating = () => {
-  //   axios.put(`http://localhost:8080/diary/${diaryId}`, )
-  // };
   const drop = (e) => {
     const copyListItems = [...list];
     const dragItemContent = copyListItems[dragItem.current];
@@ -94,6 +110,7 @@ function DrawerPage() {
     const visualwidth2 = window.visualViewport.width - 140;
     const height = e.clientY;
     const width = e.clientX;
+    console.log(dragItemContent);
     if (
       visualheight1 >= height &&
       height >= visualheight2 &&
@@ -101,22 +118,27 @@ function DrawerPage() {
       width >= visualwidth2
     ) {
       console.log('성공');
+      axios({
+        method: 'put',
+        url: `http://localhost:8080/diary/${dragItemContent.id}`,
+        header: {
+          'access-token': accessToken,
+        },
+        data: {
+          buttonColor: dragItemContent.buttonColor,
+          diaryColor: dragItemContent.diaryColor,
+          drawn: 1,
+          font: dragItemContent.font,
+          fontColor: dragItemContent.fontColor,
+          fontSize: dragItemContent.fontSize,
+          title: dragItemContent.title,
+        },
+      });
     } else {
       console.log('실패');
     }
   };
-  const consoletest = () => {
-    console.log(1);
-  };
-  useEffect(() => {
-    axios({
-      method: 'get',
-      url: `http://localhost:8080/diary/user/${userId}`,
-      headers: {
-        'access-token': accessToken,
-      },
-    }).then((res) => console.log(res));
-  });
+
   return (
     <div className="App">
       <Navbar />
@@ -150,4 +172,4 @@ function DrawerPage() {
   );
 }
 
-export default DrawerPage;
+export default React.memo(DrawerPage);
