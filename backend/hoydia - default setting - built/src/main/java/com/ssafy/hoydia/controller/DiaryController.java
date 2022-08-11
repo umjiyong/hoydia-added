@@ -249,7 +249,7 @@ public class DiaryController {
         private Integer fontSize;
 
         @NotBlank
-        private int drawn;
+        private Integer drawn;
 
     }
 
