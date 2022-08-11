@@ -54,7 +54,7 @@ public class DiaryService {
 
 
     @Transactional
-    public void update(String id, String title, String diaryColor, String buttonColor, Font font, int drawn)  {
+    public void update(String id, String title, String diaryColor, String buttonColor,String font, String fontColor, Integer fontSize , Integer drawn)  {
 
         Diary diary = diaryRepository.findById(id);
 
@@ -67,6 +67,8 @@ public class DiaryService {
             diary.setDiaryColor(diaryColor);
             diary.setButtonColor(buttonColor);
             diary.setFont(font);
+            diary.setFontColor(fontColor);
+            diary.setFontSize(fontSize);
             diary.setDrawn(drawn);
 
         }

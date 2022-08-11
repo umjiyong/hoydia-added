@@ -130,6 +130,8 @@ public class DiaryController {
                 request.getDiaryColor(),
                 request.getButtonColor(),
                 request.getFont(),
+                request.getFontColor(),
+                request.getFontSize(),
                 request.getDrawn());
 
         return new MessageResponseDto("수정 완료");
@@ -202,6 +204,10 @@ public class DiaryController {
 
         private String font;
 
+        private String fontColor;
+
+        private Integer fontSize;
+
         private Integer drawn;
 
         public ReadDiaryResponseDto(Diary diary) {
@@ -217,6 +223,8 @@ public class DiaryController {
             this.diaryColor = diary.getDiaryColor();
             this.buttonColor = diary.getButtonColor();
             this.font = diary.getFont();
+            this.fontColor = diary.getFontColor();
+            this.fontSize = diary.getFontSize();
             this.drawn = diary.getDrawn();
 
         }
@@ -234,11 +242,14 @@ public class DiaryController {
         @NotBlank
         private String buttonColor;
 
+        private String font;
 
-        private Font font;
+        private String fontColor;
+
+        private Integer fontSize;
 
         @NotBlank
-        private int drawn;
+        private Integer drawn;
 
     }
 
