@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
-import AlarmAnswerModal from 'components/AlarmAnswerModal';
-// import AlarmMatchingResultModal from './AlarmMatchingResultModal';
+import axios from 'axios';
+// import AlarmAnswerModal from 'components/AlarmAnswerModal';
+import AlarmMatchingResultModal from './AlarmMatchingResultModal';
 // import AlarmDiaryArriveModal from './AlarmDiaryArriveModal';
 
 const Container = styled.div`
@@ -68,6 +69,22 @@ function AlarmList() {
       setTimeout(resolve, 300);
     });
   }
+
+  useEffect(() => {
+    axios({
+      headers: {
+        'access-token': `${localStorage.getItem('access-token')}`,
+      },
+      url: 'http://localhost:8080/notice',
+      method: 'GET',
+    })
+      .then((res) => {
+        console.log(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
   return (
     <div className="AlarmList">
       <Container>
@@ -77,20 +94,20 @@ function AlarmList() {
         </Header>
         <Detail1 onClick={toggleModal}>Answer1</Detail1>
       </Container>
-      <AlarmAnswerModal
-        toggleModal={toggleModal}
-        afterOpen={afterOpen}
-        beforeClose={beforeClose}
-        isOpen={isOpen}
-        opacity={opacity}
-      />
-      {/* <AlarmMatchingResultModal
+      {/* <AlarmAnswerModal
         toggleModal={toggleModal}
         afterOpen={afterOpen}
         beforeClose={beforeClose}
         isOpen={isOpen}
         opacity={opacity}
       /> */}
+      <AlarmMatchingResultModal
+        toggleModal={toggleModal}
+        afterOpen={afterOpen}
+        beforeClose={beforeClose}
+        isOpen={isOpen}
+        opacity={opacity}
+      />
       {/* <AlarmDiaryArriveModal
         toggleModal={toggleModal}
         afterOpen={afterOpen}
