@@ -137,15 +137,13 @@ function diaryEdit() {
       data: {
         bgmPath: 'string',
         content: `${inputs.content}`,
-        contentFont: 'string',
-        contentFontSize: 'string',
-        contentFontStyle: 'string',
+        contentFontSize: '20',
+        contentFontStyle: fontName,
         diaryId: params.diaryId,
         location: 'string',
         title: `${inputs.title}`,
-        titleFont: 'string',
-        titleFontSize: 'string',
-        titleFontStyle: 'string',
+        titleFontSize: '20',
+        titleFontStyle: fontName,
       },
     });
   }
