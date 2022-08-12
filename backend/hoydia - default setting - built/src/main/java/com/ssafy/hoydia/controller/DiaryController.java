@@ -2,6 +2,7 @@ package com.ssafy.hoydia.controller;
 
 import com.ssafy.hoydia.domain.Diary;
 import com.ssafy.hoydia.domain.Font;
+import com.ssafy.hoydia.domain.User;
 import com.ssafy.hoydia.dto.MessageResponseDto;
 import com.ssafy.hoydia.dto.ResultDto;
 import com.ssafy.hoydia.exception.InvalidApproachException;
@@ -46,8 +47,12 @@ public class DiaryController {
         if(userService.searchById(request.getPairId()) == null)
             throw new InvalidApproachException("존재하지 않는 친구 코드입니다.");
 
+        User owner = userService.searchById(jwtService.getUserId());
+        User pair = userService.searchById(request.getPairId());
+
         Diary diary = Diary.builder()
                 .user(userService.searchById(jwtService.getUserId()))
+                .title("제목")
                 .ownerId(jwtService.getUserId())
                 .pairId(request.getPairId())
                 .diaryColor(request.getDiaryColor())
@@ -112,7 +117,7 @@ public class DiaryController {
 
     @PutMapping("/{diaryId}")
     @ApiOperation(value="다이어리를 업데이트", notes = "diaryId에 해당하는 diary의 title,color,drawn 등을 수정 가능 (variable은 body로 request) id는 pathVariable로 request")
-    public MessageResponseDto updateDiary(@PathVariable("diaryId") String id, @RequestBody @Valid UpdateDiaryRequestDto request) {
+    public MessageResponseDto updateDiary(@PathVariable("diaryId") String id, @RequestBody UpdateDiaryRequestDto request) {
 
         if (!jwtService.isValidUser())
             throw new InvalidApproachException("사용자 인증 실패");
@@ -130,6 +135,8 @@ public class DiaryController {
                 request.getDiaryColor(),
                 request.getButtonColor(),
                 request.getFont(),
+                request.getFontColor(),
+                request.getFontSize(),
                 request.getDrawn());
 
         return new MessageResponseDto("수정 완료");
@@ -200,7 +207,11 @@ public class DiaryController {
 
         private String buttonColor;
 
-        private Font font;
+        private String font;
+
+        private String fontColor;
+
+        private Integer fontSize;
 
         private Integer drawn;
 
@@ -217,6 +228,8 @@ public class DiaryController {
             this.diaryColor = diary.getDiaryColor();
             this.buttonColor = diary.getButtonColor();
             this.font = diary.getFont();
+            this.fontColor = diary.getFontColor();
+            this.fontSize = diary.getFontSize();
             this.drawn = diary.getDrawn();
 
         }
@@ -228,17 +241,18 @@ public class DiaryController {
         @NotBlank
         private String title;
 
-        @NotBlank
         private String diaryColor;
 
-        @NotBlank
         private String buttonColor;
 
-        @NotBlank
-        private Font font;
+        private String font;
+
+        private String fontColor;
+
+        private Integer fontSize;
 
         @NotBlank
-        private int drawn;
+        private Integer drawn;
 
     }
 

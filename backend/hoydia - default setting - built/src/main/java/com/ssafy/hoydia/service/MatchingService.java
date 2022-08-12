@@ -48,14 +48,15 @@ public class MatchingService {
 
             matchingNoteRepository.regist(matchingNote);
 
-            sendNotice( note1.getUser() , note2.getUser() , "매칭 완료" , "님과 매칭이 연결되었습니다." );
+            sendNotice( note1.getUser() , note2.getUser() , "매칭중! 위치 : " + matchingNote.getId() , "님과 매칭이 연결되었습니다." );
+
 
             noteRepository.delete(note1.getId());
             noteRepository.delete(note2.getId());
 
         }
 
-        if (noteList.size()/2 == 0) return null;
+        if (noteList.size()%2 == 0) return null;
 
         else {
             Note rest = noteList.get(noteList.size() - 1);
@@ -103,6 +104,7 @@ public class MatchingService {
             if(matchingNote.getOwnerPermit() == 1 && matchingNote.getPairPermit() == 1){ // 둘 다 수락인 경우
                 Diary diary = Diary.builder()
                         .user(matchingNote.getUser())
+                        .title("제목")
                         .ownerId(matchingNote.getOwnerId())
                         .pairId(matchingNote.getPairId())
                         .build();

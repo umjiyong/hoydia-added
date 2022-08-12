@@ -30,6 +30,7 @@ public class Diary {
     private LocalDateTime regTime;
 
     private String ownerId;
+
     private String pairId;
 
     private boolean own;
@@ -40,12 +41,11 @@ public class Diary {
 
     private String buttonColor;
 
-    @Embedded
-    @AttributeOverrides({@AttributeOverride(name= "size",column = @Column(name = "diary_font_size")),
-            @AttributeOverride(name="style",column = @Column(name = "diary_font_style")),
-            @AttributeOverride(name="color",column = @Column(name = "diary_font_color"))})
+    private String font;
 
-    private Font font;
+    private String fontColor;
+
+    private Integer fontSize;
 
     private Integer drawn;
 
@@ -61,7 +61,9 @@ public class Diary {
             String title,
             String diaryColor,
             String buttonColor,
-            Font font
+            String font,
+            String fontColor,
+            Integer fontSize
     )
     {
         SHA256 sha256 = new SHA256();
@@ -80,6 +82,8 @@ public class Diary {
         this.diaryColor = diaryColor;
         this.buttonColor = buttonColor;
         this.font = font;
+        this.fontColor = fontColor;
+        this.fontSize = fontSize;
         this.drawn = 0;
     }
 

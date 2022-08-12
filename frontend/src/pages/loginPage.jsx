@@ -6,7 +6,6 @@ import React from 'react';
 import styled from 'styled-components';
 import Logo from 'components/Logo';
 import kakaoLogin from 'assets/kakaoLogin.png';
-import naverLogin from 'assets/naverLogin.png';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -30,12 +29,6 @@ const Slogan = styled.p`
 `;
 
 const KakaoBtn = styled.img`
-  width: 312px;
-  height: 75px;
-  border-radius: 100px;
-`;
-
-const NaverBtn = styled.img`
   width: 312px;
   height: 75px;
   border-radius: 100px;
@@ -86,6 +79,25 @@ function loginPage() {
                       res.data['access-token'],
                     );
                     window.localStorage.setItem('userId', res.data.userId);
+                    const JWT_EXPIRE_TIME = 1 * 3600 * 1000;
+
+                    const onSilentRefresh = () => {
+                      const header =
+                        window.localStorage.getItem('access-token');
+                      const response = axios.post(
+                        'http://localhost:8080/auth/refresh',
+                        header,
+                      );
+                      window.localStorage.setItem(
+                        'access-token',
+                        response.data['access-token'],
+                      );
+                      window.localStorage.setItem(
+                        'userId',
+                        response.data.userId,
+                      );
+                    };
+                    setTimeout(onSilentRefresh, JWT_EXPIRE_TIME - 60000);
                     navigate('/mainPage');
                   } catch (e) {
                     console.error(e);
@@ -102,7 +114,6 @@ function loginPage() {
           <a href={KAKAO_AUTH_URI}>
             <KakaoBtn src={kakaoLogin} />
           </a>
-          <NaverBtn src={naverLogin} />
         </BtnContainer>
       </Container>
     </div>

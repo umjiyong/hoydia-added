@@ -32,14 +32,24 @@ public class Page {
     @Setter (AccessLevel.NONE)
     private LocalDateTime regTime;
 
-    @Embedded
-    @NotBlank
-    private Title title;
+    private String title;
 
-    @Embedded
-    private Content content;
+    private String titleFont;
+
+    private String titleFontStyle;
+
+    private String titleFontSize;
+
+    private String content;
+
+    private String contentFont;
+
+    private String contentFontStyle;
+
+    private String contentFontSize;
 
     private String bgmPath;
+
     private String location;
 
     @OneToMany(mappedBy = "page")
@@ -48,9 +58,16 @@ public class Page {
 
     @Builder
     public Page (
+
             Diary diary,
-            Title title,
-            Content content,
+            String title,
+            String titleFont,
+            String titleFontStyle,
+            String titleFontSize,
+            String content,
+            String contentFont,
+            String contentFontStyle,
+            String contentFontSize,
             String bgmPath,
             String location
     )
@@ -66,7 +83,13 @@ public class Page {
         this.diary = diary;
         this.regTime = LocalDateTime.now();
         this.title = title;
+        this.titleFont = titleFont;
+        this.titleFontStyle = titleFontStyle;
+        this.titleFontSize = titleFontSize;
         this.content = content;
+        this.contentFont = contentFont;
+        this.contentFontStyle = contentFontStyle;
+        this.contentFontSize = contentFontSize;
         this.bgmPath = bgmPath;
         this.location = location;
 

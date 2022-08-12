@@ -67,6 +67,8 @@ public class PageController {
 
         pageService.regist(page);
 
+        diaryService.searchById(page.getDiary().getId()).setOwn(!diaryService.searchById(page.getDiary().getId()).isOwn()); // 페이지가 위치한 다이어리의 소유주 상태를 전환해줌.
+
         return new CreatePageResponseDto(page.getId(),page.getRegTime());
     }
 
@@ -119,7 +121,7 @@ public class PageController {
     }
 
     @PutMapping("/{pageId}")
-    @ApiOperation(value="페이지를 업데이트", notes = "pageId에 대응되는 page의 value들을 수정. (variable은 body로 request) id는 pathVariable로 request")
+    @ApiOperation(value="페이지를 업데이트", notes = "pageId에 대응되는 page의 value들을 수정. (variable은 body로 request) id는 pathVariable로 request - 죽은 기능(update 하지 않기로 함)")
     public MessageResponseDto updatePage(@PathVariable("pageId") String id, @RequestBody @Valid UpdatePageRequestDto request) {
 
         if (!jwtService.isValidUser())
@@ -139,7 +141,13 @@ public class PageController {
 
         pageService.update(id,
                 request.getTitle(),
+                request.getTitleFont(),
+                request.getTitleFontStyle(),
+                request.getTitleFontSize(),
                 request.getContent(),
+                request.getContentFont(),
+                request.getContentFontStyle(),
+                request.getContentFontSize(),
                 request.getBgmPath(),
                 request.getLocation());
 
@@ -179,10 +187,21 @@ public class PageController {
         @NotBlank
         private String diaryId; //소유권 체크용
 
-        @NotBlank
-        private Title title;
+        private String title;
 
-        private Content content;
+        private String titleFont;
+
+        private String titleFontStyle;
+
+        private String titleFontSize;
+
+        private String content;
+
+        private String contentFont;
+
+        private String contentFontStyle;
+
+        private String contentFontSize;
 
         private String bgmPath;
 
@@ -209,9 +228,21 @@ public class PageController {
 
         private LocalDateTime regTime;
 
-        private Title title;
+        private String title;
 
-        private Content content;
+        private String titleFont;
+
+        private String titleFontStyle;
+
+        private String titleFontSize;
+
+        private String content;
+
+        private String contentFont;
+
+        private String contentFontStyle;
+
+        private String contentFontSize;
 
         private String bgmPath;
 
@@ -224,7 +255,13 @@ public class PageController {
             this.diaryId = page.getDiary().getId();
             this.regTime = page.getRegTime();
             this.title = page.getTitle();
+            this.titleFont = page.getTitleFont();
+            this.titleFontStyle = page.getTitleFontStyle();
+            this.titleFontSize = page.getTitleFontSize();
             this.content = page.getContent();
+            this.contentFont = page.getContentFont();
+            this.contentFontStyle = page.getContentFontStyle();
+            this.contentFontSize = page.getContentFontSize();
             this.bgmPath = page.getBgmPath();
             this.location = page.getLocation();
 
@@ -235,10 +272,21 @@ public class PageController {
     @Data
     static class UpdatePageRequestDto {
 
-        @NotBlank
-        private Title title;
+        private String title;
 
-        private Content content;
+        private String titleFont;
+
+        private String titleFontStyle;
+
+        private String titleFontSize;
+
+        private String content;
+
+        private String contentFont;
+
+        private String contentFontStyle;
+
+        private String contentFontSize;
 
         private String bgmPath;
 
