@@ -100,11 +100,10 @@ function desk() {
       visualwidth1 >= width &&
       width >= visualwidth2
     ) {
-      console.log('성공');
       axios({
         method: 'put',
         url: `http://localhost:8080/diary/${dragItemContent.id}`,
-        header: {
+        headers: {
           'access-token': accessToken,
         },
         data: {
@@ -112,8 +111,6 @@ function desk() {
           title: dragItemContent.title,
         },
       });
-    } else {
-      console.log('실패');
     }
   };
   const [openDrop, setOpenDrop] = useState(false);

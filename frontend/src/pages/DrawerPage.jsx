@@ -7,13 +7,12 @@ import axios from 'axios';
 
 const DrawerContainer = styled.div``;
 
-const DiaryContainer = styled.div`
-  display: flex;
-  justify-content: center;
-`;
+const DiaryContainer = styled.div``;
 
 const Colcontainer = styled.div`
-  flex: ${(props) => props.size};
+  display: flex;
+  justify-content: center;
+  margin: 20px;
 `;
 
 const FloatingBtn = styled.img`
@@ -31,10 +30,9 @@ const FloatingBtn = styled.img`
   cursor: pointer;
 `;
 
-const userId = window.localStorage.getItem('userId');
-const accessToken = window.localStorage.getItem('access-token');
-
 function DrawerPage() {
+  const userId = window.localStorage.getItem('userId');
+  const accessToken = window.localStorage.getItem('access-token');
   const [list, setList] = useState([]);
   const DiaryAsync = async () => {
     try {
@@ -46,10 +44,9 @@ function DrawerPage() {
         },
       }).then((res) => {
         setList(res.data.data);
-        console.log(res);
       });
     } catch (e) {
-      console.error(e);
+      setList([]);
     }
   };
   useEffect(() => {
@@ -77,27 +74,27 @@ function DrawerPage() {
     const visualwidth2 = window.visualViewport.width - 140;
     const height = e.clientY;
     const width = e.clientX;
-    console.log(dragItemContent);
     if (
       visualheight1 >= height &&
       height >= visualheight2 &&
       visualwidth1 >= width &&
       width >= visualwidth2
     ) {
-      console.log('성공');
       axios({
-        method: 'put',
+        method: 'PUT',
         url: `http://localhost:8080/diary/${dragItemContent.id}`,
-        header: {
+        headers: {
           'access-token': accessToken,
         },
         data: {
           drawn: 1,
           title: dragItemContent.title,
         },
-      });
-    } else {
-      console.log('실패');
+      })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {});
     }
   };
 
