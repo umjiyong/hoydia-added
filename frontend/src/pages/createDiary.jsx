@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import Navbar from 'components/Navbar';
 import Diary from 'assets/CreateDiaryBackground.png';
 import FontMenu from 'components/FontMenu';
+import axios from 'axios';
 
 const MainDiv = styled.div`
   display: flex;
@@ -117,6 +118,28 @@ function diaryEdit() {
     event.preventDefault();
     console.log(inputs);
   };
+
+  const [file, setFile] = useState();
+
+  function fileHandleChange(event) {
+    setFile(event.target.files[0]);
+  }
+
+  function fileHandleSubmit(event) {
+    event.preventDefault();
+    const url = 'http://localhost:8080/file';
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('fileName', file.name);
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
+    };
+    axios.post(url, formData, config).then((response) => {
+      console.log(response.data);
+    });
+  }
   return (
     <div className="diaryEdit">
       <Navbar />
@@ -124,7 +147,11 @@ function diaryEdit() {
       <Container src={Diary} alt="Diary" />
       <MainDiv>
         <LeftDiv>
-          <div>이미지 파일</div>
+          <form onSubmit={fileHandleSubmit}>
+            <h1>React File Upload</h1>
+            <input type="file" onChange={fileHandleChange} />
+            <button type="submit">Upload</button>
+          </form>
           <div>
             폰트
             <Test>
