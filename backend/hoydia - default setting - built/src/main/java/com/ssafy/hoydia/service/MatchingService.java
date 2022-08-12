@@ -56,7 +56,7 @@ public class MatchingService {
 
         }
 
-        if (noteList.size()/2 == 0) return null;
+        if (noteList.size()%2 == 0) return null;
 
         else {
             Note rest = noteList.get(noteList.size() - 1);
