@@ -134,7 +134,7 @@ public class DiaryController {
                 request.getTitle(),
                 request.getDiaryColor(),
                 request.getButtonColor(),
-                request.getFont(),
+                request.getFontStyle(),
                 request.getFontColor(),
                 request.getFontSize(),
                 request.getDrawn());
@@ -207,7 +207,7 @@ public class DiaryController {
 
         private String buttonColor;
 
-        private String font;
+        private String fontStyle;
 
         private String fontColor;
 
@@ -227,7 +227,7 @@ public class DiaryController {
             this.title = diary.getTitle();
             this.diaryColor = diary.getDiaryColor();
             this.buttonColor = diary.getButtonColor();
-            this.font = diary.getFont();
+            this.fontStyle = diary.getFontStyle();
             this.fontColor = diary.getFontColor();
             this.fontSize = diary.getFontSize();
             this.drawn = diary.getDrawn();
@@ -245,7 +245,7 @@ public class DiaryController {
 
         private String buttonColor;
 
-        private String font;
+        private String fontStyle;
 
         private String fontColor;
 

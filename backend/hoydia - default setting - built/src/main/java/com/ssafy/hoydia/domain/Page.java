@@ -34,15 +34,11 @@ public class Page {
 
     private String title;
 
-    private String titleFont;
-
     private String titleFontStyle;
 
     private String titleFontSize;
 
     private String content;
-
-    private String contentFont;
 
     private String contentFontStyle;
 
@@ -61,11 +57,9 @@ public class Page {
 
             Diary diary,
             String title,
-            String titleFont,
             String titleFontStyle,
             String titleFontSize,
             String content,
-            String contentFont,
             String contentFontStyle,
             String contentFontSize,
             String bgmPath,
@@ -83,11 +77,9 @@ public class Page {
         this.diary = diary;
         this.regTime = LocalDateTime.now();
         this.title = title;
-        this.titleFont = titleFont;
         this.titleFontStyle = titleFontStyle;
         this.titleFontSize = titleFontSize;
         this.content = content;
-        this.contentFont = contentFont;
         this.contentFontStyle = contentFontStyle;
         this.contentFontSize = contentFontSize;
         this.bgmPath = bgmPath;
