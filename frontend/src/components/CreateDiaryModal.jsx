@@ -1,9 +1,10 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react/jsx-no-bind */
 import React, { useState } from 'react';
-
+import axios from 'axios';
 import styled from 'styled-components';
 import Modal, { ModalProvider, BaseModalBackground } from 'styled-react-modal';
 import exit from 'assets/exit.png';
@@ -102,6 +103,12 @@ const ExitDiv = styled.div`
 function FancyModalButton() {
   const [isOpen, setIsOpen] = useState(false);
   const [opacity, setOpacity] = useState(0);
+  const [friendPost, setfriendPost] = useState();
+
+  const friendChange = (event) => {
+    const value = event.target.value;
+    setfriendPost(value);
+  };
 
   function toggleModal() {
     setOpacity(0);
@@ -119,6 +126,30 @@ function FancyModalButton() {
       setOpacity(0);
       setTimeout(resolve, 300);
     });
+  }
+
+  function togglePost() {
+    axios({
+      headers: {
+        'access-token': `${localStorage.getItem('access-token')}`,
+      },
+      url: 'http://localhost:8080/diary',
+      method: 'POST',
+      data: {
+        buttonColor: '',
+        diaryColor: '',
+        pairId: `${friendPost}`,
+      },
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    setOpacity(0);
+    setIsOpen(!isOpen);
+    setfriendPost('');
   }
 
   return (
@@ -143,9 +174,11 @@ function FancyModalButton() {
             type="text"
             placeholder="같이 일기를 만들 친구의 코드를 입력해주세요."
             autoFocus
+            value={friendPost || ''}
+            onChange={friendChange}
           />
         </form>
-        <GoButton type="button" onClick={toggleModal}>
+        <GoButton type="button" onClick={togglePost}>
           GO!GO!
         </GoButton>
       </StyledModal>
