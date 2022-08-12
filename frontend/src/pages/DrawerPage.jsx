@@ -29,10 +29,10 @@ const FloatingBtn = styled.img`
   align-items: center;
   cursor: pointer;
 `;
+const userId = window.localStorage.getItem('userId');
+const accessToken = window.localStorage.getItem('access-token');
 
 function DrawerPage() {
-  const userId = window.localStorage.getItem('userId');
-  const accessToken = window.localStorage.getItem('access-token');
   const [list, setList] = useState([]);
   const DiaryAsync = async () => {
     try {

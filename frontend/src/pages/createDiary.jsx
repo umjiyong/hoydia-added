@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import Navbar from 'components/Navbar';
 import Diary from 'assets/CreateDiaryBackground.png';
 import FontMenu from 'components/FontMenu';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const MainDiv = styled.div`
@@ -41,11 +42,6 @@ const RightDiv = styled.div`
   width: 50%;
 `;
 
-const Img = styled(Diary)`
-  width: 600px;
-  height: 600px;
-`;
-
 const Container = styled.img`
   position: absolute;
   // top: 50px;
@@ -56,14 +52,6 @@ const Container = styled.img`
   z-index: -1;
   background-color: #ffca8c;
 `;
-
-// const Background = styled.div`
-//   background-color: black;
-// `;
-
-// const ContainerBox = styled.div`
-//   text-align: center;
-// `;
 
 const InputContent = styled.textarea`
   box-sizing: border-box;
@@ -99,8 +87,15 @@ const Test = styled.div`
   font-size: 10px;
 `;
 
+const userId = window.localStorage.getItem('userId');
+const accessToken = window.localStorage.getItem('access-token');
+
 function diaryEdit() {
   const [inputs, setInputs] = useState({});
+  const [file, setFile] = useState();
+  const [fontName, setfontName] = useState('');
+  const params = useParams();
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     const [name, value] = [event.target.name, event.target.value];
@@ -108,29 +103,19 @@ function diaryEdit() {
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
-  const [fontName, setfontName] = useState('');
+  function fileHandleChange(event) {
+    setFile(event.target.files[0]);
+  }
 
   const parentFunction = (data) => {
     setfontName(data);
   };
 
-  const handleSubmit = (event) => {
+  function fileSubmit(event) {
     event.preventDefault();
-    console.log(inputs);
-  };
-
-  const [file, setFile] = useState();
-
-  function fileHandleChange(event) {
-    setFile(event.target.files[0]);
-  }
-
-  function fileHandleSubmit(event) {
-    event.preventDefault();
-    const url = 'http://localhost:8080/file';
+    const url = 'http://localhost:8080/file/upload';
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('fileName', file.name);
     const config = {
       headers: {
         'content-type': 'multipart/form-data',
@@ -140,31 +125,63 @@ function diaryEdit() {
       console.log(response.data);
     });
   }
+
+  function pageSubmit(event) {
+    event.preventDefault();
+    axios({
+      method: 'post',
+      url: 'http://localhost:8080/page',
+      headers: {
+        'access-token': accessToken,
+      },
+      data: {
+        bgmPath: 'string',
+        content: `${inputs.content}`,
+        contentFont: 'string',
+        contentFontSize: 'string',
+        contentFontStyle: 'string',
+        diaryId: params.diaryId,
+        location: 'string',
+        title: `${inputs.title}`,
+        titleFont: 'string',
+        titleFontSize: 'string',
+        titleFontStyle: 'string',
+      },
+    });
+  }
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    fileSubmit(event);
+    pageSubmit(event);
+    navigate('diaryDetailPage');
+  };
   return (
     <div className="diaryEdit">
       <Navbar />
 
       <Container src={Diary} alt="Diary" />
-      <MainDiv>
-        <LeftDiv>
-          <form onSubmit={fileHandleSubmit}>
+      <form onSubmit={handleSubmit}>
+        <MainDiv>
+          <LeftDiv>
             <h1>React File Upload</h1>
-            <input type="file" onChange={fileHandleChange} />
-            <button type="submit">Upload</button>
-          </form>
-          <div>
-            폰트
-            <Test>
-              <FontMenu parentFunction={parentFunction} />
-            </Test>
-          </div>
+            <input
+              type="file"
+              name="file"
+              value={file || ''}
+              onChange={fileHandleChange}
+            />
+            <div>
+              폰트
+              <Test>
+                <FontMenu parentFunction={parentFunction} />
+              </Test>
+            </div>
 
-          <div>카카오</div>
-          <div>음악</div>
-        </LeftDiv>
+            <div>카카오</div>
+            <div>음악</div>
+          </LeftDiv>
 
-        <RightDiv>
-          <form onSubmit={handleSubmit}>
+          <RightDiv>
             <p>일기장 제목</p>
             <InputTitle
               maxLength={30}
@@ -186,10 +203,10 @@ function diaryEdit() {
             />
 
             <br></br>
-            <input type="submit" />
-          </form>
-        </RightDiv>
-      </MainDiv>
+          </RightDiv>
+          <input type="submit" />
+        </MainDiv>
+      </form>
     </div>
   );
 }

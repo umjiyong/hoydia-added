@@ -25,9 +25,9 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/mainPage" element={<MainPage />} />
         <Route path="/drawerPage" element={<DrawerPage />} />
-        <Route path="/diaryEdit" element={<DiaryEdit />} />
+        <Route path="/diaryEdit/:diaryId" element={<DiaryEdit />} />
         <Route path="/kakaologin" element={<KakaoLogin />} />
-        <Route path="/createDiary" element={<CreateDiary />} />
+        <Route path="/createDiary/:diaryId" element={<CreateDiary />} />
         <Route path="/diaryDetailPage" element={<DiaryDetailPage />} />
       </Routes>
     </div>
