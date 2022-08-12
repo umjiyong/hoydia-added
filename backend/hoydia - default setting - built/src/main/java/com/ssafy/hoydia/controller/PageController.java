@@ -60,7 +60,11 @@ public class PageController {
         Page page = Page.builder()
                 .diary(diary)
                 .title(request.getTitle())
+                .titleFontStyle(request.getTitleFontStyle())
+                .titleFontSize(request.getTitleFontSize())
                 .content(request.getContent())
+                .contentFontStyle(request.getContentFontStyle())
+                .contentFontSize(request.getContentFontSize())
                 .bgmPath(request.getBgmPath())
                 .location(request.getLocation())
                 .build();
