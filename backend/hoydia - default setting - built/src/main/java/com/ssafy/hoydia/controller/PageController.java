@@ -141,11 +141,9 @@ public class PageController {
 
         pageService.update(id,
                 request.getTitle(),
-                request.getTitleFont(),
                 request.getTitleFontStyle(),
                 request.getTitleFontSize(),
                 request.getContent(),
-                request.getContentFont(),
                 request.getContentFontStyle(),
                 request.getContentFontSize(),
                 request.getBgmPath(),
@@ -189,15 +187,11 @@ public class PageController {
 
         private String title;
 
-        private String titleFont;
-
         private String titleFontStyle;
 
         private String titleFontSize;
 
         private String content;
-
-        private String contentFont;
 
         private String contentFontStyle;
 
@@ -230,15 +224,11 @@ public class PageController {
 
         private String title;
 
-        private String titleFont;
-
         private String titleFontStyle;
 
         private String titleFontSize;
 
         private String content;
-
-        private String contentFont;
 
         private String contentFontStyle;
 
@@ -255,11 +245,9 @@ public class PageController {
             this.diaryId = page.getDiary().getId();
             this.regTime = page.getRegTime();
             this.title = page.getTitle();
-            this.titleFont = page.getTitleFont();
             this.titleFontStyle = page.getTitleFontStyle();
             this.titleFontSize = page.getTitleFontSize();
             this.content = page.getContent();
-            this.contentFont = page.getContentFont();
             this.contentFontStyle = page.getContentFontStyle();
             this.contentFontSize = page.getContentFontSize();
             this.bgmPath = page.getBgmPath();
@@ -274,15 +262,11 @@ public class PageController {
 
         private String title;
 
-        private String titleFont;
-
         private String titleFontStyle;
 
         private String titleFontSize;
 
         private String content;
-
-        private String contentFont;
 
         private String contentFontStyle;
 
