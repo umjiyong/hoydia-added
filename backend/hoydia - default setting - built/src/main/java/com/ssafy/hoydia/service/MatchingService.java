@@ -38,10 +38,10 @@ public class MatchingService {
 
             MatchingNote matchingNote = MatchingNote.builder()
                     .user(note1.getUser())
-                    .ownerId(note1.getId())
+                    .ownerId(note1.getUser().getId())
                     .ownerAnswer(note1.getAnswer())
                     .ownerQuestion(note1.getQuestion())
-                    .pairId(note2.getId())
+                    .pairId(note2.getUser().getId())
                     .pairAnswer(note2.getAnswer())
                     .pairQuestion(note2.getQuestion())
                     .build();
@@ -75,6 +75,7 @@ public class MatchingService {
 
     @Transactional
     public String permitCheckedCheck(String matchingNoteId , String userId , boolean permit) { // 매칭노트 아이디로 체크
+
 
         MatchingNote matchingNote = matchingNoteRepository.findById(matchingNoteId);
 
