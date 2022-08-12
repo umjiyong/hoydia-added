@@ -1,9 +1,16 @@
+/* eslint-disable key-spacing */
+/* eslint-disable quote-props */
+/* eslint-disable no-console */
+/* eslint-disable camelcase */
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable no-shadow */
 /* eslint-disable react/jsx-no-bind */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import styled from 'styled-components';
 import Modal, { ModalProvider, BaseModalBackground } from 'styled-react-modal';
 import exit from 'assets/exit.png';
+import axios from 'axios';
 
 const StyledModal = Modal.styled`
        
@@ -78,6 +85,34 @@ const ExitDiv = styled.div`
 `;
 
 function FancyModalButton() {
+  const [user_id, setUser_id] = useState('1');
+  const [user_email, setUser_email] = useState('@');
+  const [user_nickname, setUser_nickname] = useState('');
+
+  const token = localStorage.getItem('access-token');
+
+  useEffect(() => {
+    // console.log(token);
+
+    axios({
+      headers: {
+        'access-token': `${localStorage.getItem('access-token')}`,
+      },
+      url: 'http://localhost:8080/user',
+      method: 'GET',
+    })
+      .then((res) => {
+        setUser_id(res.data.data.id);
+        setUser_email(res.data.data.email);
+        setUser_nickname(res.data.data.nickname);
+
+        // console.log(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+
   const [isOpen, setIsOpen] = useState(false);
   const [opacity, setOpacity] = useState(0);
 
@@ -115,6 +150,11 @@ function FancyModalButton() {
           <ExitBtn src={exit} />
         </ExitDiv>
         <Title>마이페이지</Title>
+        <div>
+          <p>유저 아이디 (친구 추가 코드) : {user_id}</p>
+          <p>유저 이메일 : {user_email}</p>
+          <p>유저 닉네임 : {user_nickname}</p>
+        </div>
         <GoButton type="button" onClick={toggleModal}>
           GOGO
         </GoButton>

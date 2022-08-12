@@ -30,6 +30,7 @@ public class Diary {
     private LocalDateTime regTime;
 
     private String ownerId;
+
     private String pairId;
 
     private boolean own;
@@ -39,6 +40,12 @@ public class Diary {
     private String diaryColor;
 
     private String buttonColor;
+
+    private String fontStyle;
+
+    private String fontColor;
+
+    private Integer fontSize;
 
     private Integer drawn;
 
@@ -51,11 +58,12 @@ public class Diary {
             User user,
             String ownerId,
             String pairId,
-            boolean own,
             String title,
             String diaryColor,
             String buttonColor,
-            Integer drawn
+            String fontStyle,
+            String fontColor,
+            Integer fontSize
     )
     {
         SHA256 sha256 = new SHA256();
@@ -69,11 +77,14 @@ public class Diary {
         this.regTime = LocalDateTime.now();
         this.ownerId = ownerId;
         this.pairId = pairId;
-        this.own = own;
+        this.own = true;
         this.title = title;
         this.diaryColor = diaryColor;
         this.buttonColor = buttonColor;
-        this.drawn = drawn;
+        this.fontStyle = fontStyle;
+        this.fontColor = fontColor;
+        this.fontSize = fontSize;
+        this.drawn = 0;
     }
 
 }

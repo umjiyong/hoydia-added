@@ -1,9 +1,12 @@
 package com.ssafy.hoydia.controller;
 
 import com.ssafy.hoydia.domain.Diary;
+import com.ssafy.hoydia.domain.Font;
+import com.ssafy.hoydia.domain.User;
 import com.ssafy.hoydia.dto.MessageResponseDto;
 import com.ssafy.hoydia.dto.ResultDto;
 import com.ssafy.hoydia.exception.InvalidApproachException;
+import com.ssafy.hoydia.exception.LoginException;
 import com.ssafy.hoydia.exception.UnauthorizedException;
 import com.ssafy.hoydia.service.DiaryService;
 import com.ssafy.hoydia.service.JwtService;
@@ -36,19 +39,24 @@ public class DiaryController {
 
     @PostMapping
     @ApiOperation(value="일기 작성", notes = "사용자 두 명에 해당하는 고유 id와 color들을 body에 request 후 작성.")
-    public CreateDiaryResponseDto createDiary(@RequestBody @Valid CreateDiaryRequestDto request) {
+    public CreateDiaryResponseDto createDiary (@RequestBody @Valid CreateDiaryRequestDto request) {
 
         if (!jwtService.isValidUser())
             throw new InvalidApproachException("사용자 인증 실패");
 
+        if(userService.searchById(request.getPairId()) == null)
+            throw new InvalidApproachException("존재하지 않는 친구 코드입니다.");
+
+        User owner = userService.searchById(jwtService.getUserId());
+        User pair = userService.searchById(request.getPairId());
+
         Diary diary = Diary.builder()
                 .user(userService.searchById(jwtService.getUserId()))
-                .ownerId(request.getOwnerId())
+                .title("제목")
+                .ownerId(jwtService.getUserId())
                 .pairId(request.getPairId())
-                .own(true)
                 .diaryColor(request.getDiaryColor())
                 .buttonColor(request.getButtonColor())
-                .drawn(0)
                 .build();
 
         diaryService.regist(diary);
@@ -109,7 +117,7 @@ public class DiaryController {
 
     @PutMapping("/{diaryId}")
     @ApiOperation(value="다이어리를 업데이트", notes = "diaryId에 해당하는 diary의 title,color,drawn 등을 수정 가능 (variable은 body로 request) id는 pathVariable로 request")
-    public MessageResponseDto updateDiary(@PathVariable("diaryId") String id, @RequestBody @Valid UpdateDiaryRequestDto request) {
+    public MessageResponseDto updateDiary(@PathVariable("diaryId") String id, @RequestBody UpdateDiaryRequestDto request) {
 
         if (!jwtService.isValidUser())
             throw new InvalidApproachException("사용자 인증 실패");
@@ -126,6 +134,9 @@ public class DiaryController {
                 request.getTitle(),
                 request.getDiaryColor(),
                 request.getButtonColor(),
+                request.getFontStyle(),
+                request.getFontColor(),
+                request.getFontSize(),
                 request.getDrawn());
 
         return new MessageResponseDto("수정 완료");
@@ -157,15 +168,10 @@ public class DiaryController {
     static class CreateDiaryRequestDto {
 
         @NotBlank
-        private String ownerId;
-
-        @NotBlank
         private String pairId;
 
-        @NotBlank
         private String diaryColor;
 
-        @NotBlank
         private String buttonColor;
 
     }
@@ -201,6 +207,12 @@ public class DiaryController {
 
         private String buttonColor;
 
+        private String fontStyle;
+
+        private String fontColor;
+
+        private Integer fontSize;
+
         private Integer drawn;
 
         public ReadDiaryResponseDto(Diary diary) {
@@ -215,6 +227,9 @@ public class DiaryController {
             this.title = diary.getTitle();
             this.diaryColor = diary.getDiaryColor();
             this.buttonColor = diary.getButtonColor();
+            this.fontStyle = diary.getFontStyle();
+            this.fontColor = diary.getFontColor();
+            this.fontSize = diary.getFontSize();
             this.drawn = diary.getDrawn();
 
         }
@@ -226,15 +241,18 @@ public class DiaryController {
         @NotBlank
         private String title;
 
-        @NotBlank
         private String diaryColor;
 
-        @NotBlank
         private String buttonColor;
 
-        @NotBlank
-        private int drawn;
+        private String fontStyle;
 
+        private String fontColor;
+
+        private Integer fontSize;
+
+        @NotBlank
+        private Integer drawn;
 
     }
 

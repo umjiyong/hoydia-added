@@ -128,8 +128,9 @@ const RightDiv = styled.div`
 const IndexDiv = styled.p`
   position: absolute;
   top: 200px;
-  right: 75px;
+  left: 1130px;
   font-family: ${(props) => props.fontName}, 'sans-serif';
+  z-index: 1;
 `;
 const DiaryIcon = <FontAwesomeIcon size="lg" icon={faBook} />;
 const ClipIcon = <FontAwesomeIcon size="lg" icon={faPaperclip} />;
@@ -247,7 +248,7 @@ function diaryEdit() {
 
           <EditDiv>
             <InputBar
-              maxLength={14}
+              maxLength={13}
               type="text"
               id="message"
               name="message"
@@ -283,14 +284,14 @@ function diaryEdit() {
 
         <RightDiv>
           <Container color1={colorHex1} color2={colorHex2}>
+            <IndexDiv
+              style={{ color: colorHex3, fontSize: size, fontFamily: fontName }}
+              onChange={(e) => setColorHex2(e.hex)}
+            >
+              {message}
+            </IndexDiv>
             <DiaryImg className="plus_icon" />
           </Container>
-          <IndexDiv
-            style={{ color: colorHex3, fontSize: size, fontFamily: fontName }}
-            onChange={(e) => setColorHex2(e.hex)}
-          >
-            {message}
-          </IndexDiv>
         </RightDiv>
       </MainDiv>
       <Jujang>저장하기</Jujang>

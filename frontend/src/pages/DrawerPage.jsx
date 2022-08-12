@@ -1,17 +1,10 @@
 import styled from 'styled-components';
 import React, { useState, useEffect, useRef } from 'react';
-import diary from 'assets/diary.png';
-import diarytable from 'assets/diaryTable.png';
+import Diary from 'components/DiaryCompo';
 import Navbar from 'components/Navbar';
+import floatingbutton from 'assets/floatingButton.png';
+import axios from 'axios';
 
-const LoaderWrap = styled.div`
-  width: 100%;
-  height: 80%;
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  align-items: center;
-`;
 const DrawerContainer = styled.div``;
 
 const DiaryContainer = styled.div`
@@ -22,11 +15,7 @@ const DiaryContainer = styled.div`
 const Colcontainer = styled.div`
   flex: ${(props) => props.size};
 `;
-const Diary = styled.img`
-  max-width: 240px;
-  max-height: 300px;
-  // margin: 40px;
-`;
+
 const FloatingBtn = styled.img`
   position: fixed; //포인트!
   line-height: 63px;
@@ -42,35 +31,37 @@ const FloatingBtn = styled.img`
   cursor: pointer;
 `;
 
+const userId = window.localStorage.getItem('userId');
+const accessToken = window.localStorage.getItem('access-token');
+
 function DrawerPage() {
-  const [itemList, setItemList] = useState([1, 2, 3, 4, 5, 6]); // ItemList
-  const [list, setList] = useState([
-    <Diary src={diary} alt="diary1" />,
-    <Diary src={diary} alt="diary2" />,
-    <Diary src={diary} alt="diary3" />,
-    <Diary src={diary} alt="diary4" />,
-    <Diary src={diary} alt="diary5" />,
-    <Diary src={diary} alt="diary5" />,
-    <Diary src={diary} alt="diary5" />,
-    <Diary src={diary} alt="diary5" />,
-    <Diary src={diary} alt="diary5" />,
-    <Diary src={diary} alt="diary5" />,
-    <Diary src={diary} alt="diary5" />,
-    <Diary src={diary} alt="diary5" />,
-    <Diary src={diary} alt="diary5" />,
-    <Diary src={diary} alt="diary5" />,
-  ]);
-  const [target, setTarget] = useState(''); // target
-  const [isLoding, setIsLoding] = useState(false); // isloding
+  const [list, setList] = useState([]);
+  const DiaryAsync = async () => {
+    try {
+      axios({
+        method: 'get',
+        url: `http://localhost:8080/diary/user/${userId}`,
+        headers: {
+          'access-token': accessToken,
+        },
+      }).then((res) => {
+        setList(res.data.data);
+        console.log(res);
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  };
+  useEffect(() => {
+    DiaryAsync();
+  }, []);
   const dragItem = useRef();
   const dragOverItem = useRef();
   const dragStart = (e, position) => {
     dragItem.current = position;
-    console.log(e.type);
   };
   const dragEnter = (e, position) => {
     dragOverItem.current = position;
-    console.log(e.type);
   };
   const drop = (e) => {
     const copyListItems = [...list];
@@ -80,47 +71,35 @@ function DrawerPage() {
     dragItem.current = null;
     dragOverItem.current = null;
     setList(copyListItems);
-    console.log(e);
-    console.log(window.visualViewport.height);
-    console.log(window.visualViewport.width);
     const visualheight1 = window.visualViewport.height - 40;
     const visualwidth1 = window.visualViewport.width - 40;
     const visualheight2 = window.visualViewport.height - 140;
     const visualwidth2 = window.visualViewport.width - 140;
     const height = e.clientY;
     const width = e.clientX;
+    console.log(dragItemContent);
     if (
       visualheight1 >= height &&
       height >= visualheight2 &&
       visualwidth1 >= width &&
       width >= visualwidth2
     ) {
-      console.log('이동');
+      console.log('성공');
+      axios({
+        method: 'put',
+        url: `http://localhost:8080/diary/${dragItemContent.id}`,
+        header: {
+          'access-token': accessToken,
+        },
+        data: {
+          drawn: 1,
+          title: dragItemContent.title,
+        },
+      });
     } else {
       console.log('실패');
     }
   };
-  const onIntersect = async ([entry], observer) => {
-    if (entry.isIntersecting && !isLoding) {
-      observer.unobserve(entry.target);
-      setIsLoding(true);
-      // 데이터를 가져오는 부분
-      setIsLoding(false);
-      observer.observe(entry.target);
-    }
-  };
-
-  useEffect(() => {
-    let observer;
-    if (target) {
-      // callback 함수, option
-      observer = new IntersectionObserver(onIntersect, {
-        threshold: 0.4,
-      });
-      observer.observe(target); // 타겟 엘리먼트 지정
-    }
-    return () => observer && observer.disconnect();
-  }, [target]);
 
   return (
     <div className="App">
@@ -145,22 +124,14 @@ function DrawerPage() {
                 onDragEnd={drop}
                 draggable
               >
-                {item}
+                <Diary DiaryInfo={item} />
               </Colcontainer>
             ))}
-          {isLoding ? (
-            <LoaderWrap>
-              {/* <ReactLoading type="spin" color="#A593E0" /> */}
-            </LoaderWrap>
-          ) : (
-            ''
-          )}
-          <div ref={setTarget}> </div>
         </DiaryContainer>
-        {/* <FloatingBtn src={floatingbutton} /> */}
+        <FloatingBtn src={floatingbutton} />
       </DrawerContainer>
     </div>
   );
 }
 
-export default DrawerPage;
+export default React.memo(DrawerPage);

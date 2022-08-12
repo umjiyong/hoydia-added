@@ -14,7 +14,7 @@ public class FileDto {
     private String path;
 
     public File toEntity () {
-        File file =File.builder()
+        File file = File.builder()
                 .id(id)
                 .original(original)
                 .custom(custom)

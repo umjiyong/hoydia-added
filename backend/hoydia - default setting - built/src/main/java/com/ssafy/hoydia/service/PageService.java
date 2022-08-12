@@ -45,7 +45,15 @@ public class PageService {
     }
 
     @Transactional
-    public String update (String id, Title title, Content content, String bgmPath, String location) {
+    public String update (String id,
+                          String title,
+                          String titleFontStyle,
+                          String titleFontSize,
+                          String content,
+                          String contentFontStyle,
+                          String contentFontSize,
+                          String bgmPath,
+                          String location) {
 
         Page page = pageRepository.findById(id);
 
@@ -56,7 +64,11 @@ public class PageService {
 
 
             page.setTitle(title);
+            page.setTitleFontStyle(titleFontStyle);
+            page.setTitleFontSize(titleFontSize);
             page.setContent(content);
+            page.setContentFontStyle(contentFontStyle);
+            page.setContentFontStyle(contentFontSize);
             page.setBgmPath(bgmPath);
             page.setLocation(location);
 

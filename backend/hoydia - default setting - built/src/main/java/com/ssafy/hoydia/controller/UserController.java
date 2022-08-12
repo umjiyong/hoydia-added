@@ -65,6 +65,7 @@ public class UserController {
         List<ReadUserResponseDto> userList = userService.searchAllUserOrderById().stream().map(user -> new ReadUserResponseDto(user)).collect(Collectors.toList());
         return new ResultDto(userList);
     }
+
     @GetMapping
     @ApiOperation(value="유저 확인", notes = "현재 접속해 있는 유저의 정보 확인")
     public ResultDto readUser() {
@@ -98,26 +99,23 @@ public class UserController {
     }
 
     // 회원 탈퇴
-    @DeleteMapping("/{userId}")
-    @ApiOperation(value="회원 탈퇴", notes = "id를 path에 request")
-    public MessageResponseDto deleteUser(@PathVariable("userId") String userId){
+    @DeleteMapping
+    @ApiOperation(value="회원 탈퇴", notes = "로그인 된 아이디를 회원 탈퇴")
+    public MessageResponseDto deleteUser(){
 
         if (!jwtService.isValidUser())
             throw new InvalidApproachException("사용자 인증 실패");
 
         String currentUid = jwtService.getUserId();
 
-        boolean isMine = currentUid.equals(userId);
-
-        if(!isMine) throw new UnauthorizedException();
-
-        userService.delete(userId);
+        userService.delete(currentUid);
         return new MessageResponseDto("회원 탈퇴가 완료되었습니다.");
 
     }
 
     @Data
     static class RegistUserRequestDto {
+
         @NotBlank
         private String id;
 

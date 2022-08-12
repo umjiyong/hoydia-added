@@ -41,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests() // 다음으로 올 코드들이 URL별 권한 관리를 할 것이라는 것을 나타냄
 //                .antMatchers(HttpMethod.OPTIONS).permitAll()// preflight 대응
 //              .antMatchers("/","/css/**","/images/**","/js/**","/webjars/**")
-                .antMatchers("/oauth-login","/","/user/**","/diary/**","/auth/**","/note/**")
+                .antMatchers("/oauth-login","/","/user/**","/diary/**","/auth/**","/note/**","/file/**","/note/**","/notice/**","/page/**","/sticker/**","/match/**")
                 .permitAll() // 위에 지정된 URL을 전체 열람 권한을 줌
                 .antMatchers().hasRole(Role.USER.name())
                 .anyRequest().authenticated().and() // 설정 값 이외에는 authenticated 되어야만 사용할 수 있다.

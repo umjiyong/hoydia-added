@@ -2,13 +2,12 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/self-closing-comp */
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Logo from 'components/Logo';
 import kakaoLogin from 'assets/kakaoLogin.png';
-import naverLogin from 'assets/naverLogin.png';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Hoydia = styled.h1`
@@ -29,18 +28,7 @@ const Slogan = styled.p`
   color: #000000;
 `;
 
-const Diary = styled.img`
-  max-width: 100%;
-  height: auto;
-`;
-
 const KakaoBtn = styled.img`
-  width: 312px;
-  height: 75px;
-  border-radius: 100px;
-`;
-
-const NaverBtn = styled.img`
   width: 312px;
   height: 75px;
   border-radius: 100px;
@@ -65,7 +53,6 @@ function loginPage() {
   const KAKAO_CLIENT_ID = process.env.REACT_APP_KAKAO_CLIENT_ID;
   const REDIRECT_URI = 'http://localhost:3000/kakaoLogin';
   const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-
   return (
     <div className="login">
       <Container>
@@ -78,8 +65,46 @@ function loginPage() {
           >
             <GoogleLogin
               onSuccess={(credentialResponse) => {
-                navigate('/mainPage');
-                console.log(credentialResponse.credential);
+                const authRequest = {
+                  accessToken: credentialResponse.credential,
+                };
+                const async = async () => {
+                  try {
+                    const res = await axios.post(
+                      'http://localhost:8080/auth/google',
+                      authRequest,
+                    );
+                    window.localStorage.setItem(
+                      'access-token',
+                      res.data['access-token'],
+                    );
+                    window.localStorage.setItem('userId', res.data.userId);
+                    const JWT_EXPIRE_TIME = 1 * 3600 * 1000;
+
+                    const onSilentRefresh = () => {
+                      const header =
+                        window.localStorage.getItem('access-token');
+                      const response = axios.post(
+                        'http://localhost:8080/auth/refresh',
+                        header,
+                      );
+                      window.localStorage.setItem(
+                        'access-token',
+                        response.data['access-token'],
+                      );
+                      window.localStorage.setItem(
+                        'userId',
+                        response.data.userId,
+                      );
+                    };
+                    setTimeout(onSilentRefresh, JWT_EXPIRE_TIME - 60000);
+                    navigate('/mainPage');
+                  } catch (e) {
+                    console.error(e);
+                    navigate('/');
+                  }
+                };
+                async();
               }}
               onError={() => {
                 console.log('Login Failed');
@@ -89,7 +114,6 @@ function loginPage() {
           <a href={KAKAO_AUTH_URI}>
             <KakaoBtn src={kakaoLogin} />
           </a>
-          <NaverBtn src={naverLogin} />
         </BtnContainer>
       </Container>
     </div>
