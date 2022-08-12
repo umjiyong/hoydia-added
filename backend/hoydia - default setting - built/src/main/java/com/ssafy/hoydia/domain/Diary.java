@@ -30,6 +30,7 @@ public class Diary {
     private LocalDateTime regTime;
 
     private String ownerId;
+
     private String pairId;
 
     private boolean own;

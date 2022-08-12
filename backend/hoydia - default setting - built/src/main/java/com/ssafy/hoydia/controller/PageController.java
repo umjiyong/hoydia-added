@@ -141,7 +141,13 @@ public class PageController {
 
         pageService.update(id,
                 request.getTitle(),
+                request.getTitleFont(),
+                request.getTitleFontStyle(),
+                request.getTitleFontSize(),
                 request.getContent(),
+                request.getContentFont(),
+                request.getContentFontStyle(),
+                request.getContentFontSize(),
                 request.getBgmPath(),
                 request.getLocation());
 
@@ -181,10 +187,21 @@ public class PageController {
         @NotBlank
         private String diaryId; //소유권 체크용
 
-        @NotBlank
-        private Title title;
+        private String title;
 
-        private Content content;
+        private String titleFont;
+
+        private String titleFontStyle;
+
+        private String titleFontSize;
+
+        private String content;
+
+        private String contentFont;
+
+        private String contentFontStyle;
+
+        private String contentFontSize;
 
         private String bgmPath;
 
@@ -211,9 +228,21 @@ public class PageController {
 
         private LocalDateTime regTime;
 
-        private Title title;
+        private String title;
 
-        private Content content;
+        private String titleFont;
+
+        private String titleFontStyle;
+
+        private String titleFontSize;
+
+        private String content;
+
+        private String contentFont;
+
+        private String contentFontStyle;
+
+        private String contentFontSize;
 
         private String bgmPath;
 
@@ -226,7 +255,13 @@ public class PageController {
             this.diaryId = page.getDiary().getId();
             this.regTime = page.getRegTime();
             this.title = page.getTitle();
+            this.titleFont = page.getTitleFont();
+            this.titleFontStyle = page.getTitleFontStyle();
+            this.titleFontSize = page.getTitleFontSize();
             this.content = page.getContent();
+            this.contentFont = page.getContentFont();
+            this.contentFontStyle = page.getContentFontStyle();
+            this.contentFontSize = page.getContentFontSize();
             this.bgmPath = page.getBgmPath();
             this.location = page.getLocation();
 
@@ -237,10 +272,21 @@ public class PageController {
     @Data
     static class UpdatePageRequestDto {
 
-        @NotBlank
-        private Title title;
+        private String title;
 
-        private Content content;
+        private String titleFont;
+
+        private String titleFontStyle;
+
+        private String titleFontSize;
+
+        private String content;
+
+        private String contentFont;
+
+        private String contentFontStyle;
+
+        private String contentFontSize;
 
         private String bgmPath;
 
