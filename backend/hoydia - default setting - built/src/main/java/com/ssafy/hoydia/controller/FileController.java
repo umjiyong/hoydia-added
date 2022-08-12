@@ -73,7 +73,7 @@ public class FileController {
 //    }
 
     @PostMapping("/upload")
-    @ApiOperation(value="파일 서버에 올리기", notes = "서버에 올리는 작업이므로 서버 키가 있어야 함(백엔드 문의) + 돈 나올 수 있는 기능이니 조금만..주의")
+    @ApiOperation(value="파일 서버에 올리기", notes = "(parameter는 catgory와 파일 (body)) 서버에 올리는 작업이므로 서버 키가 있어야 함(백엔드 문의) + 돈 나올 수 있는 기능이니 조금만..주의")
     public String uploadFile(
             @RequestParam("category") String category,
             @RequestPart(value = "file") MultipartFile multipartFile) {

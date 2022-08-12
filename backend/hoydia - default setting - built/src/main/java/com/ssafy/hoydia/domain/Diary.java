@@ -41,7 +41,7 @@ public class Diary {
 
     private String buttonColor;
 
-    private String font;
+    private String fontStyle;
 
     private String fontColor;
 
@@ -61,7 +61,7 @@ public class Diary {
             String title,
             String diaryColor,
             String buttonColor,
-            String font,
+            String fontStyle,
             String fontColor,
             Integer fontSize
     )
@@ -81,7 +81,7 @@ public class Diary {
         this.title = title;
         this.diaryColor = diaryColor;
         this.buttonColor = buttonColor;
-        this.font = font;
+        this.fontStyle = fontStyle;
         this.fontColor = fontColor;
         this.fontSize = fontSize;
         this.drawn = 0;
