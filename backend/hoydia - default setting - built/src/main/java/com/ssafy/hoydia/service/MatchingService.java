@@ -38,17 +38,17 @@ public class MatchingService {
 
             MatchingNote matchingNote = MatchingNote.builder()
                     .user(note1.getUser())
-                    .ownerId(note1.getId())
+                    .ownerId(note1.getUser().getId())
                     .ownerAnswer(note1.getAnswer())
                     .ownerQuestion(note1.getQuestion())
-                    .pairId(note2.getId())
+                    .pairId(note2.getUser().getId())
                     .pairAnswer(note2.getAnswer())
                     .pairQuestion(note2.getQuestion())
                     .build();
 
             matchingNoteRepository.regist(matchingNote);
 
-            sendNotice( note1.getUser() , note2.getUser() , "매칭중! 위치 : " + matchingNote.getId() , "님과 매칭이 연결되었습니다." );
+            sendMatchingNotice(note1.getUser() , note2.getUser() , "매칭중! 매칭노트 : " + matchingNote.getId() , "님과 매칭이 연결되었습니다." );
 
 
             noteRepository.delete(note1.getId());
@@ -75,6 +75,7 @@ public class MatchingService {
 
     @Transactional
     public String permitCheckedCheck(String matchingNoteId , String userId , boolean permit) { // 매칭노트 아이디로 체크
+
 
         MatchingNote matchingNote = matchingNoteRepository.findById(matchingNoteId);
 
@@ -111,13 +112,13 @@ public class MatchingService {
 
                 diaryRepository.regist(diary);
 
-                sendNotice( matchingNote.getUser() , noteRepository.findById(matchingNote.getPairId()).getUser() , "교환 일기 만들기 성공!" , "님과 다이어리가 만들어 졌어요." );
+                sendMatchingNotice(matchingNote.getUser() , noteRepository.findById(matchingNote.getPairId()).getUser() , "교환 일기 만들기 성공!" , "님과 다이어리가 만들어 졌어요." );
 
             }
 
             else {
 
-                sendNotice( matchingNote.getUser() , noteRepository.findById(matchingNote.getPairId()).getUser() , "교환 일기 만들기 실패!" , "님과 매칭 중 한 분이 거절하였습니다 ㅠ_ㅠ" );
+                sendMatchingNotice(matchingNote.getUser() , noteRepository.findById(matchingNote.getPairId()).getUser() , "교환 일기 만들기 실패!" , "님과 매칭 중 한 분이 거절하였습니다 ㅠ_ㅠ" );
 
             }
 
@@ -131,7 +132,8 @@ public class MatchingService {
 
     }
 
-    private void sendNotice (User user1, User user2, String title , String content) {
+    @Transactional
+    public void sendMatchingNotice (User user1, User user2, String title , String content) {
 
         Notice notice1 = Notice.builder()
                 .user(user1)

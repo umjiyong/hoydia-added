@@ -26,7 +26,6 @@ public class Page {
     @JoinColumn(name = "diary_id")
     @ManyToOne(fetch= FetchType.LAZY)
     @Setter (AccessLevel.NONE)
-    @NotBlank
     private Diary diary;
 
     @Setter (AccessLevel.NONE)

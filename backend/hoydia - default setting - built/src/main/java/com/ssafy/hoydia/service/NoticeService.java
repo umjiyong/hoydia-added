@@ -2,6 +2,7 @@ package com.ssafy.hoydia.service;
 
 import com.ssafy.hoydia.domain.Note;
 import com.ssafy.hoydia.domain.Notice;
+import com.ssafy.hoydia.domain.User;
 import com.ssafy.hoydia.exception.InvalidApproachException;
 import com.ssafy.hoydia.repository.NoticeRepository;
 import lombok.RequiredArgsConstructor;
@@ -63,6 +64,26 @@ public class NoticeService {
     public void delete (Long id) {
 
         noticeRepository.delete(id);
+
+    }
+
+    @Transactional
+    public void sendNotice (User user1, User user2, String title , String content) {
+
+        Notice notice1 = Notice.builder()
+                .user(user1)
+                .title(title)
+                .content(content)
+                .build();
+
+        Notice notice2 = Notice.builder()
+                .user(user2)
+                .title(title)
+                .content(content)
+                .build();
+
+        noticeRepository.regist(notice1);
+        noticeRepository.regist(notice2);
 
     }
 
