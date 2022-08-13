@@ -4,6 +4,7 @@
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable no-unused-vars */
+/* eslint implicit-arrow-linebreak: ["error", "beside"] */
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Navbar from 'components/Navbar';
@@ -11,6 +12,7 @@ import Diary from 'assets/CreateDiaryBackground.png';
 import FontMenu from 'components/FontMenu';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { Map, MapMarker } from 'react-kakao-maps-sdk';
 
 const MainDiv = styled.div`
   display: flex;
@@ -95,12 +97,21 @@ const accessToken = window.localStorage.getItem('access-token');
 function diaryEdit() {
   const [inputs, setInputs] = useState({});
   const [fileImage, setFileImage] = useState();
+  const [fileImageView, setFileImageView] = useState();
   const [fontName, setfontName] = useState('');
+  const [position, setPosition] = useState({
+    lat: 37.553181930643554,
+    lng: 126.97290711826425,
+  });
   const params = useParams();
   const navigate = useNavigate();
 
-  const saveFileImage = (e) => {
-    setFileImage(URL.createObjectURL(e.target.files[0]));
+  const saveFileImage = (event) => {
+    setFileImage(event.target.files[0]);
+  };
+
+  const saveFileImageView = (e) => {
+    setFileImageView(URL.createObjectURL(e.target.files[0]));
   };
 
   const handleChange = (event) => {
@@ -114,17 +125,16 @@ function diaryEdit() {
 
   function fileSubmit(event) {
     event.preventDefault();
-    const url = 'http://localhost:8080/file/upload';
+    const url = 'http://localhost:8080/file/upload?category=image';
     const formData = new FormData();
     formData.append('file', fileImage);
+    formData.append('fileName', fileImage.name);
     const config = {
       headers: {
         'content-type': 'multipart/form-data',
       },
     };
-    axios.post(url, formData, config).then((response) => {
-      console.log(response.data);
-    });
+    axios.post(url, formData, config).then((response) => {});
   }
 
   function pageSubmit(event) {
@@ -137,23 +147,24 @@ function diaryEdit() {
       },
       data: {
         bgmPath: 'string',
-        content: `${inputs.content}`,
+        content: inputs.content,
         contentFontSize: '20',
         contentFontStyle: fontName,
         diaryId: params.diaryId,
-        location: 'string',
-        title: `${inputs.title}`,
+        location: position.lat,
+        title: inputs.title,
         titleFontSize: '20',
         titleFontStyle: fontName,
       },
-    });
+    }).then();
   }
   const handleSubmit = (event) => {
     event.preventDefault();
     fileSubmit(event);
     pageSubmit(event);
-    navigate('diaryDetailPage');
+    navigate('/diaryDetailPage');
   };
+
   return (
     <div className="diaryEdit">
       <Navbar />
@@ -163,12 +174,15 @@ function diaryEdit() {
         <MainDiv>
           <LeftDiv>
             <h1>File Upload</h1>
-            <FileImage alt="image" src={fileImage} />
+            <FileImage alt="image" src={fileImageView} />
             <input
               type="file"
               name="imgUpload"
               accept="image/*"
-              onChange={saveFileImage}
+              onChange={(e) => {
+                saveFileImage(e);
+                saveFileImageView(e);
+              }}
             />
             <div>
               폰트
@@ -177,7 +191,26 @@ function diaryEdit() {
               </Test>
             </div>
 
-            <div>카카오</div>
+            <Map // 지도를 표시할 Container
+              center={{
+                // 지도의 중심좌표
+                lat: 37.553181930643554,
+                lng: 126.97290711826425,
+              }}
+              style={{
+                width: '100%',
+                height: '450px',
+              }}
+              level={3} // 지도의 확대 레벨
+              onClick={(_t, mouseEvent) => {
+                setPosition({
+                  lat: mouseEvent.latLng.getLat(),
+                  lng: mouseEvent.latLng.getLng(),
+                });
+              }}
+            >
+              {position && <MapMarker position={position} />}
+            </Map>
             <div>음악</div>
           </LeftDiv>
 

@@ -28,7 +28,10 @@ function App() {
         <Route path="/diaryEdit/:diaryId" element={<DiaryEdit />} />
         <Route path="/kakaologin" element={<KakaoLogin />} />
         <Route path="/createDiary/:diaryId" element={<CreateDiary />} />
-        <Route path="/diaryDetailPage" element={<DiaryDetailPage />} />
+        <Route
+          path="/diaryDetailPage/:diaryId/:pageId"
+          element={<DiaryDetailPage />}
+        />
       </Routes>
     </div>
   );
