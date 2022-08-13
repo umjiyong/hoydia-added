@@ -36,11 +36,17 @@ public class DiaryRepository {
 
     public List<Diary> findByUser(String userId) { // 유저의 모든 일기를 가져옴
 
-        List<Diary> diaries = em.createQuery("SELECT d FROM Diary d WHERE d.user.id = :user_id",Diary.class)
+        List<Diary> diaries1 = em.createQuery("SELECT d FROM Diary d WHERE d.ownerId = :user_id AND d.own = 1 ",Diary.class)
                 .setParameter("user_id",userId)
                 .getResultList();
 
-        return diaries;
+        List<Diary> diaries2 = em.createQuery("SELECT d FROM Diary d WHERE d.pairId = :user_id AND d.own = 0",Diary.class)
+                .setParameter("user_id",userId)
+                .getResultList();
+
+        diaries1.addAll(diaries2);
+
+        return diaries1;
 
     }
 
