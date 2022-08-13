@@ -87,25 +87,26 @@ const Test = styled.div`
   font-size: 10px;
 `;
 
+const FileImage = styled.img``;
+
 const userId = window.localStorage.getItem('userId');
 const accessToken = window.localStorage.getItem('access-token');
 
 function diaryEdit() {
   const [inputs, setInputs] = useState({});
-  const [file, setFile] = useState();
+  const [fileImage, setFileImage] = useState();
   const [fontName, setfontName] = useState('');
   const params = useParams();
   const navigate = useNavigate();
 
-  const handleChange = (event) => {
-    const [name, value] = [event.target.name, event.target.value];
-
-    setInputs((values) => ({ ...values, [name]: value }));
+  const saveFileImage = (e) => {
+    setFileImage(URL.createObjectURL(e.target.files[0]));
   };
 
-  function fileHandleChange(event) {
-    setFile(event.target.files[0]);
-  }
+  const handleChange = (event) => {
+    const [name, value] = [event.target.name, event.target.value];
+    setInputs((values) => ({ ...values, [name]: value }));
+  };
 
   const parentFunction = (data) => {
     setfontName(data);
@@ -115,7 +116,7 @@ function diaryEdit() {
     event.preventDefault();
     const url = 'http://localhost:8080/file/upload';
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('file', fileImage);
     const config = {
       headers: {
         'content-type': 'multipart/form-data',
@@ -161,12 +162,13 @@ function diaryEdit() {
       <form onSubmit={handleSubmit}>
         <MainDiv>
           <LeftDiv>
-            <h1>React File Upload</h1>
+            <h1>File Upload</h1>
+            <FileImage alt="image" src={fileImage} />
             <input
               type="file"
-              name="file"
-              value={file || ''}
-              onChange={fileHandleChange}
+              name="imgUpload"
+              accept="image/*"
+              onChange={saveFileImage}
             />
             <div>
               폰트

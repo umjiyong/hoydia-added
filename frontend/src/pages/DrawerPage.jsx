@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import React, { useState, useEffect, useRef } from 'react';
 import Diary from 'components/DiaryCompo';
 import Navbar from 'components/Navbar';
+import Toast from 'components/Toast';
 import floatingbutton from 'assets/floatingButton.png';
 import axios from 'axios';
 
@@ -34,6 +35,10 @@ const accessToken = window.localStorage.getItem('access-token');
 
 function DrawerPage() {
   const [list, setList] = useState([]);
+  const [ToastStatus, setToastStatus] = useState(false);
+  const handleToast = () => {
+    setToastStatus(true);
+  };
   const DiaryAsync = async () => {
     try {
       axios({
@@ -51,6 +56,9 @@ function DrawerPage() {
   };
   useEffect(() => {
     DiaryAsync();
+    if (ToastStatus) {
+      setTimeout(() => setToastStatus(false), 2000);
+    }
   }, []);
   const dragItem = useRef();
   const dragOverItem = useRef();
@@ -94,7 +102,9 @@ function DrawerPage() {
         .then((res) => {
           console.log(res);
         })
-        .catch((err) => {});
+        .catch((err) => {
+          handleToast();
+        });
     }
   };
 
@@ -126,6 +136,7 @@ function DrawerPage() {
             ))}
         </DiaryContainer>
         <FloatingBtn src={floatingbutton} />
+        {ToastStatus && <Toast msg="DESK의 자리가 부족합니다." />}
       </DrawerContainer>
     </div>
   );
