@@ -142,8 +142,8 @@ function FancyModalButton() {
       url: 'http://localhost:8080/note',
       method: 'POST',
       data: {
-        answer: `${questList[num]}`,
-        question: `${questionPost}`,
+        question: `${questList[num]}`,
+        answer: `${questionPost}`,
       },
     })
       .then((res) => {

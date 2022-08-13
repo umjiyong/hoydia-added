@@ -1,9 +1,12 @@
+/* eslint-disable dot-notation */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable array-callback-return */
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
 import axios from 'axios';
-// import AlarmAnswerModal from 'components/AlarmAnswerModal';
-import AlarmMatchingResultModal from './AlarmMatchingResultModal';
+import AlarmAnswerModal from 'components/AlarmAnswerModal';
+// import AlarmMatchingResultModal from './AlarmMatchingResultModal';
 // import AlarmDiaryArriveModal from './AlarmDiaryArriveModal';
 
 const Container = styled.div`
@@ -51,10 +54,12 @@ const Detail1 = styled.a`
 function AlarmList() {
   const [isOpen, setIsOpen] = useState(false);
   const [opacity, setOpacity] = useState(0);
-
-  function toggleModal() {
+  const [noticeList, setnoticeList] = useState();
+  const [test, setTest] = useState();
+  function toggleModal(item) {
     setOpacity(0);
     setIsOpen(!isOpen);
+    setTest(item.substring(12));
   }
 
   function afterOpen() {
@@ -79,12 +84,15 @@ function AlarmList() {
       method: 'GET',
     })
       .then((res) => {
+        setnoticeList(res.data.data);
         console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  });
+  }, []);
+
+  // const b = mainNotice.data.map((item, index) => item.title);
   return (
     <div className="AlarmList">
       <Container>
@@ -92,22 +100,31 @@ function AlarmList() {
           <Title>알림함</Title>
           <Date>{moment().format('YYYY. M. D (ddd)')}</Date>
         </Header>
-        <Detail1 onClick={toggleModal}>Answer1</Detail1>
+        <div>
+          {noticeList &&
+            noticeList.map((item, index) => (
+              <Detail1 key={index} onClick={() => toggleModal(item.title)}>
+                {item.title}
+              </Detail1>
+            ))}
+        </div>
+        {/* <Detail1 onClick={toggleModal}>Answer1</Detail1> */}
       </Container>
-      {/* <AlarmAnswerModal
+      <AlarmAnswerModal
+        toggleModal={toggleModal}
+        afterOpen={afterOpen}
+        beforeClose={beforeClose}
+        isOpen={isOpen}
+        opacity={opacity}
+        test={test}
+      />
+      {/* <AlarmMatchingResultModal
         toggleModal={toggleModal}
         afterOpen={afterOpen}
         beforeClose={beforeClose}
         isOpen={isOpen}
         opacity={opacity}
       /> */}
-      <AlarmMatchingResultModal
-        toggleModal={toggleModal}
-        afterOpen={afterOpen}
-        beforeClose={beforeClose}
-        isOpen={isOpen}
-        opacity={opacity}
-      />
       {/* <AlarmDiaryArriveModal
         toggleModal={toggleModal}
         afterOpen={afterOpen}
