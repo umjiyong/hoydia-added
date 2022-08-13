@@ -92,7 +92,7 @@ function FancyModalButton() {
   const token = localStorage.getItem('access-token');
 
   useEffect(() => {
-    console.log(token);
+    // console.log(token);
 
     axios({
       headers: {
@@ -106,7 +106,7 @@ function FancyModalButton() {
         setUser_email(res.data.data.email);
         setUser_nickname(res.data.data.nickname);
 
-        console.log(res.data.data);
+        // console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);

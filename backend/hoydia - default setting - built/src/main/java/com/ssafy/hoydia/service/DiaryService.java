@@ -31,6 +31,15 @@ public class DiaryService {
        return "Loc-Service : "+diary.getId();
     }
 
+    @Transactional
+    public void diaryOwnShift(String id) {
+
+        Diary diary = diaryRepository.findById(id);
+
+        diary.setOwn(!diary.isOwn());
+
+    }
+
 
     public List<Diary> searchAllDiaryOrderByRegTime(){        // 관리자용 서비스 - 모든 일기 불러오기 (시간순)
         return diaryRepository.findAllDiaryOrderByRegTime();
@@ -54,7 +63,7 @@ public class DiaryService {
 
 
     @Transactional
-    public void update(String id, String title, String diaryColor, String buttonColor,String font, String fontColor, Integer fontSize , Integer drawn)  {
+    public void update(String id, String title, String diaryColor, String buttonColor,String fontStyle, String fontColor, Integer fontSize , Integer drawn)  {
 
         Diary diary = diaryRepository.findById(id);
 
@@ -66,7 +75,7 @@ public class DiaryService {
             diary.setTitle(title);
             diary.setDiaryColor(diaryColor);
             diary.setButtonColor(buttonColor);
-            diary.setFont(font);
+            diary.setFontStyle(fontStyle);
             diary.setFontColor(fontColor);
             diary.setFontSize(fontSize);
             diary.setDrawn(drawn);

@@ -8,9 +8,7 @@ import com.ssafy.hoydia.dto.MessageResponseDto;
 import com.ssafy.hoydia.dto.ResultDto;
 import com.ssafy.hoydia.exception.InvalidApproachException;
 import com.ssafy.hoydia.exception.UnauthorizedException;
-import com.ssafy.hoydia.service.DiaryService;
-import com.ssafy.hoydia.service.JwtService;
-import com.ssafy.hoydia.service.PageService;
+import com.ssafy.hoydia.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -35,8 +33,10 @@ import java.util.stream.Collectors;
 public class PageController {
 
     private final JwtService jwtService;
+    private final UserService userService;
     private final DiaryService diaryService;
     private final PageService pageService;
+    private final NoticeService noticeService;
 
 
     @PostMapping
@@ -60,14 +60,20 @@ public class PageController {
         Page page = Page.builder()
                 .diary(diary)
                 .title(request.getTitle())
+                .titleFontStyle(request.getTitleFontStyle())
+                .titleFontSize(request.getTitleFontSize())
                 .content(request.getContent())
+                .contentFontStyle(request.getContentFontStyle())
+                .contentFontSize(request.getContentFontSize())
                 .bgmPath(request.getBgmPath())
                 .location(request.getLocation())
                 .build();
 
         pageService.regist(page);
 
-        diaryService.searchById(page.getDiary().getId()).setOwn(!diaryService.searchById(page.getDiary().getId()).isOwn()); // 페이지가 위치한 다이어리의 소유주 상태를 전환해줌.
+        diaryService.diaryOwnShift(page.getDiary().getId());; // 페이지가 위치한 다이어리의 소유주 상태를 전환해줌.
+
+        noticeService.sendNotice(userService.searchById(diary.getOwnerId()),userService.searchById(diary.getPairId()),"일기 교환 완료!", diary.getTitle() + "가 전송되었어요!");
 
         return new CreatePageResponseDto(page.getId(),page.getRegTime());
     }
@@ -141,7 +147,11 @@ public class PageController {
 
         pageService.update(id,
                 request.getTitle(),
+                request.getTitleFontStyle(),
+                request.getTitleFontSize(),
                 request.getContent(),
+                request.getContentFontStyle(),
+                request.getContentFontSize(),
                 request.getBgmPath(),
                 request.getLocation());
 
@@ -181,10 +191,17 @@ public class PageController {
         @NotBlank
         private String diaryId; //소유권 체크용
 
-        @NotBlank
-        private Title title;
+        private String title;
 
-        private Content content;
+        private String titleFontStyle;
+
+        private String titleFontSize;
+
+        private String content;
+
+        private String contentFontStyle;
+
+        private String contentFontSize;
 
         private String bgmPath;
 
@@ -211,9 +228,17 @@ public class PageController {
 
         private LocalDateTime regTime;
 
-        private Title title;
+        private String title;
 
-        private Content content;
+        private String titleFontStyle;
+
+        private String titleFontSize;
+
+        private String content;
+
+        private String contentFontStyle;
+
+        private String contentFontSize;
 
         private String bgmPath;
 
@@ -226,7 +251,11 @@ public class PageController {
             this.diaryId = page.getDiary().getId();
             this.regTime = page.getRegTime();
             this.title = page.getTitle();
+            this.titleFontStyle = page.getTitleFontStyle();
+            this.titleFontSize = page.getTitleFontSize();
             this.content = page.getContent();
+            this.contentFontStyle = page.getContentFontStyle();
+            this.contentFontSize = page.getContentFontSize();
             this.bgmPath = page.getBgmPath();
             this.location = page.getLocation();
 
@@ -237,10 +266,17 @@ public class PageController {
     @Data
     static class UpdatePageRequestDto {
 
-        @NotBlank
-        private Title title;
+        private String title;
 
-        private Content content;
+        private String titleFontStyle;
+
+        private String titleFontSize;
+
+        private String content;
+
+        private String contentFontStyle;
+
+        private String contentFontSize;
 
         private String bgmPath;
 

@@ -11,14 +11,14 @@ import CreateDiary from 'pages/createDiary';
 import DiaryDetailPage from 'pages/DiaryDetailPage';
 
 function App() {
-  const [islogIn, setIslogIn] = useState(false);
-  useEffect(() => {
-    const accessToken = window.localStorage.getItem('access-token');
-    if (accessToken) {
-      setIslogIn(true);
-    }
-  });
-  console.log(islogIn);
+  // const [islogIn, setIslogIn] = useState(false);
+  // useEffect(() => {
+  //   const accessToken = window.localStorage.getItem('access-token');
+  //   if (accessToken) {
+  //     setIslogIn(true);
+  //   }
+  // });
+  // console.log(islogIn);
   return (
     <div className="App">
       <Routes>

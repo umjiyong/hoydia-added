@@ -10,6 +10,7 @@ import com.ssafy.hoydia.exception.LoginException;
 import com.ssafy.hoydia.exception.UnauthorizedException;
 import com.ssafy.hoydia.service.DiaryService;
 import com.ssafy.hoydia.service.JwtService;
+import com.ssafy.hoydia.service.NoticeService;
 import com.ssafy.hoydia.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,6 +37,7 @@ public class DiaryController {
     private final JwtService jwtService;
     private final DiaryService diaryService;
     private final UserService userService;
+    private final NoticeService noticeService;
 
     @PostMapping
     @ApiOperation(value="일기 작성", notes = "사용자 두 명에 해당하는 고유 id와 color들을 body에 request 후 작성.")
@@ -60,6 +62,8 @@ public class DiaryController {
                 .build();
 
         diaryService.regist(diary);
+
+        noticeService.sendNotice(owner,pair,"친구와 교환일기 생성 완료","친구와 교환일기 생성이 완료되었습니다");
 
         return new CreateDiaryResponseDto(diary.getId(),diary.getRegTime());
     }
@@ -115,6 +119,71 @@ public class DiaryController {
 
     }
 
+    @GetMapping("/user/{userId}/drawn")
+    @ApiOperation(value="해당 유저의 drawn값이 1인 것 확인", notes = "userId에 해당하는 유저의 drawn값이 1인 리스트를 가져옴 urI에 pathVariable로 request")
+    public ResultDto readDrawnDiaryByUserId(@PathVariable("userId") String userId) {
+
+        if (!jwtService.isValidUser())
+            throw new InvalidApproachException("인증 실패");
+
+        String currentUid = jwtService.getUserId();
+
+        boolean isMine = currentUid.equals(userId);
+
+        if (!isMine) {
+            throw new UnauthorizedException("본인의 일기가 아닙니다.");
+        }
+
+        List<ReadDiaryResponseDto> diaryList = new ArrayList<>();
+
+        diaryList = diaryService.searchByUserId(userId).stream().map(diary -> new ReadDiaryResponseDto(diary)).collect(Collectors.toList());
+
+        List<ReadDiaryResponseDto> drawnDiaryList = new ArrayList<>();
+
+        for (int i = 0; i < diaryList.size(); i++)
+        {
+
+            if (diaryList.get(i).drawn==1) drawnDiaryList.add(diaryList.get(i));
+
+        }
+
+        return new ResultDto(drawnDiaryList);
+
+    }
+
+    @GetMapping("/user/{userId}/notdrawn")
+    @ApiOperation(value="해당 유저의 drawn값이 0인 것 확인", notes = "userId에 해당하는 유저의 drawn값이 0인 리스트를 가져옴 urI에 pathVariable로 request")
+    public ResultDto readNotDrawnDiaryByUserId(@PathVariable("userId") String userId) {
+
+        if (!jwtService.isValidUser())
+            throw new InvalidApproachException("인증 실패");
+
+        String currentUid = jwtService.getUserId();
+
+        boolean isMine = currentUid.equals(userId);
+
+        if (!isMine) {
+            throw new UnauthorizedException("본인의 일기가 아닙니다.");
+        }
+
+        List<ReadDiaryResponseDto> diaryList = new ArrayList<>();
+
+        diaryList = diaryService.searchByUserId(userId).stream().map(diary -> new ReadDiaryResponseDto(diary)).collect(Collectors.toList());
+
+        List<ReadDiaryResponseDto> notDrawnDiaryList = new ArrayList<>();
+
+        for (int i = 0; i < diaryList.size(); i++)
+        {
+
+            if (diaryList.get(i).drawn==0) notDrawnDiaryList.add(diaryList.get(i));
+
+        }
+
+        return new ResultDto(notDrawnDiaryList);
+
+    }
+
+
     @PutMapping("/{diaryId}")
     @ApiOperation(value="다이어리를 업데이트", notes = "diaryId에 해당하는 diary의 title,color,drawn 등을 수정 가능 (variable은 body로 request) id는 pathVariable로 request")
     public MessageResponseDto updateDiary(@PathVariable("diaryId") String id, @RequestBody UpdateDiaryRequestDto request) {
@@ -134,7 +203,7 @@ public class DiaryController {
                 request.getTitle(),
                 request.getDiaryColor(),
                 request.getButtonColor(),
-                request.getFont(),
+                request.getFontStyle(),
                 request.getFontColor(),
                 request.getFontSize(),
                 request.getDrawn());
@@ -207,7 +276,7 @@ public class DiaryController {
 
         private String buttonColor;
 
-        private String font;
+        private String fontStyle;
 
         private String fontColor;
 
@@ -227,7 +296,7 @@ public class DiaryController {
             this.title = diary.getTitle();
             this.diaryColor = diary.getDiaryColor();
             this.buttonColor = diary.getButtonColor();
-            this.font = diary.getFont();
+            this.fontStyle = diary.getFontStyle();
             this.fontColor = diary.getFontColor();
             this.fontSize = diary.getFontSize();
             this.drawn = diary.getDrawn();
@@ -245,7 +314,7 @@ public class DiaryController {
 
         private String buttonColor;
 
-        private String font;
+        private String fontStyle;
 
         private String fontColor;
 
