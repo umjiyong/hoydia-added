@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Diary from 'components/DiaryCompo';
 import Navbar from 'components/Navbar';
 import Toast from 'components/Toast';
+import { useNavigate } from 'react-router-dom';
 import floatingbutton from 'assets/floatingButton.png';
 import axios from 'axios';
 
@@ -30,10 +31,14 @@ const FloatingBtn = styled.img`
   align-items: center;
   cursor: pointer;
 `;
+
+const DiaryBtn = styled.div``;
+
 const userId = window.localStorage.getItem('userId');
 const accessToken = window.localStorage.getItem('access-token');
 
 function DrawerPage() {
+  const navigate = useNavigate();
   const [list, setList] = useState([]);
   const [ToastStatus, setToastStatus] = useState(false);
   const handleToast = () => {
@@ -43,7 +48,7 @@ function DrawerPage() {
     try {
       axios({
         method: 'get',
-        url: `http://localhost:8080/diary/user/${userId}`,
+        url: `http://localhost:8080/diary/user/${userId}/notdrawn`,
         headers: {
           'access-token': accessToken,
         },
@@ -53,6 +58,18 @@ function DrawerPage() {
     } catch (e) {
       setList([]);
     }
+  };
+  const DiaryDetailBtn = (diaryId) => {
+    axios({
+      method: 'get',
+      url: `http://localhost:8080/page/diary/${diaryId}`,
+      headers: {
+        'access-token': accessToken,
+      },
+    }).then((res) => {
+      const pageId = res.data.data[0].id;
+      navigate(`/diaryDetailPage/${diaryId}/${pageId}`);
+    });
   };
   useEffect(() => {
     DiaryAsync();
@@ -131,7 +148,9 @@ function DrawerPage() {
                 onDragEnd={drop}
                 draggable
               >
-                <Diary DiaryInfo={item} />
+                <DiaryBtn onClick={() => DiaryDetailBtn(item.id)}>
+                  <Diary DiaryInfo={item} />
+                </DiaryBtn>
               </Colcontainer>
             ))}
         </DiaryContainer>
