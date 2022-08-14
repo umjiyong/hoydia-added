@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-no-bind */
 import React, { useState, useEffect } from 'react';
-
+import axios from 'axios';
 import styled from 'styled-components';
 import Modal, { ModalProvider, BaseModalBackground } from 'styled-react-modal';
 import exit from 'assets/exit.png';
@@ -119,11 +119,32 @@ function FancyModalButton({
   beforeClose,
   isOpen,
   opacity,
+  test,
 }) {
   const [ToastStatus, setToastStatus] = useState(false);
   const handleToast = () => {
     setToastStatus(true);
+    if (test) {
+      console.log(test);
+      axios({
+        headers: {
+          'access-token': `${localStorage.getItem('access-token')}`,
+        },
+        url: `http://localhost:8080/match/${test}`,
+        method: 'PUT',
+        data: {
+          permit: true,
+        },
+      })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
+
   useEffect(() => {
     if (ToastStatus) {
       setTimeout(() => setToastStatus(false), 2000);
