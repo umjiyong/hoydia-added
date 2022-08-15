@@ -62,6 +62,7 @@ function DrawerPage() {
           'access-token': accessToken,
         },
       }).then((res) => {
+        console.log(res);
         setList(res.data.data);
       });
     } catch (e) {

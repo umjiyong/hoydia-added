@@ -91,8 +91,6 @@ function FancyModalButton() {
   const [user_nickname, setUser_nickname] = useState('');
 
   useEffect(() => {
-    console.log(`http://localhost:8080/user/{${user_id}}`);
-
     axios({
       headers: {
         'access-token': `${localStorage.getItem('access-token')}`,

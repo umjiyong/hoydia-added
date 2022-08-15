@@ -77,8 +77,8 @@ const DetailKakaoBtn = styled.div`
 `;
 
 function FancyModalButton({ props }) {
-  const locationLat = props.propLocation;
-  const locationLng = 126.97290711826425;
+  const locationLat = props.propLocation.locationx;
+  const locationLng = props.propLocation.locationy;
   const token = localStorage.getItem('access-token');
   const position = {
     lat: locationLat,

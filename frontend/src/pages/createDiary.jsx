@@ -16,18 +16,11 @@ import { Map, MapMarker } from 'react-kakao-maps-sdk';
 
 const MainDiv = styled.div`
   display: flex;
-  // justify-content: space-between;
   align-items: center;
-  // margin-top: 100px;
   margin-left: 70px;
-  // margin-right: 50px;
-  // background-image: url(${Diary});
-  // width: 100%;
-  // height: auto;
 `;
 
 const LeftDiv = styled.div`
-  position: relative
   display: flex;
   flex-direction: column;
   gap: 50px;
@@ -36,17 +29,13 @@ const LeftDiv = styled.div`
 
 const RightDiv = styled.div`
   display: flex;
-  // margin-left: 120px;
   margin-left: 140px;
   flex-direction: column;
-
   width: 50%;
 `;
 
 const Container = styled.img`
   position: absolute;
-  // top: 50px;
-  // left: 200px;
   width: 100%;
   height: 93.5%;
   padding: 30px;
@@ -94,11 +83,10 @@ const InputTitle = styled.input`
   font-size: 20px;
 `;
 
-const Test = styled.div`
-  font-size: 10px;
+const FileImage = styled.img`
+  width: 400px;
+  height: 300px;
 `;
-
-const FileImage = styled.img``;
 
 const NamingDiv = styled.span``;
 
@@ -129,10 +117,6 @@ const TitleDiv = styled.div`
 `;
 
 const GoButton = styled.input`
-  // justify-content: center;
-  // align-items: center;
-  
-  margin-left : 200px
   padding: 8px 16px;
   width: 150px;
   height: 60px;
@@ -153,17 +137,16 @@ const GoButton = styled.input`
 
 const ButtonDiv = styled.div`
   margin-left: 450px;
-  margin-top: 40px;
+  margin-top: 25px;
 `;
 
 const ContentDiv = styled.div`
   margin-top: 40px;
 `;
 
-const userId = window.localStorage.getItem('userId');
-const accessToken = window.localStorage.getItem('access-token');
-
-function diaryEdit() {
+function createPage() {
+  const userId = window.localStorage.getItem('userId');
+  const accessToken = window.localStorage.getItem('access-token');
   const [inputs, setInputs] = useState({});
   const [fileImage, setFileImage] = useState();
   const [fileImageView, setFileImageView] = useState();
@@ -226,23 +209,28 @@ function diaryEdit() {
 
   function fileSubmit(event) {
     event.preventDefault();
-    const url = 'http://localhost:8080/file/upload?category=image';
+    const url = 'http://localhost:8080/api/file/upload?category=image';
     const formData = new FormData();
     formData.append('file', fileImage);
     formData.append('fileName', fileImage.name);
+
     const config = {
       headers: {
         'content-type': 'multipart/form-data',
       },
     };
-    axios.post(url, formData, config).then((response) => {});
+    axios.post(url, formData, config).then((res) => {
+      console.log(res);
+    });
   }
 
-  function pageSubmit(event) {
+  function handleSubmit(event) {
+    fileSubmit(event);
     event.preventDefault();
+
     axios({
       method: 'post',
-      url: 'http://localhost:8080/page',
+      url: 'http://localhost:8080/api/page',
       headers: {
         'access-token': accessToken,
       },
@@ -252,19 +240,17 @@ function diaryEdit() {
         contentFontSize: '20',
         contentFontStyle: fontName,
         diaryId: params.diaryId,
-        location: position.lat,
+        locationx: position.lat,
+        locationy: position.lng,
         title: inputs.title,
         titleFontSize: '20',
         titleFontStyle: fontName,
       },
-    }).then();
+    }).then((res) => {
+      console.log(res);
+      navigate(`/diaryDetailPage/${params.diaryId}/${res.data.id}`);
+    });
   }
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    fileSubmit(event);
-    pageSubmit(event);
-    navigate(`/diaryDetailPage/${params.diaryId}/${params.pageId}`);
-  };
 
   return (
     <div className="diaryEdit">
@@ -289,7 +275,6 @@ function diaryEdit() {
             <ShowDiv>
               {filebutton ? (
                 <div>
-                  <h1>File Upload</h1>
                   <FileImage alt="image" src={fileImageView} />
                   <input
                     type="file"
@@ -370,4 +355,4 @@ function diaryEdit() {
   );
 }
 
-export default diaryEdit;
+export default createPage;
