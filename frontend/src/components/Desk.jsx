@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import post from 'assets/post.png';
 import Diary from 'components/DiaryCompo';
 import drawer from 'assets/drawer.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import AlarmList from './AlarmList';
 
@@ -17,7 +17,7 @@ const Container = styled.div`
 
 const Desk = styled.div`
   background-color: #ffca8c;
-  height: calc(1683 / 1920 * 100vh);
+  height: 74vh;
 `;
 
 const PostDiv = styled.div`
@@ -39,25 +39,29 @@ const Deskcontainer = styled.div`
   justify-content: space-around;
 `;
 
+const DiaryBtn = styled.div`
+  cursor: pointer;
+`;
+
 const DiaryContainer = styled.div``;
 
 const Drawer = styled.img`
   display: flex;
   bottom: 0;
   width: 100%;
-  height: auto;
+  height: 20.8vh;
 `;
-
 const userId = window.localStorage.getItem('userId');
 const accessToken = window.localStorage.getItem('access-token');
 
 function desk() {
+  const navigate = useNavigate();
   const [diaryList, setDiaryList] = useState([]);
   const DiaryAsync = async () => {
     try {
       axios({
         method: 'get',
-        url: `http://localhost:8080/diary/user/${userId}`,
+        url: `http://localhost:8080/diary/user/${userId}/drawn`,
         headers: {
           'access-token': accessToken,
         },
@@ -68,6 +72,22 @@ function desk() {
     } catch (e) {
       console.error(e);
     }
+  };
+  const DiaryDetailBtn = (diaryId) => {
+    axios({
+      method: 'get',
+      url: `http://localhost:8080/page/diary/${diaryId}`,
+      headers: {
+        'access-token': accessToken,
+      },
+    }).then((res) => {
+      if (res.data.data[0]) {
+        const pageId = res.data.data[0].id;
+        navigate(`/diaryDetailPage/${diaryId}/${pageId}`);
+      } else {
+        navigate(`/diaryDetailPage/${diaryId}/1`);
+      }
+    });
   };
   useEffect(() => {
     DiaryAsync();
@@ -100,20 +120,19 @@ function desk() {
       visualwidth1 >= width &&
       width >= visualwidth2
     ) {
-      console.log('성공');
       axios({
         method: 'put',
         url: `http://localhost:8080/diary/${dragItemContent.id}`,
-        header: {
+        headers: {
           'access-token': accessToken,
         },
         data: {
           drawn: 0,
           title: dragItemContent.title,
         },
+      }).then((res) => {
+        DiaryAsync();
       });
-    } else {
-      console.log('실패');
     }
   };
   const [openDrop, setOpenDrop] = useState(false);
@@ -141,7 +160,9 @@ function desk() {
                   onDragEnd={drop}
                   draggable
                 >
-                  <Diary DiaryInfo={item} />
+                  <DiaryBtn onClick={() => DiaryDetailBtn(item.id)}>
+                    <Diary DiaryInfo={item} />
+                  </DiaryBtn>
                 </DiaryContainer>
               ))}
           </Deskcontainer>

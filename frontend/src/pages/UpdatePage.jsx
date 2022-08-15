@@ -5,7 +5,7 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable no-unused-vars */
 /* eslint implicit-arrow-linebreak: ["error", "beside"] */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Navbar from 'components/Navbar';
 import Diary from 'assets/CreateDiaryBackground.png';
@@ -21,14 +21,16 @@ const MainDiv = styled.div`
   margin-top: 100px;
   margin-left: 70px;
   // margin-right: 50px;
-  // background-image: url(${Diary});
+  //   background-image: url(${Diary});
   // width: 100%;
   // height: auto;
 `;
 
 const LeftDiv = styled.div`
   display: flex;
+
   flex-direction: column;
+
   gap: 50px;
   width: 50%;
 `;
@@ -37,6 +39,7 @@ const RightDiv = styled.div`
   display: flex;
   margin-left: 120px;
   flex-direction: column;
+
   gap: 50px;
   width: 50%;
 `;
@@ -91,7 +94,7 @@ const FileImage = styled.img``;
 const userId = window.localStorage.getItem('userId');
 const accessToken = window.localStorage.getItem('access-token');
 
-function diaryEdit() {
+function updatePage() {
   const [inputs, setInputs] = useState({});
   const [fileImage, setFileImage] = useState();
   const [fileImageView, setFileImageView] = useState();
@@ -102,6 +105,14 @@ function diaryEdit() {
   });
   const params = useParams();
   const navigate = useNavigate();
+  const [title, setTitle] = useState();
+  const [titleFontStyle, setTitleFontStyle] = useState();
+  const [titleFontSize, setTitleFontSize] = useState();
+  const [content, setContent] = useState();
+  const [contentFontStyle, setContentFontStyle] = useState();
+  const [contentFontSize, setContentFontSize] = useState();
+  const [bgmPath, setBgmPath] = useState();
+  const [location, setLocation] = useState();
 
   const saveFileImage = (event) => {
     setFileImage(event.target.files[0]);
@@ -124,8 +135,10 @@ function diaryEdit() {
     event.preventDefault();
     const url = 'http://localhost:8080/file/upload?category=image';
     const formData = new FormData();
-    formData.append('file', fileImage);
-    formData.append('fileName', fileImage.name);
+    if (fileImage) {
+      formData.append('file', fileImage);
+      formData.append('fileName', fileImage.name);
+    }
     const config = {
       headers: {
         'content-type': 'multipart/form-data',
@@ -137,8 +150,8 @@ function diaryEdit() {
   function pageSubmit(event) {
     event.preventDefault();
     axios({
-      method: 'post',
-      url: 'http://localhost:8080/page',
+      method: 'put',
+      url: `http://localhost:8080/page/${params.pageId}`,
       headers: {
         'access-token': accessToken,
       },
@@ -162,6 +175,32 @@ function diaryEdit() {
     navigate(`/diaryDetailPage/${params.diaryId}/${params.pageId}`);
   };
 
+  useEffect(() => {
+    axios({
+      method: 'get',
+      url: `http://localhost:8080/page/${params.pageId}`,
+      headers: {
+        'access-token': accessToken,
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        setfontName(res.data.data.titleFontstyle);
+        setInputs({
+          title: res.data.data.title,
+          content: res.data.data.content,
+        });
+        // setTitle(res.data.data.title);
+        // setTitleFontStyle(res.data.data.titleFontStyle);
+        setTitleFontSize(res.data.data.titleFontSize);
+        // setContent(res.data.data.content);
+        // setContentFontStyle(res.data.data.contentFontStyle);
+        setContentFontSize(res.data.data.contentFontSize);
+        setBgmPath(res.data.data.bgmPath);
+        setLocation(res.data.data.location);
+      })
+      .catch((res) => {});
+  }, []);
   return (
     <div className="diaryEdit">
       <Navbar />
@@ -229,7 +268,10 @@ function diaryEdit() {
               name="content"
               value={inputs.content || ''}
               onChange={handleChange}
-              style={{ fontFamily: fontName, fontSize: 20 }}
+              style={{
+                fontFamily: fontName,
+                fontSize: 20,
+              }}
             />
 
             <br></br>
@@ -241,4 +283,4 @@ function diaryEdit() {
   );
 }
 
-export default diaryEdit;
+export default updatePage;

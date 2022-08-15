@@ -4,14 +4,16 @@
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as DiaryImg } from 'assets/diary.svg';
 import { SketchPicker } from 'react-color';
 import Navbar from 'components/Navbar';
+import { useParams, useNavigate } from 'react-router-dom';
 import FontMenu from 'components/FontMenu';
 import { faBook, faFont, faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
 
 const Container = styled.div`
   width: 388px;
@@ -60,6 +62,7 @@ const Jujang = styled.p`
   justify-content: flex-end;
   margin-top: 30px;
   margin-right: 100px;
+  cursor: pointer;
 `;
 
 const InputBar = styled.input`
@@ -136,7 +139,12 @@ const DiaryIcon = <FontAwesomeIcon size="lg" icon={faBook} />;
 const ClipIcon = <FontAwesomeIcon size="lg" icon={faPaperclip} />;
 const FontIcon = <FontAwesomeIcon size="lg" icon={faFont} />;
 
+const userId = window.localStorage.getItem('userId');
+const accessToken = window.localStorage.getItem('access-token');
+
 function diaryEdit() {
+  const params = useParams();
+  const navigate = useNavigate();
   const [colorHex1, setColorHex1] = useState('');
   const [colorHex2, setColorHex2] = useState('');
   const [colorHex3, setColorHex3] = useState('');
@@ -148,6 +156,30 @@ function diaryEdit() {
   const [size, setsize] = useState(20);
   const [fontName, setfontName] = useState('');
 
+  function diaryEditSubmit() {
+    axios({
+      method: 'put',
+      url: `http://localhost:8080/diary/${params.diaryId}`,
+      headers: {
+        'access-token': accessToken,
+      },
+      data: {
+        buttonColor: colorHex2,
+        diaryColor: colorHex1,
+        drawn: 0,
+        fontColor: colorHex3,
+        fontSize: size,
+        fontStyle: fontName,
+        title: message,
+      },
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
   const parentFunction = (data) => {
     setfontName(data);
   };
@@ -206,95 +238,103 @@ function diaryEdit() {
   } else if (fontColor === true) {
     selectName = <p>{FontIcon}</p>;
   }
+
+  useEffect(() => {}, []);
   return (
     <div className="diaryEdit">
       {/* <RootDiv> */}
       <Navbar />
-      <MainDiv>
-        <LeftDiv>
-          <EditDiv>
-            <NamingDiv>다이어리 색상 &nbsp; {DiaryIcon}</NamingDiv>
-            <ColorPalette
-              onClick={togglediary}
-              style={{ background: colorHex1 }}
-            ></ColorPalette>
-          </EditDiv>
-          <EditDiv>
-            <NamingDiv>버튼 클립 색상 &nbsp; {ClipIcon}</NamingDiv>
-            <ColorPalette
-              onClick={togglebutton}
-              style={{ background: colorHex2 }}
-            ></ColorPalette>
-          </EditDiv>
+      <form onSubmit={diaryEditSubmit}>
+        <MainDiv>
+          <LeftDiv>
+            <EditDiv>
+              <NamingDiv>다이어리 색상 &nbsp; {DiaryIcon}</NamingDiv>
+              <ColorPalette
+                onClick={togglediary}
+                style={{ background: colorHex1 }}
+              ></ColorPalette>
+            </EditDiv>
+            <EditDiv>
+              <NamingDiv>버튼 클립 색상 &nbsp; {ClipIcon}</NamingDiv>
+              <ColorPalette
+                onClick={togglebutton}
+                style={{ background: colorHex2 }}
+              ></ColorPalette>
+            </EditDiv>
 
-          <EditDiv>
-            <NamingDiv>폰트 색상 &nbsp; {FontIcon}</NamingDiv>
-            <Colorfont
-              onClick={togglefont}
-              style={{ background: colorHex3 }}
-            ></Colorfont>
-          </EditDiv>
+            <EditDiv>
+              <NamingDiv>폰트 색상 &nbsp; {FontIcon}</NamingDiv>
+              <Colorfont
+                onClick={togglefont}
+                style={{ background: colorHex3 }}
+              ></Colorfont>
+            </EditDiv>
 
-          <EditDiv>
-            <NamingDiv>폰트 스타일</NamingDiv>
-            <Colorfont onClick={togglefontstyle}></Colorfont>
-          </EditDiv>
+            <EditDiv>
+              <NamingDiv>폰트 스타일</NamingDiv>
+              <Colorfont onClick={togglefontstyle}></Colorfont>
+            </EditDiv>
 
-          <EditDiv>
-            <NamingDiv>폰트 크기</NamingDiv>
-            <FontSizePlus onClick={togglePlus}>+</FontSizePlus>
-            <FontSizeminus onClick={toggleminus}>-</FontSizeminus>
-          </EditDiv>
+            <EditDiv>
+              <NamingDiv>폰트 크기</NamingDiv>
+              <FontSizePlus onClick={togglePlus}>+</FontSizePlus>
+              <FontSizeminus onClick={toggleminus}>-</FontSizeminus>
+            </EditDiv>
 
-          <EditDiv>
-            <InputBar
-              maxLength={13}
-              type="text"
-              id="message"
-              name="message"
-              onChange={handleChange}
-              value={message}
-              placeholder="제목을 입력해주세요"
-            />
-          </EditDiv>
-        </LeftDiv>
+            <EditDiv>
+              <InputBar
+                maxLength={13}
+                type="text"
+                id="message"
+                name="message"
+                onChange={handleChange}
+                value={message}
+                placeholder="제목을 입력해주세요"
+              />
+            </EditDiv>
+          </LeftDiv>
 
-        <SelectDiv>
-          {selectName}
-          {diaryColor ? (
-            <SketchPicker
-              color={colorHex1}
-              onChange={(e) => setColorHex1(e.hex)}
-            />
-          ) : null}
-          {buttonColor ? (
-            <SketchPicker
-              color={colorHex2}
-              onChange={(e) => setColorHex2(e.hex)}
-            />
-          ) : null}
-          {fontColor ? (
-            <SketchPicker
-              color={colorHex3}
-              onChange={(e) => setColorHex3(e.hex)}
-            />
-          ) : null}
-          {fontStyle ? <FontMenu parentFunction={parentFunction} /> : null}
-        </SelectDiv>
+          <SelectDiv>
+            {selectName}
+            {diaryColor ? (
+              <SketchPicker
+                color={colorHex1}
+                onChange={(e) => setColorHex1(e.hex)}
+              />
+            ) : null}
+            {buttonColor ? (
+              <SketchPicker
+                color={colorHex2}
+                onChange={(e) => setColorHex2(e.hex)}
+              />
+            ) : null}
+            {fontColor ? (
+              <SketchPicker
+                color={colorHex3}
+                onChange={(e) => setColorHex3(e.hex)}
+              />
+            ) : null}
+            {fontStyle ? <FontMenu parentFunction={parentFunction} /> : null}
+          </SelectDiv>
 
-        <RightDiv>
-          <Container color1={colorHex1} color2={colorHex2}>
-            <IndexDiv
-              style={{ color: colorHex3, fontSize: size, fontFamily: fontName }}
-              onChange={(e) => setColorHex2(e.hex)}
-            >
-              {message}
-            </IndexDiv>
-            <DiaryImg className="plus_icon" />
-          </Container>
-        </RightDiv>
-      </MainDiv>
-      <Jujang>저장하기</Jujang>
+          <RightDiv>
+            <Container color1={colorHex1} color2={colorHex2}>
+              <IndexDiv
+                style={{
+                  color: colorHex3,
+                  fontSize: size,
+                  fontFamily: fontName,
+                }}
+                onChange={(e) => setColorHex2(e.hex)}
+              >
+                {message}
+              </IndexDiv>
+              <DiaryImg className="plus_icon" />
+            </Container>
+          </RightDiv>
+        </MainDiv>
+        <input type="submit" />
+      </form>
       {/* </RootDiv> */}
     </div>
   );
