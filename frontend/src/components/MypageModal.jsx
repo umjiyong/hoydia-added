@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable key-spacing */
 /* eslint-disable quote-props */
 /* eslint-disable no-console */
@@ -6,7 +7,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react/jsx-no-bind */
 import React, { useState, useEffect } from 'react';
-
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Modal, { ModalProvider, BaseModalBackground } from 'styled-react-modal';
 import exit from 'assets/exit.png';
@@ -37,7 +38,7 @@ const Title = styled.span`
   align-items: center;
   color: #ff8960;
 `;
-const GoButton = styled.button`
+const SignoutButton = styled.button`
   justify-content: center;
   align-items: center;
   padding: 0.5rem 1rem;
@@ -46,8 +47,8 @@ const GoButton = styled.button`
   width: 11rem;
   height: 5rem;
 
-  background: #ffdbac;
-  border-radius: 1rem;
+  background: #ff8988;
+  border-radius: 15px;
 `;
 
 const Atag = styled.a`
@@ -89,10 +90,8 @@ function FancyModalButton() {
   const [user_email, setUser_email] = useState('@');
   const [user_nickname, setUser_nickname] = useState('');
 
-  const token = localStorage.getItem('access-token');
-
   useEffect(() => {
-    // console.log(token);
+    console.log(`http://localhost:8080/user/{${user_id}}`);
 
     axios({
       headers: {
@@ -111,11 +110,31 @@ function FancyModalButton() {
       .catch((err) => {
         console.log(err);
       });
-  });
+  }, []);
 
   const [isOpen, setIsOpen] = useState(false);
   const [opacity, setOpacity] = useState(0);
 
+  function toggleDelete() {
+    alert('정말 회원탈퇴 하시겠습니까?');
+    axios({
+      headers: {
+        'access-token': `${localStorage.getItem('access-token')}`,
+      },
+      url: 'http://localhost:8080/user/',
+      method: 'DELETE',
+    })
+      .then((res) => {
+        console.log(res);
+        console.log(user_id);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    window.localStorage.clear();
+    setOpacity(0);
+    setIsOpen(!isOpen);
+  }
   function toggleModal() {
     setOpacity(0);
     setIsOpen(!isOpen);
@@ -155,9 +174,11 @@ function FancyModalButton() {
           <p>유저 이메일 : {user_email}</p>
           <p>유저 닉네임 : {user_nickname}</p>
         </div>
-        <GoButton type="button" onClick={toggleModal}>
-          GOGO
-        </GoButton>
+        <Link to="/">
+          <SignoutButton type="button" onClick={toggleDelete}>
+            회원탈퇴
+          </SignoutButton>
+        </Link>
       </StyledModal>
     </div>
   );
