@@ -130,6 +130,7 @@ public class DiaryController {
 
         boolean isMine = currentUid.equals(userId);
 
+
         if (!isMine) {
             throw new UnauthorizedException("본인의 일기가 아닙니다.");
         }
@@ -195,7 +196,7 @@ public class DiaryController {
 
         Diary diary = diaryService.searchById(id);
 
-        boolean isMine = currentUid.equals(diary.getOwnerId())||currentUid.equals(diary.getPairId()); ;
+        boolean isMine = currentUid.equals(diary.getOwnerId())||currentUid.equals(diary.getPairId());
 
         if(!isMine) throw new UnauthorizedException("본인의 일기가 아닙니다.");
 
