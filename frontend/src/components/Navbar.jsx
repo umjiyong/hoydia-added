@@ -31,7 +31,7 @@ function Navbar() {
   return (
     <UlTag>
       <LiTag>
-        <Atag href="">LOGO</Atag>
+        <Atag href="/mainPage">LOGO</Atag>
       </LiTag>
       <LiTag>
         <Modal1 />

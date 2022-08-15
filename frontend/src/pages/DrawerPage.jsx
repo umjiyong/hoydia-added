@@ -2,18 +2,27 @@ import styled from 'styled-components';
 import React, { useState, useEffect, useRef } from 'react';
 import Diary from 'components/DiaryCompo';
 import Navbar from 'components/Navbar';
+import Toast from 'components/Toast';
+import { useNavigate } from 'react-router-dom';
+import table from 'assets/table.png';
 import floatingbutton from 'assets/floatingButton.png';
 import axios from 'axios';
 
-const DrawerContainer = styled.div``;
-
-const DiaryContainer = styled.div`
-  display: flex;
-  justify-content: center;
+const DrawerContainer = styled.div`
+  background-color: F6F6F6;
 `;
 
+const DiaryContainer = styled.div``;
+
 const Colcontainer = styled.div`
-  flex: ${(props) => props.size};
+  display: flex;
+  justify-content: center;
+  margin: 30px;
+  background-image: url(${table});
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: 90%;
+  cursor: pointer;
 `;
 
 const FloatingBtn = styled.img`
@@ -31,29 +40,56 @@ const FloatingBtn = styled.img`
   cursor: pointer;
 `;
 
+const DiaryBtn = styled.div`
+  margin: 0 0 90px 0;
+`;
+
 const userId = window.localStorage.getItem('userId');
 const accessToken = window.localStorage.getItem('access-token');
 
 function DrawerPage() {
+  const navigate = useNavigate();
   const [list, setList] = useState([]);
+  const [ToastStatus, setToastStatus] = useState(false);
+  const handleToast = () => {
+    setToastStatus(true);
+  };
   const DiaryAsync = async () => {
     try {
       axios({
         method: 'get',
-        url: `http://localhost:8080/diary/user/${userId}`,
+        url: `http://localhost:8080/diary/user/${userId}/notdrawn`,
         headers: {
           'access-token': accessToken,
         },
       }).then((res) => {
         setList(res.data.data);
-        console.log(res);
       });
     } catch (e) {
-      console.error(e);
+      setList([]);
     }
+  };
+  const DiaryDetailBtn = (diaryId) => {
+    axios({
+      method: 'get',
+      url: `http://localhost:8080/page/diary/${diaryId}`,
+      headers: {
+        'access-token': accessToken,
+      },
+    }).then((res) => {
+      if (res.data.data[0]) {
+        const pageId = res.data.data[0].id;
+        navigate(`/diaryDetailPage/${diaryId}/${pageId}`);
+      } else {
+        navigate(`/diaryDetailPage/${diaryId}/1`);
+      }
+    });
   };
   useEffect(() => {
     DiaryAsync();
+    if (ToastStatus) {
+      setTimeout(() => setToastStatus(false), 2000);
+    }
   }, []);
   const dragItem = useRef();
   const dragOverItem = useRef();
@@ -77,27 +113,30 @@ function DrawerPage() {
     const visualwidth2 = window.visualViewport.width - 140;
     const height = e.clientY;
     const width = e.clientX;
-    console.log(dragItemContent);
     if (
       visualheight1 >= height &&
       height >= visualheight2 &&
       visualwidth1 >= width &&
       width >= visualwidth2
     ) {
-      console.log('성공');
       axios({
-        method: 'put',
+        method: 'PUT',
         url: `http://localhost:8080/diary/${dragItemContent.id}`,
-        header: {
+        headers: {
           'access-token': accessToken,
         },
         data: {
           drawn: 1,
           title: dragItemContent.title,
         },
-      });
-    } else {
-      console.log('실패');
+      })
+        .then((res) => {
+          console.log(res);
+          DiaryAsync();
+        })
+        .catch((err) => {
+          handleToast();
+        });
     }
   };
 
@@ -124,11 +163,14 @@ function DrawerPage() {
                 onDragEnd={drop}
                 draggable
               >
-                <Diary DiaryInfo={item} />
+                <DiaryBtn onClick={() => DiaryDetailBtn(item.id)}>
+                  <Diary DiaryInfo={item} />
+                </DiaryBtn>
               </Colcontainer>
             ))}
         </DiaryContainer>
         <FloatingBtn src={floatingbutton} />
+        {ToastStatus && <Toast msg="DESK의 자리가 부족합니다." />}
       </DrawerContainer>
     </div>
   );
