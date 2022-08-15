@@ -16,7 +16,6 @@ const Container = styled.div`
   position: relative;
   width: 240px;
   height: 300px;
-  top: 30px;
   .plus_icon {
     .first {
       fill: ${(props) => props.color1 || '#FF8960'};
@@ -29,7 +28,7 @@ const Container = styled.div`
 
 const Title = styled.p`
   position: absolute;
-  top: 60px;
+  top: 30px;
   left: 15px;
   color: ${(props) => props.color3 || 'black'};
   font-family: ${(props) => props.font}, 'sans-serif';

@@ -17,7 +17,7 @@ const Container = styled.div`
 
 const Desk = styled.div`
   background-color: #ffca8c;
-  height: calc(1683 / 1920 * 100vh);
+  height: 74vh;
 `;
 
 const PostDiv = styled.div`
@@ -39,7 +39,9 @@ const Deskcontainer = styled.div`
   justify-content: space-around;
 `;
 
-const DiaryBtn = styled.div``;
+const DiaryBtn = styled.div`
+  cursor: pointer;
+`;
 
 const DiaryContainer = styled.div``;
 
@@ -47,7 +49,7 @@ const Drawer = styled.img`
   display: flex;
   bottom: 0;
   width: 100%;
-  height: auto;
+  height: 20.8vh;
 `;
 const userId = window.localStorage.getItem('userId');
 const accessToken = window.localStorage.getItem('access-token');
@@ -128,6 +130,8 @@ function desk() {
           drawn: 0,
           title: dragItemContent.title,
         },
+      }).then((res) => {
+        DiaryAsync();
       });
     }
   };

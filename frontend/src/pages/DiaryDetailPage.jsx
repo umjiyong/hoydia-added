@@ -57,7 +57,7 @@ const DetailEditBtn = styled.div`
   background-size: 100%;
   cursor: pointer;
 `;
-const DetailExitBtn = styled.div`
+const DetailUpdateBtn = styled.div`
   position: absolute;
   top: 9.2%;
   right: 19%;
@@ -129,8 +129,12 @@ const CaretRightBtn = styled.div`
 `;
 const TitleDiv = styled.div``;
 const ContentDiv = styled.div``;
-const CaretLeft = <FontAwesomeIcon size="6x" icon={faCaretLeft} />;
-const CaretRight = <FontAwesomeIcon size="6x" icon={faCaretRight} />;
+const CaretLeft = (
+  <FontAwesomeIcon size="6x" icon={faCaretLeft} color="#FFDBAC" />
+);
+const CaretRight = (
+  <FontAwesomeIcon size="6x" icon={faCaretRight} color="#FFDBAC" />
+);
 
 const userId = window.localStorage.getItem('userId');
 const accessToken = window.localStorage.getItem('access-token');
@@ -154,8 +158,8 @@ function DetailPage() {
   const editDiary = () => {
     navigate(`/diaryEdit/${params.diaryId}`);
   };
-  const goBack = () => {
-    navigate(-1);
+  const updatePage = () => {
+    navigate(`/updatepage/${params.diaryId}/${params.pageId}`);
   };
 
   useEffect(() => {
@@ -167,7 +171,6 @@ function DetailPage() {
       },
     })
       .then((res) => {
-        console.log(res);
         setTitle(res.data.data.title);
         setTitleFontStyle(res.data.data.titleFontStyle);
         setTitleFontSize(res.data.data.titleFontSize);
@@ -188,7 +191,7 @@ function DetailPage() {
       <DetailSendBtn onClick={sendDiary} />
       <DetailCreateBtn onClick={createDiary} />
       <DetailEditBtn onClick={editDiary} />
-      <DetailExitBtn onClick={goBack} />
+      <DetailUpdateBtn onClick={updatePage} />
       <KakaoMapModal propLocation={location} />
       <DetailContainer>
         <CaretLeftBtn>{CaretLeft}</CaretLeftBtn>
