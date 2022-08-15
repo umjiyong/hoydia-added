@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/match")
+@RequestMapping("/api/match")
 @Slf4j
 @Api(value = "RandomMatchingController", description = ("랜덤 매칭 컨트롤러"))
 public class RandomMatchingController {
