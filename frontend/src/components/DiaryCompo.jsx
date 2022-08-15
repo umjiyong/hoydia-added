@@ -39,13 +39,13 @@ function DiaryCompo(props) {
   return (
     <div className="DiaryCompo">
       <Container
-        color1={props.DiaryInfo.color1}
-        color2={props.DiaryInfo.color2}
+        color1={props.DiaryInfo.diaryColor}
+        color2={props.DiaryInfo.buttonColor}
       >
         <Title
-          color3={props.DiaryInfo.color3}
-          font={props.DiaryInfo.font}
-          fontsize={props.DiaryInfo.fontsize}
+          color3={props.DiaryInfo.fontColor}
+          font={props.DiaryInfo.fontStyle}
+          fontsize={props.DiaryInfo.fontSize}
         >
           {props.DiaryInfo.title}
         </Title>

@@ -11,7 +11,7 @@ const Kakao = () => {
     (async () => {
       try {
         const res = await axios.post(
-          `http://localhost:8080/auth/kakao?code= + ${code}`,
+          `http://localhost:8080/api/auth/kakao?code= + ${code}`,
         );
         window.localStorage.setItem('access-token', res.data['access-token']);
         window.localStorage.setItem('userId', res.data.userId);
@@ -20,7 +20,7 @@ const Kakao = () => {
         const onSilentRefresh = () => {
           const header = window.localStorage.getItem('access-token');
           const response = axios.post(
-            'http://localhost:8080/auth/refresh',
+            'http://localhost:8080/api/auth/refresh',
             header,
           );
           window.localStorage.setItem(

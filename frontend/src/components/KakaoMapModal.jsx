@@ -28,18 +28,6 @@ const Title = styled.span`
   align-items: center;
   color: #ff8960;
 `;
-const GoButton = styled.button`
-  justify-content: center;
-  align-items: center;
-  padding: 0.5rem 1rem;
-  gap: 0.125rem;
-
-  width: 11rem;
-  height: 5rem;
-
-  background: #ffdbac;
-  border-radius: 1rem;
-`;
 
 const Atag = styled.a`
   display: block;
@@ -77,8 +65,8 @@ const ExitDiv = styled.div`
 
 const DetailKakaoBtn = styled.div`
   position: absolute;
-  top: 55%;
-  left: 12.7%;
+  bottom: 25%;
+  left: 14.3%;
   z-index: 2;
   width: 72px;
   height: 118px;
@@ -89,8 +77,8 @@ const DetailKakaoBtn = styled.div`
 `;
 
 function FancyModalButton({ props }) {
-  const locationLat = props.propLocation;
-  const locationLng = 126.97290711826425;
+  const locationLat = props.propLocation.locationx;
+  const locationLng = props.propLocation.locationy;
   const token = localStorage.getItem('access-token');
   const position = {
     lat: locationLat,

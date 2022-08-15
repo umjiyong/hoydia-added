@@ -148,6 +148,7 @@ function diaryEdit() {
   const [colorHex1, setColorHex1] = useState('');
   const [colorHex2, setColorHex2] = useState('');
   const [colorHex3, setColorHex3] = useState('');
+  const [drawnValue, setDrawnValue] = useState();
   const [message, setMessage] = useState('제목을 입력해주세요');
   const [diaryColor, setdiaryColor] = useState(false);
   const [buttonColor, setbuttonColor] = useState(false);
@@ -156,17 +157,18 @@ function diaryEdit() {
   const [size, setsize] = useState(20);
   const [fontName, setfontName] = useState('');
 
-  function diaryEditSubmit() {
+  function diaryEditSubmit(event) {
+    event.preventDefault();
     axios({
       method: 'put',
-      url: `http://localhost:8080/diary/${params.diaryId}`,
+      url: `http://localhost:8080/api/diary/${params.diaryId}`,
       headers: {
         'access-token': accessToken,
       },
       data: {
         buttonColor: colorHex2,
         diaryColor: colorHex1,
-        drawn: 0,
+        drawn: drawnValue,
         fontColor: colorHex3,
         fontSize: size,
         fontStyle: fontName,
@@ -175,11 +177,17 @@ function diaryEdit() {
     })
       .then((res) => {
         console.log(res);
+        if (drawnValue === 0) {
+          navigate('/drawerpage');
+        } else {
+          navigate('/mainpage');
+        }
       })
       .catch((err) => {
         console.log(err);
       });
   }
+
   const parentFunction = (data) => {
     setfontName(data);
   };
@@ -239,10 +247,30 @@ function diaryEdit() {
     selectName = <p>{FontIcon}</p>;
   }
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    axios({
+      method: 'get',
+      url: `http://localhost:8080/api/diary/${params.diaryId}`,
+      headers: {
+        'access-token': accessToken,
+      },
+    })
+      .then((res) => {
+        console.log(res.data.data);
+        setColorHex1(res.data.data.diaryColor || '');
+        setColorHex2(res.data.data.buttonColor || '');
+        setColorHex3(res.data.data.fontColor || '');
+        setDrawnValue(res.data.data.drawn);
+        setMessage(res.data.data.title);
+        setfontName(res.data.data.fontStyle);
+        setsize(res.data.data.fontSize || 20);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   return (
     <div className="diaryEdit">
-      {/* <RootDiv> */}
       <Navbar />
       <form onSubmit={diaryEditSubmit}>
         <MainDiv>
@@ -335,7 +363,6 @@ function diaryEdit() {
         </MainDiv>
         <input type="submit" />
       </form>
-      {/* </RootDiv> */}
     </div>
   );
 }
