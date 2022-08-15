@@ -239,7 +239,6 @@ function diaryEdit() {
     selectName = <p>{FontIcon}</p>;
   }
 
-  useEffect(() => {}, []);
   return (
     <div className="diaryEdit">
       {/* <RootDiv> */}

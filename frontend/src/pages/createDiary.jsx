@@ -98,7 +98,10 @@ const Test = styled.div`
   font-size: 10px;
 `;
 
-const FileImage = styled.img``;
+const FileImage = styled.img`
+  width: 400px;
+  height: 300px;
+`;
 
 const NamingDiv = styled.span``;
 
@@ -158,6 +161,12 @@ const ButtonDiv = styled.div`
 
 const ContentDiv = styled.div`
   margin-top: 40px;
+`;
+
+const ImgDiv = styled.div`
+  height: 200px;
+  width: 50px;
+  margin-bottom: 100px;
 `;
 
 const userId = window.localStorage.getItem('userId');
@@ -289,8 +298,9 @@ function diaryEdit() {
             <ShowDiv>
               {filebutton ? (
                 <div>
-                  <h1>File Upload</h1>
-                  <FileImage alt="image" src={fileImageView} />
+                  <ImgDiv>
+                    <FileImage alt="image" src={fileImageView} />
+                  </ImgDiv>
                   <input
                     type="file"
                     name="imgUpload"
