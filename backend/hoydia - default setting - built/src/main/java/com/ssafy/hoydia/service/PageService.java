@@ -53,7 +53,8 @@ public class PageService {
                           String contentFontStyle,
                           String contentFontSize,
                           String bgmPath,
-                          String location) {
+                          String locationx,
+                          String locationy) {
 
         Page page = pageRepository.findById(id);
 
@@ -70,7 +71,8 @@ public class PageService {
             page.setContentFontStyle(contentFontStyle);
             page.setContentFontStyle(contentFontSize);
             page.setBgmPath(bgmPath);
-            page.setLocation(location);
+            page.setLocationx(locationx);
+            page.setLocationy(locationy);
 
             return "Loc-Service : "+page.getId();
         }
