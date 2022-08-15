@@ -44,10 +44,9 @@ const DiaryBtn = styled.div`
   margin: 0 0 90px 0;
 `;
 
-const userId = window.localStorage.getItem('userId');
-const accessToken = window.localStorage.getItem('access-token');
-
 function DrawerPage() {
+  const userId = window.localStorage.getItem('userId');
+  const accessToken = window.localStorage.getItem('access-token');
   const navigate = useNavigate();
   const [list, setList] = useState([]);
   const [ToastStatus, setToastStatus] = useState(false);
@@ -58,7 +57,7 @@ function DrawerPage() {
     try {
       axios({
         method: 'get',
-        url: `http://localhost:8080/diary/user/${userId}/notdrawn`,
+        url: `http://localhost:8080/api/diary/user/${userId}/notdrawn`,
         headers: {
           'access-token': accessToken,
         },
@@ -72,7 +71,7 @@ function DrawerPage() {
   const DiaryDetailBtn = (diaryId) => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/page/diary/${diaryId}`,
+      url: `http://localhost:8080/api/page/diary/${diaryId}`,
       headers: {
         'access-token': accessToken,
       },
@@ -121,7 +120,7 @@ function DrawerPage() {
     ) {
       axios({
         method: 'PUT',
-        url: `http://localhost:8080/diary/${dragItemContent.id}`,
+        url: `http://localhost:8080/api/diary/${dragItemContent.id}`,
         headers: {
           'access-token': accessToken,
         },

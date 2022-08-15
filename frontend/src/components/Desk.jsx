@@ -51,17 +51,17 @@ const Drawer = styled.img`
   width: 100%;
   height: 20.8vh;
 `;
-const userId = window.localStorage.getItem('userId');
-const accessToken = window.localStorage.getItem('access-token');
 
 function desk() {
+  const userId = window.localStorage.getItem('userId');
+  const accessToken = window.localStorage.getItem('access-token');
   const navigate = useNavigate();
   const [diaryList, setDiaryList] = useState([]);
   const DiaryAsync = async () => {
     try {
       axios({
         method: 'get',
-        url: `http://localhost:8080/diary/user/${userId}/drawn`,
+        url: `http://localhost:8080/api/diary/user/${userId}/drawn`,
         headers: {
           'access-token': accessToken,
         },
@@ -76,7 +76,7 @@ function desk() {
   const DiaryDetailBtn = (diaryId) => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/page/diary/${diaryId}`,
+      url: `http://localhost:8080/api/page/diary/${diaryId}`,
       headers: {
         'access-token': accessToken,
       },
@@ -122,7 +122,7 @@ function desk() {
     ) {
       axios({
         method: 'put',
-        url: `http://localhost:8080/diary/${dragItemContent.id}`,
+        url: `http://localhost:8080/api/diary/${dragItemContent.id}`,
         headers: {
           'access-token': accessToken,
         },

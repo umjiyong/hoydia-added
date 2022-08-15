@@ -21,8 +21,8 @@ const MusicPlayer = styled.div`
 
 const DetailSendBtn = styled.div`
   position: absolute;
-  top: 9.2%;
-  right: 34%;
+  top: 9.8%;
+  right: 39%;
   z-index: 2;
   width: 70px;
   height: 47px;
@@ -34,8 +34,8 @@ const DetailSendBtn = styled.div`
 
 const DetailCreateBtn = styled.div`
   position: absolute;
-  top: 9.2%;
-  right: 29%;
+  top: 9.8%;
+  right: 34%;
   z-index: 2;
   width: 70px;
   height: 47px;
@@ -47,8 +47,8 @@ const DetailCreateBtn = styled.div`
 
 const DetailEditBtn = styled.div`
   position: absolute;
-  top: 9.2%;
-  right: 24%;
+  top: 9.8%;
+  right: 29%;
   z-index: 2;
   width: 70px;
   height: 47px;
@@ -59,8 +59,8 @@ const DetailEditBtn = styled.div`
 `;
 const DetailUpdateBtn = styled.div`
   position: absolute;
-  top: 9.2%;
-  right: 19%;
+  top: 9.8%;
+  right: 24%;
   z-index: 2;
   width: 70px;
   height: 47px;
@@ -72,14 +72,14 @@ const DetailUpdateBtn = styled.div`
 
 const DetailContainer = styled.div`
   position: absolute;
-  bottom: 5%;
-  left: 12.5%;
+  bottom: 4%;
+  left: 14%;
   background-color: #ff8960;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 35px;
-  width: 75.15%;
-  height: 87%;
-  padding: 60px 76px 46px 76px;
+  width: 72%;
+  height: 88%;
+  padding: 60px 76px 26px 76px;
 `;
 
 const MainDiv = styled.div`
@@ -113,33 +113,29 @@ const ImageBox = styled.img`
   width: 300px;
   height: 300px;
 `;
+
 const CaretLeftBtn = styled.div`
   position: absolute;
   width: 48px;
   height: 96px;
-  top: 40%;
-  left: 2%;
+  top: 45%;
+  left: 8%;
+  cursor: pointer;
 `;
 const CaretRightBtn = styled.div`
   position: absolute;
   width: 48px;
   height: 96px;
-  top: 40%;
-  right: 2%;
+  top: 45%;
+  right: 8%;
+  cursor: pointer;
 `;
 const TitleDiv = styled.div``;
 const ContentDiv = styled.div``;
-const CaretLeft = (
-  <FontAwesomeIcon size="6x" icon={faCaretLeft} color="#FFDBAC" />
-);
-const CaretRight = (
-  <FontAwesomeIcon size="6x" icon={faCaretRight} color="#FFDBAC" />
-);
-
-const userId = window.localStorage.getItem('userId');
-const accessToken = window.localStorage.getItem('access-token');
 
 function DetailPage() {
+  const userId = window.localStorage.getItem('userId');
+  const accessToken = window.localStorage.getItem('access-token');
   const navigate = useNavigate();
   const params = useParams();
   const [title, setTitle] = useState();
@@ -150,6 +146,8 @@ function DetailPage() {
   const [contentFontSize, setContentFontSize] = useState();
   const [bgmPath, setBgmPath] = useState();
   const [location, setLocation] = useState();
+  const [overLeft, setOverLeft] = useState(false);
+  const [overRight, setOverRight] = useState(false);
 
   const sendDiary = () => {};
   const createDiary = () => {
@@ -165,7 +163,7 @@ function DetailPage() {
   useEffect(() => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/page/${params.pageId}`,
+      url: `http://localhost:8080/api/page/${params.pageId}`,
       headers: {
         'access-token': accessToken,
       },
@@ -193,8 +191,17 @@ function DetailPage() {
       <DetailEditBtn onClick={editDiary} />
       <DetailUpdateBtn onClick={updatePage} />
       <KakaoMapModal propLocation={location} />
+      <CaretLeftBtn
+        onMouseOver={() => setOverLeft(true)}
+        onMouseLeave={() => setOverLeft(false)}
+      >
+        <FontAwesomeIcon
+          size="6x"
+          icon={faCaretLeft}
+          style={overLeft ? { color: '#FF8960' } : { color: '#FFDBAC' }}
+        />
+      </CaretLeftBtn>
       <DetailContainer>
-        <CaretLeftBtn>{CaretLeft}</CaretLeftBtn>
         <MainDiv>
           <LeftDiv>
             <ImageBox src={ImageUrl} alt="ImageBox" />
@@ -229,8 +236,17 @@ function DetailPage() {
             </ContentDiv>
           </RightDiv>
         </MainDiv>
-        <CaretRightBtn>{CaretRight}</CaretRightBtn>
       </DetailContainer>
+      <CaretRightBtn
+        onMouseOver={() => setOverRight(true)}
+        onMouseLeave={() => setOverRight(false)}
+      >
+        <FontAwesomeIcon
+          size="6x"
+          icon={faCaretRight}
+          style={overRight ? { color: '#FF8960' } : { color: '#FFDBAC' }}
+        />
+      </CaretRightBtn>
     </div>
   );
 }

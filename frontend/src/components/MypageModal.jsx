@@ -97,7 +97,7 @@ function FancyModalButton() {
       headers: {
         'access-token': `${localStorage.getItem('access-token')}`,
       },
-      url: 'http://localhost:8080/user',
+      url: 'http://localhost:8080/api/user',
       method: 'GET',
     })
       .then((res) => {
