@@ -43,15 +43,9 @@ const DiaryBtn = styled.div`
   margin: 0 0 90px 0;
 `;
 
-// <<<<<<< Updated upstream
-// =======
-// const userId = localStorage.getItem('userId');
-// const accessToken = localStorage.getItem('access-token');
-
-// >>>>>>> Stashed changes
 function DrawerPage() {
-  const userId = localStorage.getItem('userId');
-  const accessToken = localStorage.getItem('access-token');
+  const userId = window.localStorage.getItem('userId');
+  const accessToken = window.localStorage.getItem('access-token');
   const navigate = useNavigate();
   const [list, setList] = useState([]);
   const [ToastStatus, setToastStatus] = useState(false);
@@ -137,7 +131,6 @@ function DrawerPage() {
         })
         .catch((err) => {
           handleToast();
-          console.log(err);
         });
     }
   };
