@@ -103,7 +103,7 @@ const No = styled.button`
   border: none;
   color: #ffffff;
   font-size: 30px;
-  font-weight: 400;
+  font-weight: 700;
   // text-shadow: -1px 0px #d43e3c, 0px 1px #d43e3c, 1px 0px #d43e3c,
   //   0px -1px #d43e3c;
   -webkit-text-stroke: 1px #d43e3c;

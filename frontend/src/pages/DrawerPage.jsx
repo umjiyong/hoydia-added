@@ -44,8 +44,8 @@ const DiaryBtn = styled.div`
 `;
 
 function DrawerPage() {
-  const userId = window.localStorage.getItem('userId');
-  const accessToken = window.localStorage.getItem('access-token');
+  const userId = localStorage.getItem('userId');
+  const accessToken = localStorage.getItem('access-token');
   const navigate = useNavigate();
   const [list, setList] = useState([]);
   const [ToastStatus, setToastStatus] = useState(false);
@@ -114,6 +114,7 @@ function DrawerPage() {
       visualwidth1 >= width &&
       width >= visualwidth2
     ) {
+      console.log(dragItemContent);
       axios({
         method: 'PUT',
         url: `http://localhost:8080/api/diary/${dragItemContent.id}`,
@@ -123,6 +124,11 @@ function DrawerPage() {
         data: {
           drawn: 1,
           title: dragItemContent.title,
+          buttonColor: dragItemContent.buttonColor,
+          diaryColor: dragItemContent.diaryColor,
+          fontColor: dragItemContent.fontColor,
+          fontSize: dragItemContent.fontSize,
+          fontStyle: dragItemContent.fonStyle,
         },
       })
         .then((res) => {
@@ -131,6 +137,7 @@ function DrawerPage() {
         })
         .catch((err) => {
           handleToast();
+          console.log(err);
         });
     }
   };

@@ -12,13 +12,12 @@ import styled from 'styled-components';
 import Modal, { ModalProvider, BaseModalBackground } from 'styled-react-modal';
 import exit from 'assets/exit.png';
 import axios from 'axios';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { BiCopy } from 'react-icons/bi';
 
 const StyledModal = Modal.styled`
-       
-
-  
-  width: 59.25rem;
-  height: 38rem;
+  width: 50.25rem;
+  height: 30rem;
   background: #FFFFFF;
   box-shadow: 0rem 0.25rem 0.25rem  rgba(0, 0, 0, 0.25), 0rem 0.125rem 0.25rem  rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(0.25rem );
@@ -27,28 +26,50 @@ const StyledModal = Modal.styled`
   align-items: center;
   flex-direction: column;
   opacity: ${(props) => props.opacity};
-  transition : all 0.05s ease-in-out;;`;
+  transition : all 0.05s ease-in-out;;
+  `;
 
 const Title = styled.span`
-  font-family: 'Noto Sans KR';
-  font-style: normal;
-  font-weight: 700;
+  font-weight: 800;
   font-size: 50px;
   justify-content: center;
   align-items: center;
+  margin-bottom: 30px;
   color: #ff8960;
 `;
+// const Line = styled.hr`
+//   border: 1px solid red;
+// `;
+const UserEmail = styled.p`
+  margin-bottom: 40px;
+`;
+
+const UnregisterDiv = styled.div`
+  display: flex;
+  gap: 20px;
+  margin-top: 40px;
+`;
+
+const Unregister = styled.p`
+  font-size: 20px;
+`;
+
 const SignoutButton = styled.button`
   justify-content: center;
   align-items: center;
-  padding: 0.5rem 1rem;
-  gap: 0.125rem;
-
-  width: 11rem;
-  height: 5rem;
-
+  padding: 8px 16px;
+  width: 176px;
+  height: 60px;
   background: #ff8988;
   border-radius: 15px;
+  border: none;
+  color: #ffffff;
+  font-size: 30px;
+  font-weight: 700;
+  &:hover {
+    cursor: pointer;
+    background: #d43e3c;
+  }
 `;
 
 const Atag = styled.a`
@@ -57,38 +78,86 @@ const Atag = styled.a`
   text-align: center;
   padding: 0.875rem 1rem;
   text-decoration: none;
-  &:hover {
+  &:hover,
+  &:active {
     cursor: pointer;
+    color: #fff;
+    background-color: #ff8960;
+    border-radius: 10px;
   }
 `;
 
 const ExitBtn = styled.img`
-  display: flex;
-  justify-content: flex-end;
   width: 1.875rem;
   height: 1.875rem;
-  margin: 0.938rem;
-  margin-left: 56.25rem;
-  margin-top: 1rem;
   &:hover {
     cursor: pointer;
   }
 `;
 
 const ExitDiv = styled.div`
-  display: flex;
-  justify-content: flex-end;
   width: 1.875rem;
   height: 1.875rem;
-  margin: 0.938rem;
-  margin-left: 56.25rem;
-  margin-top: 1rem;
+  margin: 24px 24px 0px 750px;
+`;
+
+const UserInfo = styled.div`
+  font-size: 20px;
+`;
+
+const AddFriends = styled.div`
+  display: flex;
+`;
+
+const EditNickname = styled.div`
+  display: flex;
+`;
+const InputDiv = styled.div`
+  text-align: center;
+  margin: auto;
+`;
+
+const InputNickname = styled.input`
+  width: 200px;
+  height: 40px;
+  background: #ffffff;
+  border: 0.125rem solid #dfba88;
+  border-radius: 1rem;
+  &:active,
+  &:focus {
+    outline-color: #ff8960;
+  }
+  &::placeholder {
+    color: #888888;
+  }
+`;
+
+const EditButton = styled.button`
+  justify-content: center;
+  align-items: center;
+  padding: 8px 16px;
+  width: 176px;
+  height: 60px;
+  background: #ffdbac;
+  border-radius: 15px;
+  border: none;
+  color: #ffffff;
+  font-size: 30px;
+  font-weight: 700;
+  // text-shadow: -1px 0px #ff8960, 0px 1px #ff8960, 1px 0px #ff8960,
+  //   0px -1px #ff8960;
+  -webkit-text-stroke: 1px #ff8960;
+  &:hover {
+    cursor: pointer;
+    background-color: #ff8960;
+  }
 `;
 
 function FancyModalButton() {
   const [user_id, setUser_id] = useState('1');
   const [user_email, setUser_email] = useState('@');
   const [user_nickname, setUser_nickname] = useState('');
+  const [change_nickname, setChange_nickname] = useState('');
 
   useEffect(() => {
     axios({
@@ -102,6 +171,7 @@ function FancyModalButton() {
         setUser_id(res.data.data.id);
         setUser_email(res.data.data.email);
         setUser_nickname(res.data.data.nickname);
+        setChange_nickname(res.data.data.nickname);
 
         // console.log(res.data.data);
       })
@@ -119,7 +189,7 @@ function FancyModalButton() {
       headers: {
         'access-token': `${localStorage.getItem('access-token')}`,
       },
-      url: 'http://localhost:8080/user/',
+      url: 'http://localhost:8080/api/user/',
       method: 'DELETE',
     })
       .then((res) => {
@@ -133,6 +203,30 @@ function FancyModalButton() {
     setOpacity(0);
     setIsOpen(!isOpen);
   }
+
+  const handleChange = (event) => {
+    setChange_nickname(event.target.value);
+  };
+
+  function toggleUpdate() {
+    axios({
+      headers: {
+        'access-token': `${localStorage.getItem('access-token')}`,
+      },
+      url: `http://localhost:8080/api/user/${user_id}`,
+      method: 'PUT',
+      data: {
+        nickname: change_nickname,
+      },
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   function toggleModal() {
     setOpacity(0);
     setIsOpen(!isOpen);
@@ -167,16 +261,34 @@ function FancyModalButton() {
           <ExitBtn src={exit} />
         </ExitDiv>
         <Title>마이페이지</Title>
-        <div>
-          <p>유저 아이디 (친구 추가 코드) : {user_id}</p>
-          <p>유저 이메일 : {user_email}</p>
-          <p>유저 닉네임 : {user_nickname}</p>
-        </div>
-        <Link to="/">
-          <SignoutButton type="button" onClick={toggleDelete}>
-            회원탈퇴
-          </SignoutButton>
-        </Link>
+        <UserInfo>
+          <AddFriends>
+            <p>친구 추가 코드 : {user_id}</p>
+            <CopyToClipboard text={user_id}>
+              <BiCopy
+                size="35px"
+                cursor="pointer"
+                style={{ margin: '10px 0px 0px 7px' }}
+              />
+            </CopyToClipboard>
+          </AddFriends>
+          <UserEmail>유저 이메일 : {user_email}</UserEmail>
+          <EditNickname>
+            유저 닉네임 :
+            <InputDiv>
+              <InputNickname value={change_nickname} onChange={handleChange} />
+            </InputDiv>
+            <EditButton onClick={toggleUpdate}>저장하기</EditButton>
+          </EditNickname>
+        </UserInfo>
+        <UnregisterDiv>
+          <Unregister>정말로 오이디아를 떠나시나요?</Unregister>
+          <Link to="/">
+            <SignoutButton type="button" onClick={toggleDelete}>
+              회원탈퇴
+            </SignoutButton>
+          </Link>
+        </UnregisterDiv>
       </StyledModal>
     </div>
   );
