@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 @RequiredArgsConstructor
 @Slf4j
 @Api(value = "AuthController", description = ("소셜 로그인 관련 컨트롤러"))
@@ -78,7 +78,6 @@ public class AuthController {
     public Map googleAuthRequest(@RequestBody AuthRequest authRequest) {
 
         String userId = googleAuthService.login(authRequest).getId();
-
         User loginUser = userService.login(userId);
 
         if (loginUser == null) {

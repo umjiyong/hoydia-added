@@ -5,7 +5,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Logo from 'components/Logo';
-import kakaoLogin from 'assets/kakaoLogin.png';
+import kakaoLogin from 'assets/kakao_login.png';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -37,8 +37,8 @@ const Slogan = styled.p`
 `;
 
 const KakaoBtn = styled.img`
-  width: 312px;
-  height: 75px;
+  width: 300px;
+  height: 45px;
   border-radius: 100px;
 `;
 
@@ -83,7 +83,7 @@ function loginPage() {
                 const async = async () => {
                   try {
                     const res = await axios.post(
-                      'http://localhost:8080/auth/google',
+                      'http://localhost:8080/api/auth/google',
                       authRequest,
                     );
                     window.localStorage.setItem(
@@ -121,6 +121,9 @@ function loginPage() {
               onError={() => {
                 console.log('Login Failed');
               }}
+              width="300"
+              theme="filled_blue"
+              shape="circle"
             />
           </GoogleOAuthProvider>
           <a href={KAKAO_AUTH_URI}>

@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/note")
+@RequestMapping("/api/note")
 @Slf4j
 @Api(value = "NoteController", description = ("노트 컨트롤러(아직 매칭이 되기 전 노트들)"))
 public class NoteController {
