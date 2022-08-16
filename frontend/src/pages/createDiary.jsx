@@ -150,9 +150,6 @@ const ImgDiv = styled.div`
   margin-bottom: 100px;
 `;
 
-const userId = window.localStorage.getItem('userId');
-const accessToken = window.localStorage.getItem('access-token');
-
 function createPage() {
   const userId = window.localStorage.getItem('userId');
   const accessToken = window.localStorage.getItem('access-token');
