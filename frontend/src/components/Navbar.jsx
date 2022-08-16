@@ -46,7 +46,6 @@ function Navbar() {
           <LogoImg src={Hoydia} />
         </Atag>
       </LiTag>
-
       <LiTag>
         <Modal1 />
       </LiTag>
