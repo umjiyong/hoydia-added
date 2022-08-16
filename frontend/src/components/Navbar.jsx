@@ -31,7 +31,7 @@ const Atag = styled.a`
 const LogoImg = styled.img`
   width: 110px;
   height: auto;
-  margin-left: 15px;
+  margin: 3px 0px 0px 15px;
   &:hover {
     cursor: pointer;
     transform: scale(1.3);
