@@ -179,6 +179,7 @@ public class NoteController {
         private String question;
 
         private String answer;
+
         public ReadNoteResponseDto(Note note) {
 
             this.id = note.getId();
