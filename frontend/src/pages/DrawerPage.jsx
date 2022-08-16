@@ -4,7 +4,6 @@ import Diary from 'components/DiaryCompo';
 import Navbar from 'components/Navbar';
 import Toast from 'components/Toast';
 import { useNavigate } from 'react-router-dom';
-import table from 'assets/table.png';
 import floatingbutton from 'assets/floatingButton.png';
 import axios from 'axios';
 
@@ -12,17 +11,17 @@ const DrawerContainer = styled.div`
   background-color: F6F6F6;
 `;
 
-const DiaryContainer = styled.div``;
+const DiaryContainer = styled.div`
+  align-items: center;
+`;
 
 const Colcontainer = styled.div`
   display: flex;
   justify-content: center;
-  margin: 30px;
-  background-image: url(${table});
-  background-repeat: no-repeat;
-  background-position: bottom;
-  background-size: 90%;
-  cursor: pointer;
+  align-items: center;
+  margin: 40px 0 0 55px;
+  width: 300px;
+  height: 400px;
 `;
 
 const FloatingBtn = styled.img`
@@ -143,7 +142,7 @@ function DrawerPage() {
         <DiaryContainer
           style={{
             display: 'grid',
-            gridTemplateRows: '1fr ',
+            gridTemplateRows: '1fr',
             gridTemplateColumns: '1fr 1fr 1fr ',
           }}
         >
@@ -165,7 +164,10 @@ function DrawerPage() {
               </Colcontainer>
             ))}
         </DiaryContainer>
-        <FloatingBtn src={floatingbutton} />
+        <FloatingBtn
+          onClick={() => navigate('/mainpage')}
+          src={floatingbutton}
+        />
         {ToastStatus && <Toast msg="DESK의 자리가 부족합니다." />}
       </DrawerContainer>
     </div>
