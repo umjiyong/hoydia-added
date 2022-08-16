@@ -17,7 +17,7 @@ const Container = styled.div`
 
 const Desk = styled.div`
   background-color: #ffca8c;
-  height: 72.8vh;
+  height: 72vh;
 `;
 
 const PostDiv = styled.div`
@@ -31,8 +31,12 @@ const Post = styled.img`
   height: 10%;
   max-width: 150px;
   max-height: 100px;
-  margin-top: 90px;
-  margin-right: 40px;
+  margin-top: 60px;
+  margin-right: 60px;
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.3);
+  }
 `;
 
 const Deskcontainer = styled.div`
@@ -126,6 +130,11 @@ function desk() {
         data: {
           drawn: 0,
           title: dragItemContent.title,
+          buttonColor: dragItemContent.buttonColor,
+          diaryColor: dragItemContent.diaryColor,
+          fontColor: dragItemContent.fontColor,
+          fontSize: dragItemContent.fontSize,
+          fontStyle: dragItemContent.fonStyle,
         },
       }).then((res) => {
         DiaryAsync();

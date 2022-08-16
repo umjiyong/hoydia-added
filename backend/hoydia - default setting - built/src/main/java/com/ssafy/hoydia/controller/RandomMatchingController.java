@@ -50,7 +50,7 @@ public class RandomMatchingController {
 
     @GetMapping("/{matchingNoteId}")
     @ApiOperation(value = "매칭노트 확인", notes = "id에 해당하는 매칭노트를 가져옴 urI에 pathVariable로 request")
-    public ResultDto readMatchingNoteIdById(@PathVariable("matchingNoteId") String matchingNoteId) {
+    public ResultDto readMatchingNoteById(@PathVariable("matchingNoteId") String matchingNoteId) {
 
         if (!jwtService.isValidUser())
             throw new InvalidApproachException("사용자 인증 실패");
@@ -94,7 +94,7 @@ public class RandomMatchingController {
     static class ReadMatchingNoteResponseDto {
 
         private String id;
-        private User user;
+        private String userId;
         private LocalDateTime regTime;
         private String ownerId;
         private String pairId;
@@ -109,7 +109,7 @@ public class RandomMatchingController {
         public ReadMatchingNoteResponseDto(MatchingNote matchingNote) {
 
             this.id = matchingNote.getId();
-            this.user = matchingNote.getUser();
+            this.userId = matchingNote.getUser().getId();
             this.regTime = matchingNote.getRegTime();
             this.ownerId = matchingNote.getOwnerId();
             this.pairId = matchingNote.getPairId();

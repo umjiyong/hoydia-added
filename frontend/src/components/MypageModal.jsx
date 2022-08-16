@@ -78,8 +78,12 @@ const Atag = styled.a`
   text-align: center;
   padding: 0.875rem 1rem;
   text-decoration: none;
-  &:hover {
+  &:hover,
+  &:active {
     cursor: pointer;
+    color: #fff;
+    background-color: #ff8960;
+    border-radius: 10px;
   }
 `;
 
