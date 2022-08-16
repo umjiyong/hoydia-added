@@ -161,14 +161,8 @@ function updatePage() {
   });
   const params = useParams();
   const navigate = useNavigate();
-  const [title, setTitle] = useState();
-  const [titleFontStyle, setTitleFontStyle] = useState();
-  const [titleFontSize, setTitleFontSize] = useState();
-  const [content, setContent] = useState();
-  const [contentFontStyle, setContentFontStyle] = useState();
-  const [contentFontSize, setContentFontSize] = useState();
   const [bgmPath, setBgmPath] = useState();
-  const [location, setLocation] = useState();
+  const [imageUrl, setImageUrl] = useState();
 
   const saveFileImage = (event) => {
     setFileImage(event.target.files[0]);
@@ -217,7 +211,7 @@ function updatePage() {
 
   function fileSubmit(event) {
     event.preventDefault();
-    const url = 'http://localhost:8080/api/file/upload?category=image';
+    const url = `http://localhost:8080/api/page/image/${params.pageId}`;
     const formData = new FormData();
     if (fileImage) {
       formData.append('file', fileImage);
@@ -228,7 +222,7 @@ function updatePage() {
         'content-type': 'multipart/form-data',
       },
     };
-    axios.post(url, formData, config).then((response) => {});
+    axios.put(url, formData, config).then((response) => {});
   }
 
   function pageSubmit(event) {
@@ -269,18 +263,15 @@ function updatePage() {
       },
     })
       .then((res) => {
+        console.log(res);
         setfontName(res.data.data.titleFontstyle);
         setInputs({
           title: res.data.data.title,
           content: res.data.data.content,
         });
-        // setTitle(res.data.data.title);
-        // setTitleFontStyle(res.data.data.titleFontStyle);
-        setTitleFontSize(res.data.data.titleFontSize);
-        // setContent(res.data.data.content);
-        // setContentFontStyle(res.data.data.contentFontStyle);
-        setContentFontSize(res.data.data.contentFontSize);
         setBgmPath(res.data.data.bgmPath);
+        setFileImage(res.data.data.imgPath);
+        setFileImageView(res.data.data.imgPath);
         setPosition({
           lat: res.data.data.locationx,
           lng: res.data.data.locationy,

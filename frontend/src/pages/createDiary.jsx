@@ -213,25 +213,7 @@ function createPage() {
     setMapbutton(false);
   };
 
-  function fileSubmit(event) {
-    event.preventDefault();
-    const url = 'http://localhost:8080/api/file/upload?category=image';
-    const formData = new FormData();
-    formData.append('file', fileImage);
-    formData.append('fileName', fileImage.name);
-
-    const config = {
-      headers: {
-        'content-type': 'multipart/form-data',
-      },
-    };
-    axios.post(url, formData, config).then((res) => {
-      console.log(res);
-    });
-  }
-
   function handleSubmit(event) {
-    fileSubmit(event);
     event.preventDefault();
 
     axios({
@@ -254,6 +236,19 @@ function createPage() {
       },
     }).then((res) => {
       console.log(res);
+      const url = `http://localhost:8080/api/page/image/${res.data.id}`;
+      const formData = new FormData();
+      formData.append('file', fileImage);
+      formData.append('fileName', fileImage.name);
+
+      const config = {
+        headers: {
+          'content-type': 'multipart/form-data',
+        },
+      };
+      axios.put(url, formData, config).then((response) => {
+        console.log(response);
+      });
       navigate(`/diaryDetailPage/${params.diaryId}/${res.data.id}`);
     });
   }
@@ -302,8 +297,8 @@ function createPage() {
                 <Map // 지도를 표시할 Container
                   center={{
                     // 지도의 중심좌표
-                    lat: 37.553181930643554,
-                    lng: 126.97290711826425,
+                    lat: position.lat,
+                    lng: position.lng,
                   }}
                   style={{
                     width: '70%',
