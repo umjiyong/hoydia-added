@@ -32,7 +32,7 @@ const MainDiv = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 100px;
+  margin-top: 50px;
   margin-left: 50px;
   margin-right: 50px;
 `;
@@ -57,18 +57,10 @@ const SelectDiv = styled.div`
   left: 750px;
 `;
 
-const Jujang = styled.p`
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 30px;
-  margin-right: 100px;
-  cursor: pointer;
-`;
-
 const InputBar = styled.input`
   padding: 0.01rem 0.5rem;
   // gap: 0.125rem;
-
+  text-align: center;
   width: 70%;
   height: 5rem;
 
@@ -115,13 +107,6 @@ const EditDiv = styled.div`
   padding: 0px 30px 0px 30px;
 `;
 
-const Line = styled.hr`
-  border-color: red;
-  background-color: red;
-  width: 650px;
-  lineheight: 100px;
-`;
-
 const RightDiv = styled.div`
   display: flex;
   // width: 60%;
@@ -135,6 +120,31 @@ const IndexDiv = styled.p`
   font-family: ${(props) => props.fontName}, 'sans-serif';
   z-index: 1;
 `;
+const GoButton = styled.input`
+  padding: 8px 16px;
+  width: 150px;
+  height: 60px;
+  background: #ffdbac;
+  border-radius: 15px;
+  border: none;
+  color: #ffffff;
+  font-size: 30px;
+  font-weight: 700;
+  -webkit-text-stroke: 1px #ff8960;
+  text-shadow: -1px 0px #ff8960, 0px 1px #ff8960, 1px 0px #ff8960,
+    0px -1px #ff8960;
+  &:hover {
+    cursor: pointer;
+    background-color: #ff8960;
+  }
+`;
+
+const ButtonDiv = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin: 25px 100px 0 0;
+`;
+
 const DiaryIcon = <FontAwesomeIcon size="lg" icon={faBook} />;
 const ClipIcon = <FontAwesomeIcon size="lg" icon={faPaperclip} />;
 const FontIcon = <FontAwesomeIcon size="lg" icon={faFont} />;
@@ -361,7 +371,9 @@ function diaryEdit() {
             </Container>
           </RightDiv>
         </MainDiv>
-        <input type="submit" />
+        <ButtonDiv>
+          <GoButton type="submit" value="저장" />
+        </ButtonDiv>
       </form>
     </div>
   );

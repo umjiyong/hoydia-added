@@ -16,6 +16,7 @@ const Container = styled.div`
   position: relative;
   width: 240px;
   height: 300px;
+  cursor: pointer;
   .plus_icon {
     .first {
       fill: ${(props) => props.color1 || '#FF8960'};
