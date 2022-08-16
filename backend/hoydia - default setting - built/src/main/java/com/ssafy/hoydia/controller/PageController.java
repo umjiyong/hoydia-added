@@ -150,7 +150,7 @@ public class PageController {
 
         diaryService.diaryOwnShift(request.getDiaryId());; // 페이지가 위치한 다이어리의 소유주 상태를 전환해줌.
 
-        noticeService.sendNoticeAlone(userService.searchById(diary.getPairId()),userService.searchById(diary.getOwnerId()),"일기 교환 완료!", "교환일기가 도착했습니다");
+        noticeService.sendNoticeAlone(userService.searchById(diary.getPairId()),userService.searchById(diary.getOwnerId()),"일기 교환 완료!", userService.searchById(diary.getOwnerId()).getNickname()+"님과의 교환일기가 도착했습니다!");
 
         return new CreatePageResponseDto(page.getId(),page.getRegTime());
     }
