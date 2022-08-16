@@ -57,21 +57,17 @@ function desk() {
   const accessToken = window.localStorage.getItem('access-token');
   const navigate = useNavigate();
   const [diaryList, setDiaryList] = useState([]);
-  const DiaryAsync = async () => {
-    try {
-      axios({
-        method: 'get',
-        url: `http://localhost:8080/api/diary/user/${userId}/drawn`,
-        headers: {
-          'access-token': accessToken,
-        },
-      }).then((res) => {
-        setDiaryList(res.data.data);
-        console.log(res);
-      });
-    } catch (e) {
-      console.error(e);
-    }
+  const DiaryAsync = () => {
+    axios({
+      method: 'get',
+      url: `http://localhost:8080/api/diary/user/${userId}/drawn`,
+      headers: {
+        'access-token': accessToken,
+      },
+    }).then((res) => {
+      setDiaryList(res.data.data);
+      console.log(res);
+    });
   };
   const DiaryDetailBtn = (diaryId) => {
     axios({
