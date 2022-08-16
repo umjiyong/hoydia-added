@@ -43,12 +43,6 @@ const DiaryBtn = styled.div`
   margin: 0 0 90px 0;
 `;
 
-// <<<<<<< Updated upstream
-// =======
-// const userId = localStorage.getItem('userId');
-// const accessToken = localStorage.getItem('access-token');
-
-// >>>>>>> Stashed changes
 function DrawerPage() {
   const userId = localStorage.getItem('userId');
   const accessToken = localStorage.getItem('access-token');
