@@ -144,6 +144,15 @@ const ContentDiv = styled.div`
   margin-top: 40px;
 `;
 
+const ImgDiv = styled.div`
+  height: 200px;
+  width: 50px;
+  margin-bottom: 100px;
+`;
+
+const userId = window.localStorage.getItem('userId');
+const accessToken = window.localStorage.getItem('access-token');
+
 function createPage() {
   const userId = window.localStorage.getItem('userId');
   const accessToken = window.localStorage.getItem('access-token');
@@ -275,7 +284,9 @@ function createPage() {
             <ShowDiv>
               {filebutton ? (
                 <div>
-                  <FileImage alt="image" src={fileImageView} />
+                  <ImgDiv>
+                    <FileImage alt="image" src={fileImageView} />
+                  </ImgDiv>
                   <input
                     type="file"
                     name="imgUpload"
