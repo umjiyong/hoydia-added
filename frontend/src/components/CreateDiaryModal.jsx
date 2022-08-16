@@ -67,6 +67,7 @@ const Atag = styled.a`
     cursor: pointer;
   }
 `;
+
 const InputCode = styled.input`
   box-sizing: border-box;
   margin-bottom: 20px;
@@ -113,6 +114,7 @@ function FancyModalButton() {
   function toggleModal() {
     setOpacity(0);
     setIsOpen(!isOpen);
+    setfriendPost('');
   }
 
   function afterOpen() {

@@ -8,42 +8,45 @@ import exit from 'assets/exit.png';
 import axios from 'axios';
 
 const StyledModal = Modal.styled`
-       
-
-  
-   width: 50.25rem;
-        height: 32.25rem;
-        background: #FFFFFF;
-        box-shadow: 0rem 0.25rem 0.25rem  rgba(0, 0, 0, 0.25), 0rem 0.125rem 0.25rem  rgba(0, 0, 0, 0.25);
-        backdrop-filter: blur(0.25rem );
-        border-radius: 2.188rem;
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        opacity: ${(props) => props.opacity};
-        transition : all 0.05s ease-in-out;;`;
+  width: 50.25rem;
+  height: 32.25rem;
+  background: #FFFFFF;
+  box-shadow: 0rem 0.25rem 0.25rem  rgba(0, 0, 0, 0.25), 0rem 0.125rem 0.25rem  rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(0.25rem );
+  border-radius: 2.188rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: ${(props) => props.opacity};
+  transition : all 0.05s ease-in-out;;`;
 
 const Title = styled.span`
-  font-family: 'Noto Sans KR';
-  font-style: normal;
-  font-weight: 700;
+  font-weight: 800;
   font-size: 50px;
   justify-content: center;
   align-items: center;
-
   color: #ff8960;
 `;
+
 const GoButton = styled.button`
   justify-content: center;
   align-items: center;
-  padding: 0.5rem 1rem;
-  gap: 0.125rem;
-
-  width: 11rem;
-  height: 5rem;
-
+  padding: 8px 16px;
+  width: 176px;
+  height: 60px;
   background: #ffdbac;
-  border-radius: 1rem;
+  border-radius: 15px;
+  border: none;
+  color: #ffffff;
+  font-size: 30px;
+  font-weight: 700;
+  -webkit-text-stroke: 1px #ff8960;
+  text-shadow: -1px 0px #ff8960, 0px 1px #ff8960, 1px 0px #ff8960,
+    0px -1px #ff8960;
+  &:hover {
+    cursor: pointer;
+    background-color: #ff8960;
+  }
 `;
 
 const Atag = styled.a`
@@ -58,17 +61,21 @@ const Atag = styled.a`
 `;
 
 const InputQ = styled.textarea`
-  box-sizing: border-box;
-
-  padding: 0.5rem 1rem;
-  gap: 0.125rem;
-
-  width: 38.563rem;
-  height: 7.5rem;
-
-  background: #ffffff;
+  width: 660px;
+  height: 240px;
   border: 2px solid #dfba88;
-  border-radius: 1rem;
+  border-radius: 16px;
+  margin: 20px 0 25px 0;
+  box-sizing: border-box;
+  &:active,
+  &:focus {
+    outline-color: #ff8960;
+  }
+  &::placeholder {
+    color: #888888;
+  }
+  font-size: 20px;
+  resize: none;
 `;
 
 const ExitBtn = styled.img`
@@ -94,7 +101,9 @@ const ExitDiv = styled.div`
   margin-top: 1rem;
 `;
 
-const QuestDiv = styled.div``;
+const QuestDiv = styled.div`
+  font-size: 20px;
+`;
 
 function FancyModalButton() {
   const [isOpen, setIsOpen] = useState(false);
@@ -132,6 +141,7 @@ function FancyModalButton() {
   function toggleOff() {
     setOpacity(0);
     setIsOpen(!isOpen);
+    setquestionrPost('');
   }
 
   function togglePost() {
@@ -139,7 +149,7 @@ function FancyModalButton() {
       headers: {
         'access-token': `${localStorage.getItem('access-token')}`,
       },
-      url: 'http://localhost:8080/note',
+      url: 'http://localhost:8080/api/note',
       method: 'POST',
       data: {
         question: `${questList[num]}`,
@@ -186,9 +196,7 @@ function FancyModalButton() {
           <ExitBtn src={exit} />
         </ExitDiv>
         <Title>Q&A</Title>
-
         <QuestDiv>{questList[num]}</QuestDiv>
-
         <InputQ
           type="textarea"
           id="InputQ"
