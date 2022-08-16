@@ -5,7 +5,7 @@ import Modal1 from 'components/CreateDiaryModal';
 import Modal2 from 'components/RandomMatchingQuestionModal';
 import Modal3 from 'components/MypageModal';
 import Modal4 from 'components/LogoutModal';
-import hoydia from 'assets/Hoydia.png';
+import Hoydia from 'assets/Hoydia.png';
 
 const UlTag = styled.ul`
   display: flex;
@@ -16,21 +16,26 @@ const UlTag = styled.ul`
   overflow: hidden;
   background-color: #ffdbac;
 `;
+
 const LiTag = styled.li`
-  // float: left;
+  float: left;
+  font-weight: 700;
+  font-size: 20px;
 `;
 
 const Atag = styled.a`
   display: block;
-  color: black;
-  text-align: center;
-  // padding: 0.875rem 0.875rem;
-  text-decoration: none;
+  text-align: center;W
 `;
 
 const LogoImg = styled.img`
-  width: 80px;
-  margin: 7px 0px 0px 7px;
+  width: 110px;
+  height: auto;
+  margin-left: 15px;
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.3);
+  }
 `;
 
 function Navbar() {
@@ -38,9 +43,10 @@ function Navbar() {
     <UlTag>
       <LiTag>
         <Atag href="/mainPage">
-          <LogoImg src={hoydia} />
+          <LogoImg src={Hoydia} />
         </Atag>
       </LiTag>
+
       <LiTag>
         <Modal1 />
       </LiTag>
