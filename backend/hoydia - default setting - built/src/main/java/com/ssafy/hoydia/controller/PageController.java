@@ -15,7 +15,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -37,6 +39,7 @@ public class PageController {
     private final DiaryService diaryService;
     private final PageService pageService;
     private final NoticeService noticeService;
+    private final AwsS3Service awsS3Service;
 
 
     @PostMapping
@@ -152,6 +155,35 @@ public class PageController {
         return new CreatePageResponseDto(page.getId(),page.getRegTime());
     }
 
+    @PutMapping("/image/{pageId}")
+    @ApiOperation(value="작성한 페이지에 이미지를 전송", notes = "pageId를 PathVariable로 받고 body에 이미지를 request")
+    public String uploadImage(@PathVariable("pageId") String pageId ,@RequestPart(value = "file") MultipartFile multipartFile) {
+
+        String imgPath = awsS3Service.uploadFileV1("image", multipartFile);
+
+        pageService.setImgPath(pageId,imgPath);
+
+        return imgPath;
+    }
+
+    @PutMapping("/bgm/{pageId}")
+    @ApiOperation(value="작성한 페이지의 bgmPath를 수정", notes = "pageId를 PathVariable로 받고 body에 bgmpath를 request")
+    public String uploadImage(@PathVariable("pageId") String pageId , String bgmPath ) {
+
+        pageService.setBgmPath(pageId,bgmPath);
+
+        return bgmPath;
+    }
+
+    @PutMapping("/loc/{pageId}")
+    @ApiOperation(value="작성한 페이지의 장소를 수정", notes = "pageId를 PathVariable로 받고 body에 loc를 request")
+    public String uploadImage(@PathVariable("pageId") String pageId , LocRequestDto request ) {
+
+        pageService.setLocation(pageId, request.locationx, request.locationy);
+
+        return "장소 설정 완료";
+    }
+
     @PutMapping("/update/{pageId}")
     @ApiOperation(value="페이지를 업데이트", notes = "pageId에 대응되는 page의 value들을 수정. (variable은 body로 request) id는 pathVariable로 request - 죽은 기능(update 하지 않기로 함)")
     public MessageResponseDto updatePage(@PathVariable("pageId") String id, @RequestBody @Valid UpdatePageRequestDto request) {
@@ -232,6 +264,8 @@ public class PageController {
 
         private String bgmPath;
 
+        private String imgPath;
+
         private String locationx;
 
         private String locationy;
@@ -279,6 +313,8 @@ public class PageController {
 
         private String bgmPath;
 
+        private String imgPath;
+
         private String locationx;
 
         private String locationy;
@@ -296,6 +332,7 @@ public class PageController {
             this.contentFontStyle = page.getContentFontStyle();
             this.contentFontSize = page.getContentFontSize();
             this.bgmPath = page.getBgmPath();
+            this.imgPath = page.getImgPath();
             this.locationx = page.getLocationx();
             this.locationy = page.getLocationy();
 
@@ -320,14 +357,22 @@ public class PageController {
 
         private String bgmPath;
 
+        private String imgPath;
+
         private String locationx;
 
         private String locationy;
 
-
     }
 
+    @Data
+    static class LocRequestDto {
 
+        private String locationx;
+
+        private String locationy;
+
+    }
 
 
 

@@ -45,6 +45,8 @@ public class Page {
 
     private String bgmPath;
 
+    private String imgPath;
+
     private String locationx;
 
     private String locationy;
@@ -64,6 +66,7 @@ public class Page {
             String contentFontStyle,
             String contentFontSize,
             String bgmPath,
+            String imgPath,
             String locationx,
             String locationy
     )
@@ -85,6 +88,7 @@ public class Page {
         this.contentFontStyle = contentFontStyle;
         this.contentFontSize = contentFontSize;
         this.bgmPath = bgmPath;
+        this.imgPath = imgPath;
         this.locationx = locationx;
         this.locationy = locationy;
 
