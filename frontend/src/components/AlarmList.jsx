@@ -40,13 +40,7 @@ const Date = styled.div`
   font-weight: 700;
 `;
 
-const NoticeListDiv = styled.div`
-  margin: 10px 0px 10px 0px;
-  height: 230px;
-  overflow: auto;
-`;
-
-const Detail = styled.a`
+const Detail1 = styled.a`
   display: block;
   color: black;
   text-align: center;
@@ -63,8 +57,6 @@ function AlarmList() {
   const [noticeList, setnoticeList] = useState();
   const [test, setTest] = useState();
   const [selectName, setSelectName] = useState();
-  const [propsContent, setpropsContent] = useState();
-
   function afterOpen() {
     setTimeout(() => {
       setOpacity(1);
@@ -82,20 +74,18 @@ function AlarmList() {
     setOpacity(0);
     setIsOpen(!isOpen);
   }
-
-  function toggleModal(item, content) {
+  function toggleModal(item) {
     setOpacity(0);
     setIsOpen(!isOpen);
     setTest(item.substring(12));
-    console.log(test);
-    setpropsContent(content);
+
     if (item.includes('매칭중!')) {
       setSelectName(1);
     } else if (item.includes('교환 일기 만들기')) {
       setSelectName(2);
     } else if (item.includes('일기 교환')) {
       setSelectName(3);
-    } else setSelectName(4);
+    }
   }
 
   useEffect(() => {
@@ -115,6 +105,7 @@ function AlarmList() {
       });
   }, []);
 
+  // const b = mainNotice.data.map((item, index) => item.title);
   return (
     <div className="AlarmList">
       <Container>
@@ -122,19 +113,17 @@ function AlarmList() {
           <Title>알림함</Title>
           <Date>{moment().format('YYYY. M. D (ddd)')}</Date>
         </Header>
-        <NoticeListDiv>
+        <div>
           {noticeList &&
             noticeList.map((item, index) => (
-              <Detail
-                key={index}
-                onClick={() => toggleModal(item.title, item.content)}
-              >
+              <Detail1 key={index} onClick={() => toggleModal(item.title)}>
                 {item['title'].length > 20
                   ? item['title'].substring(0, 4)
                   : item['title']}
-              </Detail>
+              </Detail1>
             ))}
-        </NoticeListDiv>
+        </div>
+        {/* <Detail1 onClick={toggleModal}>Answer1</Detail1> */}
       </Container>
       {selectName === 1 ? (
         <AlarmAnswerModal
@@ -144,17 +133,15 @@ function AlarmList() {
           isOpen={isOpen}
           opacity={opacity}
           test={test}
-          propsContent={propsContent}
         />
       ) : null}
       {selectName === 2 ? (
         <AlarmMatchingResultModal
-          toggleModal={toggleoff}
+          toggleModal={toggleModal}
           afterOpen={afterOpen}
           beforeClose={beforeClose}
           isOpen={isOpen}
           opacity={opacity}
-          propsContent={propsContent}
         />
       ) : null}
       {selectName === 3 ? (
@@ -164,7 +151,6 @@ function AlarmList() {
           beforeClose={beforeClose}
           isOpen={isOpen}
           opacity={opacity}
-          propsContent={propsContent}
         />
       ) : null}
     </div>

@@ -141,8 +141,8 @@ function desk() {
       <Container>
         <Desk>
           {openDrop ? <AlarmList /> : null}
-          <PostDiv onClick={openAlarm}>
-            <Post src={post} alt="post" />
+          <PostDiv>
+            <Post src={post} alt="post" onClick={openAlarm} />
           </PostDiv>
           <Deskcontainer>
             {diaryList &&
