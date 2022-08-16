@@ -239,7 +239,9 @@ function createPage() {
       const url = `http://localhost:8080/api/page/image/${res.data.id}`;
       const formData = new FormData();
       formData.append('file', fileImage);
-      formData.append('fileName', fileImage.name);
+      if (fileImage) {
+        formData.append('fileName', fileImage.name);
+      }
 
       const config = {
         headers: {
@@ -250,6 +252,7 @@ function createPage() {
         console.log(response);
       });
       navigate(`/diaryDetailPage/${params.diaryId}/${res.data.id}`);
+      window.location.reload();
     });
   }
 

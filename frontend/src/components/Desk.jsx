@@ -126,6 +126,11 @@ function desk() {
         data: {
           drawn: 0,
           title: dragItemContent.title,
+          buttonColor: dragItemContent.buttonColor,
+          diaryColor: dragItemContent.diaryColor,
+          fontColor: dragItemContent.fontColor,
+          fontSize: dragItemContent.fontSize,
+          fontStyle: dragItemContent.fonStyle,
         },
       }).then((res) => {
         DiaryAsync();
