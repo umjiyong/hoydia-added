@@ -102,8 +102,8 @@ public class RandomMatchingController {
         private String pairQuestion;
         private String ownerAnswer;
         private String pairAnswer;
-        private int ownerPermit;
-        private int pairPermit;
+        private Integer ownerPermit;
+        private Integer pairPermit;
 
 
         public ReadMatchingNoteResponseDto(MatchingNote matchingNote) {
