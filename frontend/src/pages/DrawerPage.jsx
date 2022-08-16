@@ -53,21 +53,17 @@ function DrawerPage() {
   const handleToast = () => {
     setToastStatus(true);
   };
-  const DiaryAsync = async () => {
-    try {
-      axios({
-        method: 'get',
-        url: `http://localhost:8080/api/diary/user/${userId}/notdrawn`,
-        headers: {
-          'access-token': accessToken,
-        },
-      }).then((res) => {
-        console.log(res);
-        setList(res.data.data);
-      });
-    } catch (e) {
-      setList([]);
-    }
+  const DiaryAsync = () => {
+    axios({
+      method: 'get',
+      url: `http://localhost:8080/api/diary/user/${userId}/notdrawn`,
+      headers: {
+        'access-token': accessToken,
+      },
+    }).then((res) => {
+      console.log(res);
+      setList(res.data.data);
+    });
   };
   const DiaryDetailBtn = (diaryId) => {
     axios({
