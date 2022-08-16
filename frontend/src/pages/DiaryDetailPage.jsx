@@ -264,7 +264,7 @@ function DetailPage() {
       <DetailContainer>
         <MainDiv>
           <LeftDiv>
-            <ImageBox src={imageUrl} alt="ImageBox" />
+            <ImageBox src={imageUrl} onerror="this.style.display='none'" />
             <MusicPlayer>
               <AudioPlayer
                 // autoPlay
