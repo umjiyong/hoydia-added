@@ -17,7 +17,7 @@ const Container = styled.div`
 
 const Desk = styled.div`
   background-color: #ffca8c;
-  height: 74vh;
+  height: 72.8vh;
 `;
 
 const PostDiv = styled.div`
@@ -34,6 +34,7 @@ const Post = styled.img`
   margin-top: 90px;
   margin-right: 40px;
 `;
+
 const Deskcontainer = styled.div`
   display: flex;
   justify-content: space-around;
