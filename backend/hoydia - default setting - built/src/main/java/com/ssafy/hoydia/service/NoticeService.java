@@ -87,7 +87,7 @@ public class NoticeService {
 
     }
     @Transactional
-    public void sendNoticeAlone (User user1, User user2, String title , String content) {
+    public void sendNoticeAlone (User user1, String title , String content) {
 
         Notice notice1 = Notice.builder()
                 .user(user1)
