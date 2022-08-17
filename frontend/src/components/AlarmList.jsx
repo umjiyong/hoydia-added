@@ -40,7 +40,13 @@ const Date = styled.div`
   font-weight: 700;
 `;
 
-const Detail1 = styled.a`
+const NoticeListDiv = styled.div`
+  margin: 10px 0px 10px 0px;
+  height: 230px;
+  overflow: auto;
+`;
+
+const Detail = styled.a`
   display: block;
   color: black;
   text-align: center;
@@ -55,8 +61,11 @@ function AlarmList() {
   const [isOpen, setIsOpen] = useState(false);
   const [opacity, setOpacity] = useState(0);
   const [noticeList, setnoticeList] = useState();
-  const [test, setTest] = useState();
+  // const [test, setTest] = useState();
   const [selectName, setSelectName] = useState();
+  const [propsContent, setpropsContent] = useState();
+  const [answermodal, setAnswermodal] = useState();
+
   function afterOpen() {
     setTimeout(() => {
       setOpacity(1);
@@ -74,10 +83,30 @@ function AlarmList() {
     setOpacity(0);
     setIsOpen(!isOpen);
   }
-  function toggleModal(item) {
+
+  function toggleModal(item, content) {
     setOpacity(0);
     setIsOpen(!isOpen);
-    setTest(item.substring(12));
+
+    // setTest(item.substring(12));
+
+    setpropsContent(content);
+    if (item.includes('매칭중!')) {
+      axios({
+        headers: {
+          'access-token': `${localStorage.getItem('access-token')}`,
+        },
+        url: `http://localhost:8080/api/match/${item.substring(12)}`,
+        method: 'GET',
+      })
+        .then((res) => {
+          setAnswermodal(res.data.data);
+          // console.log(res.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
 
     if (item.includes('매칭중!')) {
       setSelectName(1);
@@ -85,7 +114,7 @@ function AlarmList() {
       setSelectName(2);
     } else if (item.includes('일기 교환')) {
       setSelectName(3);
-    }
+    } else setSelectName(4);
   }
 
   useEffect(() => {
@@ -105,7 +134,6 @@ function AlarmList() {
       });
   }, []);
 
-  // const b = mainNotice.data.map((item, index) => item.title);
   return (
     <div className="AlarmList">
       <Container>
@@ -113,17 +141,19 @@ function AlarmList() {
           <Title>알림함</Title>
           <Date>{moment().format('YYYY. M. D (ddd)')}</Date>
         </Header>
-        <div>
+        <NoticeListDiv>
           {noticeList &&
             noticeList.map((item, index) => (
-              <Detail1 key={index} onClick={() => toggleModal(item.title)}>
+              <Detail
+                key={index}
+                onClick={() => toggleModal(item.title, item.content)}
+              >
                 {item['title'].length > 20
                   ? item['title'].substring(0, 4)
                   : item['title']}
-              </Detail1>
+              </Detail>
             ))}
-        </div>
-        {/* <Detail1 onClick={toggleModal}>Answer1</Detail1> */}
+        </NoticeListDiv>
       </Container>
       {selectName === 1 ? (
         <AlarmAnswerModal
@@ -132,16 +162,19 @@ function AlarmList() {
           beforeClose={beforeClose}
           isOpen={isOpen}
           opacity={opacity}
-          test={test}
+          answermodal={answermodal}
+          // test={test}
+          // propsContent={propsContent}
         />
       ) : null}
       {selectName === 2 ? (
         <AlarmMatchingResultModal
-          toggleModal={toggleModal}
+          toggleModal={toggleoff}
           afterOpen={afterOpen}
           beforeClose={beforeClose}
           isOpen={isOpen}
           opacity={opacity}
+          propsContent={propsContent}
         />
       ) : null}
       {selectName === 3 ? (
@@ -151,6 +184,7 @@ function AlarmList() {
           beforeClose={beforeClose}
           isOpen={isOpen}
           opacity={opacity}
+          propsContent={propsContent}
         />
       ) : null}
     </div>
