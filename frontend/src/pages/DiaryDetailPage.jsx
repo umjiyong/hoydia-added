@@ -219,7 +219,7 @@ function DetailPage() {
   const sendDiary = () => {
     axios({
       method: 'put',
-      url: `http://localhost:8080/api/page/send/${params.pageId}`,
+      url: `/page/send/${params.pageId}`,
       headers: {
         'access-token': accessToken,
       },
@@ -243,7 +243,7 @@ function DetailPage() {
   const pageListLoading = () => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/api/page/diary/${params.diaryId}`,
+      url: `/page/diary/${params.diaryId}`,
       headers: {
         'access-token': accessToken,
       },
@@ -258,7 +258,7 @@ function DetailPage() {
   const pageLoading = () => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/api/page/${params.pageId}`,
+      url: `/page/${params.pageId}`,
       headers: {
         'access-token': accessToken,
       },
@@ -283,7 +283,7 @@ function DetailPage() {
   const diaryLoading = () => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/api/diary/${params.diaryId}`,
+      url: `/diary/${params.diaryId}`,
       headers: {
         'access-token': accessToken,
       },
