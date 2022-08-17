@@ -1,3 +1,4 @@
+/* eslint-disable dot-notation */
 /* eslint-disable react/jsx-no-bind */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -46,22 +47,28 @@ const Title = styled.span`
   align-items: center;
   color: #ff8960;
 `;
+
 const Question = styled.span`
   font-size: 20px;
   margin-top: 5px;
 `;
 
-const Answer = styled.div`
+const Answer = styled.textarea`
   width: 660px;
   height: 280px;
   border: 2px solid #dfba88;
   border-radius: 16px;
   margin-top: 20px;
+  resize: none;
+  &:active,
+  &:focus {
+    outline-color: #ff8960;
+  }
+  font-size: 20px;
 `;
 
 const Pair = styled.p`
-  // margin-top: 240px;
-  margin-bottom: 20px;
+  margin: 25px 0px 15px 0px;
   font-size: 20px;
 `;
 
@@ -71,7 +78,7 @@ const PairBtn = styled.div`
   gap: 30px;
 `;
 
-const Yes = styled.button`
+const YesButton = styled.button`
   justify-content: center;
   align-items: center;
   padding: 8px 16px;
@@ -85,14 +92,14 @@ const Yes = styled.button`
   font-weight: 700;
   // text-shadow: -1px 0px #ff8960, 0px 1px #ff8960, 1px 0px #ff8960,
   //   0px -1px #ff8960;
-  -webkit-text-stroke: 1px #ff8960;
+  // -webkit-text-stroke: 1px #ff8960;
   &:hover {
     cursor: pointer;
     background-color: #ff8960;
   }
 `;
 
-const No = styled.button`
+const NoButton = styled.button`
   justify-content: center;
   align-items: center;
   padding: 8px 16px;
@@ -106,7 +113,7 @@ const No = styled.button`
   font-weight: 700;
   // text-shadow: -1px 0px #d43e3c, 0px 1px #d43e3c, 1px 0px #d43e3c,
   //   0px -1px #d43e3c;
-  -webkit-text-stroke: 1px #d43e3c;
+  // -webkit-text-stroke: 1px #d43e3c;
   &:hover {
     cursor: pointer;
     background: #d43e3c;
@@ -119,18 +126,44 @@ function FancyModalButton({
   beforeClose,
   isOpen,
   opacity,
-  test,
+  answermodal,
 }) {
+  // console.log(answermodal);
+
+  // console.log(localStorage.getItem('userId'));
   const [ToastStatus, setToastStatus] = useState(false);
+  // const [Main, setMain] = useState();
+  let Main = null;
+  const [MainQuestion, setMainquestion] = useState('');
+  const [MainAnswer, setMainanswer] = useState('');
+  const [MainId, setMainid] = useState('');
+  useEffect(() => {
+    console.log(answermodal);
+    // setMain(answermodal);
+    Main = answermodal;
+    if (Main) {
+      if (localStorage.getItem('userId') === Main.ownerId) {
+        setMainquestion(Main.pairQuestion);
+        setMainanswer(Main.pairAnswer);
+        setMainid(Main.id);
+      } else {
+        setMainquestion(Main.ownerQuestion);
+        setMainanswer(Main.ownerAnswer);
+        setMainid(Main.id);
+      }
+    }
+  }, [answermodal]);
+
   const handleToast = () => {
     setToastStatus(true);
-    if (test) {
-      console.log(test);
+
+    if (MainId) {
+      console.log(MainId);
       axios({
         headers: {
           'access-token': `${localStorage.getItem('access-token')}`,
         },
-        url: `http://localhost:8080/api/match/${test}`,
+        url: `http://localhost:8080/api/match/${MainId}`,
         method: 'PUT',
         data: {
           permit: true,
@@ -150,6 +183,8 @@ function FancyModalButton({
       setTimeout(() => setToastStatus(false), 2000);
     }
   }, [ToastStatus]);
+  console.log(MainAnswer);
+  console.log(MainQuestion);
   return (
     <StyledModal
       isOpen={isOpen}
@@ -164,12 +199,12 @@ function FancyModalButton({
         <ExitBtn src={exit} />
       </ExitDiv>
       <Title>Q&A</Title>
-      <Question>오늘의 질문: 최애 여행지는 어디인가요?</Question>
-      <Answer>대답 어쩌구저쩌구</Answer>
+      <Question>{MainQuestion}</Question>
+      <Answer value={MainAnswer} readOnly />
       <Pair>페어가 되길 원하시나요?</Pair>
       <PairBtn>
-        <Yes onClick={handleToast}>네</Yes>
-        <No onClick={toggleModal}>아니오</No>
+        <YesButton onClick={handleToast}>네</YesButton>
+        <NoButton onClick={toggleModal}>아니오</NoButton>
       </PairBtn>
       {ToastStatus && (
         <Toast msg="감성 페어와 매칭이 완료될 때까지 기다려주세요! ⏳" />

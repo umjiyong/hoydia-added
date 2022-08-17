@@ -7,7 +7,7 @@ import pairHedgehogs from 'assets/pairHedgehogs.png';
 
 const StyledModal = Modal.styled`
   width: 600px;
-  height 400px;
+  height 410px;
   background: #FFFFFF;
   box-shadow: 0rem 0.25rem 0.25rem  rgba(0, 0, 0, 0.25), 0rem 0.125rem 0.25rem  rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(0.25rem );
@@ -58,6 +58,7 @@ function FancyModalButton({
   beforeClose,
   isOpen,
   opacity,
+  propsContent,
 }) {
   return (
     <StyledModal
@@ -74,7 +75,7 @@ function FancyModalButton({
       </ExitDiv>
       <Title>매칭결과</Title>
       <Mascot src={pairHedgehogs} />
-      <Message>감성 페어와 매칭이 완료되었습니다.</Message>
+      <Message>{propsContent}</Message>
     </StyledModal>
   );
 }

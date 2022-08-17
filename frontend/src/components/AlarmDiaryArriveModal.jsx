@@ -7,7 +7,7 @@ import arriveDiaryHedgehogs from 'assets/arriveDiaryHedgehogs.png';
 
 const StyledModal = Modal.styled`
   width: 600px;
-  height 400px;
+  height 410px;
   background: #FFFFFF;
   box-shadow: 0rem 0.25rem 0.25rem  rgba(0, 0, 0, 0.25), 0rem 0.125rem 0.25rem  rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(0.25rem );
@@ -35,13 +35,13 @@ const ExitBtn = styled.img`
 `;
 
 const Title = styled.span`
-  font-style: normal;
-  font-weight: 700;
+  font-weight: 800;
   font-size: 50px;
   justify-content: center;
   align-items: center;
   color: #ff8960;
 `;
+
 const Mascot = styled.img`
   width: 200px;
   height: auto;
@@ -58,6 +58,7 @@ function FancyModalButton({
   beforeClose,
   isOpen,
   opacity,
+  propsContent,
 }) {
   return (
     <StyledModal
@@ -74,7 +75,7 @@ function FancyModalButton({
       </ExitDiv>
       <Title>일기장 도착!</Title>
       <Mascot src={arriveDiaryHedgehogs} />
-      <Message>000과의 교환 일기가 도착하였습니다.</Message>
+      <Message>{propsContent}</Message>
     </StyledModal>
   );
 }

@@ -61,9 +61,10 @@ function AlarmList() {
   const [isOpen, setIsOpen] = useState(false);
   const [opacity, setOpacity] = useState(0);
   const [noticeList, setnoticeList] = useState();
-  const [test, setTest] = useState();
+  // const [test, setTest] = useState();
   const [selectName, setSelectName] = useState();
   const [propsContent, setpropsContent] = useState();
+  const [answermodal, setAnswermodal] = useState();
 
   function afterOpen() {
     setTimeout(() => {
@@ -86,9 +87,27 @@ function AlarmList() {
   function toggleModal(item, content) {
     setOpacity(0);
     setIsOpen(!isOpen);
-    setTest(item.substring(12));
-    console.log(test);
+
+    // setTest(item.substring(12));
+
     setpropsContent(content);
+    if (item.includes('매칭중!')) {
+      axios({
+        headers: {
+          'access-token': `${localStorage.getItem('access-token')}`,
+        },
+        url: `http://localhost:8080/api/match/${item.substring(12)}`,
+        method: 'GET',
+      })
+        .then((res) => {
+          setAnswermodal(res.data.data);
+          // console.log(res.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
     if (item.includes('매칭중!')) {
       setSelectName(1);
     } else if (item.includes('교환 일기 만들기')) {
@@ -143,8 +162,9 @@ function AlarmList() {
           beforeClose={beforeClose}
           isOpen={isOpen}
           opacity={opacity}
-          test={test}
-          propsContent={propsContent}
+          answermodal={answermodal}
+          // test={test}
+          // propsContent={propsContent}
         />
       ) : null}
       {selectName === 2 ? (
