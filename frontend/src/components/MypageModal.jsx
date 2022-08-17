@@ -34,43 +34,12 @@ const Title = styled.span`
   font-size: 50px;
   justify-content: center;
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   color: #ff8960;
 `;
 // const Line = styled.hr`
 //   border: 1px solid red;
 // `;
-const UserEmail = styled.p`
-  margin-bottom: 40px;
-`;
-
-const UnregisterDiv = styled.div`
-  display: flex;
-  gap: 20px;
-  margin-top: 40px;
-`;
-
-const Unregister = styled.p`
-  font-size: 20px;
-`;
-
-const SignoutButton = styled.button`
-  justify-content: center;
-  align-items: center;
-  padding: 8px 16px;
-  width: 176px;
-  height: 60px;
-  background: #ff8988;
-  border-radius: 15px;
-  border: none;
-  color: #ffffff;
-  font-size: 30px;
-  font-weight: 700;
-  &:hover {
-    cursor: pointer;
-    background: #d43e3c;
-  }
-`;
 
 const Atag = styled.a`
   display: block;
@@ -102,16 +71,25 @@ const ExitDiv = styled.div`
 `;
 
 const UserInfo = styled.div`
-  font-size: 20px;
+  font-size: 22px;
 `;
 
 const AddFriends = styled.div`
   display: flex;
 `;
 
+const UserEmail = styled.p`
+  margin-bottom: 40px;
+`;
+
 const EditNickname = styled.div`
   display: flex;
 `;
+
+const UserNickname = styled.p`
+  margin: 12px 5px 0px 0px;
+`;
+
 const InputDiv = styled.div`
   text-align: center;
   margin: auto;
@@ -119,10 +97,11 @@ const InputDiv = styled.div`
 
 const InputNickname = styled.input`
   width: 200px;
-  height: 40px;
+  height: 50px;
   background: #ffffff;
   border: 0.125rem solid #dfba88;
   border-radius: 1rem;
+  font-size: 2zpx;
   &:active,
   &:focus {
     outline-color: #ff8960;
@@ -136,20 +115,51 @@ const EditButton = styled.button`
   justify-content: center;
   align-items: center;
   padding: 8px 16px;
-  width: 176px;
-  height: 60px;
+  margin-left: 20px;
+  width: 110px;
+  height: 50px;
   background: #ffdbac;
   border-radius: 15px;
   border: none;
   color: #ffffff;
-  font-size: 30px;
+  font-size: 20px;
   font-weight: 700;
   // text-shadow: -1px 0px #ff8960, 0px 1px #ff8960, 1px 0px #ff8960,
   //   0px -1px #ff8960;
-  -webkit-text-stroke: 1px #ff8960;
+  // -webkit-text-stroke: 1px #ff8960;
   &:hover {
     cursor: pointer;
     background-color: #ff8960;
+  }
+`;
+
+const UnregisterDiv = styled.div`
+  display: flex;
+  gap: 20px;
+  margin-top: 40px;
+`;
+
+const Unregister = styled.p`
+  font-size: 20px;
+`;
+
+const SignoutButton = styled.button`
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+  padding: 8px 16px;
+  width: 140px;
+  height: 50px;
+  background: #ff8988;
+  border-radius: 15px;
+  border: none;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 700;
+  // -webkit-text-stroke: 1px #d43e3c;
+  &:hover {
+    cursor: pointer;
+    background: #d43e3c;
   }
 `;
 
@@ -274,11 +284,11 @@ function FancyModalButton() {
           </AddFriends>
           <UserEmail>유저 이메일 : {user_email}</UserEmail>
           <EditNickname>
-            유저 닉네임 :
+            <UserNickname>유저 닉네임 :</UserNickname>
             <InputDiv>
               <InputNickname value={change_nickname} onChange={handleChange} />
             </InputDiv>
-            <EditButton onClick={toggleUpdate}>저장하기</EditButton>
+            <EditButton onClick={toggleUpdate}>저장</EditButton>
           </EditNickname>
         </UserInfo>
         <UnregisterDiv>

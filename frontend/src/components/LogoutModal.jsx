@@ -42,7 +42,7 @@ const YesButton = styled.button`
   font-weight: 700;
   // text-shadow: -1px 0px #ff8960, 0px 1px #ff8960, 1px 0px #ff8960,
   //   0px -1px #ff8960;
-  -webkit-text-stroke: 1px #ff8960;
+  // -webkit-text-stroke: 1px #ff8960;
   &:hover {
     cursor: pointer;
     background-color: #ff8960;
@@ -63,7 +63,7 @@ const NoButton = styled.button`
   font-weight: 700;
   // text-shadow: -1px 0px #d43e3c, 0px 1px #d43e3c, 1px 0px #d43e3c,
   //   0px -1px #d43e3c;
-  -webkit-text-stroke: 1px #d43e3c;
+  // -webkit-text-stroke: 1px #d43e3c;
   &:hover {
     cursor: pointer;
     background: #d43e3c;
