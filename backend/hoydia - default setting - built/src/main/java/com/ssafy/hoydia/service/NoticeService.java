@@ -86,6 +86,18 @@ public class NoticeService {
         noticeRepository.regist(notice2);
 
     }
+    @Transactional
+    public void sendNoticeAlone (User user1, String title , String content) {
+
+        Notice notice1 = Notice.builder()
+                .user(user1)
+                .title(title)
+                .content(content)
+                .build();
+
+        noticeRepository.regist(notice1);
+
+    }
 
 
 

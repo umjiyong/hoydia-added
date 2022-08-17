@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import post from 'assets/post.png';
 import Diary from 'components/DiaryCompo';
 import drawer from 'assets/drawer.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import AlarmList from './AlarmList';
 
@@ -17,7 +17,7 @@ const Container = styled.div`
 
 const Desk = styled.div`
   background-color: #ffca8c;
-  height: calc(1683 / 1920 * 100vh);
+  height: 72vh;
 `;
 
 const PostDiv = styled.div`
@@ -31,12 +31,21 @@ const Post = styled.img`
   height: 10%;
   max-width: 150px;
   max-height: 100px;
-  margin-top: 90px;
-  margin-right: 40px;
+  margin-top: 60px;
+  margin-right: 60px;
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.3);
+  }
 `;
+
 const Deskcontainer = styled.div`
   display: flex;
   justify-content: space-around;
+`;
+
+const DiaryBtn = styled.div`
+  cursor: pointer;
 `;
 
 const DiaryContainer = styled.div``;
@@ -45,29 +54,41 @@ const Drawer = styled.img`
   display: flex;
   bottom: 0;
   width: 100%;
-  height: auto;
+  height: 20.8vh;
 `;
 
-const userId = window.localStorage.getItem('userId');
-const accessToken = window.localStorage.getItem('access-token');
-
 function desk() {
+  const userId = window.localStorage.getItem('userId');
+  const accessToken = window.localStorage.getItem('access-token');
+  const navigate = useNavigate();
   const [diaryList, setDiaryList] = useState([]);
-  const DiaryAsync = async () => {
-    try {
-      axios({
-        method: 'get',
-        url: `http://localhost:8080/diary/user/${userId}`,
-        headers: {
-          'access-token': accessToken,
-        },
-      }).then((res) => {
-        setDiaryList(res.data.data);
-        console.log(res);
-      });
-    } catch (e) {
-      console.error(e);
-    }
+  const DiaryAsync = () => {
+    axios({
+      method: 'get',
+      url: `/diary/user/${userId}/drawn`,
+      headers: {
+        'access-token': accessToken,
+      },
+    }).then((res) => {
+      setDiaryList(res.data.data);
+      console.log(res);
+    });
+  };
+  const DiaryDetailBtn = (diaryId) => {
+    axios({
+      method: 'get',
+      url: `/page/diary/${diaryId}`,
+      headers: {
+        'access-token': accessToken,
+      },
+    }).then((res) => {
+      if (res.data.data[0]) {
+        const pageId = res.data.data[0].id;
+        navigate(`/diaryDetailPage/${diaryId}/${pageId}`);
+      } else {
+        navigate(`/diaryDetailPage/${diaryId}/1`);
+      }
+    });
   };
   useEffect(() => {
     DiaryAsync();
@@ -100,20 +121,24 @@ function desk() {
       visualwidth1 >= width &&
       width >= visualwidth2
     ) {
-      console.log('성공');
       axios({
         method: 'put',
-        url: `http://localhost:8080/diary/${dragItemContent.id}`,
-        header: {
+        url: `/diary/${dragItemContent.id}`,
+        headers: {
           'access-token': accessToken,
         },
         data: {
           drawn: 0,
           title: dragItemContent.title,
+          buttonColor: dragItemContent.buttonColor,
+          diaryColor: dragItemContent.diaryColor,
+          fontColor: dragItemContent.fontColor,
+          fontSize: dragItemContent.fontSize,
+          fontStyle: dragItemContent.fonStyle,
         },
+      }).then((res) => {
+        DiaryAsync();
       });
-    } else {
-      console.log('실패');
     }
   };
   const [openDrop, setOpenDrop] = useState(false);
@@ -125,8 +150,8 @@ function desk() {
       <Container>
         <Desk>
           {openDrop ? <AlarmList /> : null}
-          <PostDiv onClick={openAlarm}>
-            <Post src={post} alt="post" />
+          <PostDiv>
+            <Post src={post} alt="post" onClick={openAlarm} />
           </PostDiv>
           <Deskcontainer>
             {diaryList &&
@@ -141,7 +166,9 @@ function desk() {
                   onDragEnd={drop}
                   draggable
                 >
-                  <Diary DiaryInfo={item} />
+                  <DiaryBtn onClick={() => DiaryDetailBtn(item.id)}>
+                    <Diary DiaryInfo={item} />
+                  </DiaryBtn>
                 </DiaryContainer>
               ))}
           </Deskcontainer>

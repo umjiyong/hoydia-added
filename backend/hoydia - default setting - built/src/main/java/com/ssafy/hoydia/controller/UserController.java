@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 @Slf4j
 @Api (value = "UserController", description = ("유저 컨트롤러"))
 public class UserController {

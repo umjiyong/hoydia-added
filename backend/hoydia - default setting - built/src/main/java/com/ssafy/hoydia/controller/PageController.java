@@ -15,7 +15,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -27,7 +29,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/page")
+@RequestMapping("/api/page")
 @Slf4j
 @Api(value = "PageController", description = ("페이지 컨트롤러(일기장의 각 페이지)"))
 public class PageController {
@@ -37,6 +39,7 @@ public class PageController {
     private final DiaryService diaryService;
     private final PageService pageService;
     private final NoticeService noticeService;
+    private final AwsS3Service awsS3Service;
 
 
     @PostMapping
@@ -66,17 +69,16 @@ public class PageController {
                 .contentFontStyle(request.getContentFontStyle())
                 .contentFontSize(request.getContentFontSize())
                 .bgmPath(request.getBgmPath())
-                .location(request.getLocation())
+                .locationx(request.getLocationx())
+                .locationy(request.getLocationy())
                 .build();
 
         pageService.regist(page);
 
-        diaryService.diaryOwnShift(page.getDiary().getId());; // 페이지가 위치한 다이어리의 소유주 상태를 전환해줌.
-
-        noticeService.sendNotice(userService.searchById(diary.getOwnerId()),userService.searchById(diary.getPairId()),"일기 교환 완료!", diary.getTitle() + "가 전송되었어요!");
-
         return new CreatePageResponseDto(page.getId(),page.getRegTime());
     }
+
+
 
     @GetMapping("/{id}")
     @ApiOperation(value="페이지 확인", notes = "id에 해당하는 페이지를 가져옴 urI에 pathVariable로 request")
@@ -126,7 +128,71 @@ public class PageController {
 
     }
 
-    @PutMapping("/{pageId}")
+    @PutMapping("/send/{pageId}")
+    @ApiOperation(value="작성한 일기 페이지를 전송", notes = "pageId를 PathVariable로 받고 diaryId를 함께 body에 request")
+    public CreatePageResponseDto sendCreatedPage(@PathVariable("pageId") String pageId , @RequestBody @Valid SendCreatedPageRequestDto request) {
+
+        if (!jwtService.isValidUser())
+            throw new InvalidApproachException("사용자 인증 실패");
+
+        String currentUid = jwtService.getUserId();
+
+        Diary diary = diaryService.searchById(request.getDiaryId());
+
+        boolean isMine = currentUid.equals(diary.getOwnerId())||currentUid.equals(diary.getPairId()); // 현재 로그인 된 id와 사용자 2의 id check
+
+        if (!isMine) {
+            throw new UnauthorizedException("본인의 일기가 아닙니다.");
+        }
+
+
+        Page page = pageService.searchById(pageId);
+
+
+
+        if (!diary.isOwn()) {
+            noticeService.sendNoticeAlone(userService.searchById(diary.getOwnerId()), "일기 교환 완료!", userService.searchById(diary.getPairId()).getNickname() + "님과의 교환일기가 도착했습니다!");
+        }
+        else {
+            noticeService.sendNoticeAlone(userService.searchById(diary.getPairId()),"일기 교환 완료!", userService.searchById(diary.getOwnerId()).getNickname()+"님과의 교환일기가 도착했습니다!");
+        }
+
+
+        diaryService.diaryOwnShift(request.getDiaryId());; // 페이지가 위치한 다이어리의 소유주 상태를 전환해줌.
+
+        return new CreatePageResponseDto(page.getId(),page.getRegTime());
+    }
+
+    @PutMapping("/image/{pageId}")
+    @ApiOperation(value="작성한 페이지에 이미지를 전송", notes = "pageId를 PathVariable로 받고 body에 이미지를 request")
+    public String uploadImage(@PathVariable("pageId") String pageId ,@RequestPart(value = "file") MultipartFile multipartFile) {
+
+        String imgPath = awsS3Service.uploadFileV1("image", multipartFile);
+
+        pageService.setImgPath(pageId,imgPath);
+
+        return imgPath;
+    }
+
+    @PutMapping("/bgm/{pageId}")
+    @ApiOperation(value="작성한 페이지의 bgmPath를 수정", notes = "pageId를 PathVariable로 받고 body에 bgmpath를 request")
+    public String uploadImage(@PathVariable("pageId") String pageId , String bgmPath ) {
+
+        pageService.setBgmPath(pageId,bgmPath);
+
+        return bgmPath;
+    }
+
+    @PutMapping("/loc/{pageId}")
+    @ApiOperation(value="작성한 페이지의 장소를 수정", notes = "pageId를 PathVariable로 받고 body에 loc를 request")
+    public String uploadImage(@PathVariable("pageId") String pageId , LocRequestDto request ) {
+
+        pageService.setLocation(pageId, request.locationx, request.locationy);
+
+        return "장소 설정 완료";
+    }
+
+    @PutMapping("/update/{pageId}")
     @ApiOperation(value="페이지를 업데이트", notes = "pageId에 대응되는 page의 value들을 수정. (variable은 body로 request) id는 pathVariable로 request - 죽은 기능(update 하지 않기로 함)")
     public MessageResponseDto updatePage(@PathVariable("pageId") String id, @RequestBody @Valid UpdatePageRequestDto request) {
 
@@ -153,7 +219,8 @@ public class PageController {
                 request.getContentFontStyle(),
                 request.getContentFontSize(),
                 request.getBgmPath(),
-                request.getLocation());
+                request.getLocationx(),
+                request.getLocationy());
 
         return new MessageResponseDto("수정 완료");
     }
@@ -205,7 +272,19 @@ public class PageController {
 
         private String bgmPath;
 
-        private String location;
+        private String imgPath;
+
+        private String locationx;
+
+        private String locationy;
+
+    }
+
+    @Data
+    static class SendCreatedPageRequestDto {
+
+        @NotBlank
+        private String diaryId;
 
     }
 
@@ -242,7 +321,11 @@ public class PageController {
 
         private String bgmPath;
 
-        private String location;
+        private String imgPath;
+
+        private String locationx;
+
+        private String locationy;
 
 
         public ReadPageResponseDto(Page page) {
@@ -257,7 +340,9 @@ public class PageController {
             this.contentFontStyle = page.getContentFontStyle();
             this.contentFontSize = page.getContentFontSize();
             this.bgmPath = page.getBgmPath();
-            this.location = page.getLocation();
+            this.imgPath = page.getImgPath();
+            this.locationx = page.getLocationx();
+            this.locationy = page.getLocationy();
 
         }
     }
@@ -280,12 +365,22 @@ public class PageController {
 
         private String bgmPath;
 
-        private String location;
+        private String imgPath;
 
+        private String locationx;
+
+        private String locationy;
 
     }
 
+    @Data
+    static class LocRequestDto {
 
+        private String locationx;
+
+        private String locationy;
+
+    }
 
 
 

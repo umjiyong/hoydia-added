@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/diary")
+@RequestMapping("/api/diary")
 @Slf4j
 @Api (value = "DiaryController", description = ("일기 컨트롤러"))
 public class DiaryController {
@@ -130,6 +130,7 @@ public class DiaryController {
 
         boolean isMine = currentUid.equals(userId);
 
+
         if (!isMine) {
             throw new UnauthorizedException("본인의 일기가 아닙니다.");
         }
@@ -195,7 +196,7 @@ public class DiaryController {
 
         Diary diary = diaryService.searchById(id);
 
-        boolean isMine = currentUid.equals(diary.getUser().getId());
+        boolean isMine = currentUid.equals(diary.getOwnerId())||currentUid.equals(diary.getPairId());
 
         if(!isMine) throw new UnauthorizedException("본인의 일기가 아닙니다.");
 
@@ -223,7 +224,7 @@ public class DiaryController {
 
         Diary diary = diaryService.searchById(id);
 
-        boolean isMine = currentUid.equals(diary.getUser().getId());
+        boolean isMine = currentUid.equals(diary.getOwnerId())||currentUid.equals(diary.getPairId());
 
         if(!isMine) throw new UnauthorizedException("본인의 일기가 아닙니다.");
 

@@ -1,13 +1,13 @@
 /* eslint-disable react/jsx-no-bind */
 import React from 'react';
-
 import styled from 'styled-components';
 import Modal, { ModalProvider, BaseModalBackground } from 'styled-react-modal';
 import exit from 'assets/exit.png';
+import arriveDiaryHedgehogs from 'assets/arriveDiaryHedgehogs.png';
 
 const StyledModal = Modal.styled`
   width: 600px;
-  height 400px;
+  height 410px;
   background: #FFFFFF;
   box-shadow: 0rem 0.25rem 0.25rem  rgba(0, 0, 0, 0.25), 0rem 0.125rem 0.25rem  rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(0.25rem );
@@ -19,15 +19,6 @@ const StyledModal = Modal.styled`
   opacity: ${(props) => props.opacity};
   transition : all 0.05s ease-in-out;
   `;
-
-const Title = styled.span`
-  font-style: normal;
-  font-weight: 700;
-  font-size: 50px;
-  justify-content: center;
-  align-items: center;
-  color: #ff8960;
-`;
 
 const ExitDiv = styled.div`
   width: 1.875rem;
@@ -43,8 +34,21 @@ const ExitBtn = styled.img`
   }
 `;
 
+const Title = styled.span`
+  font-weight: 800;
+  font-size: 50px;
+  justify-content: center;
+  align-items: center;
+  color: #ff8960;
+`;
+
+const Mascot = styled.img`
+  width: 200px;
+  height: auto;
+`;
+
 const Message = styled.p`
-  margin: 40px 0px 30px 0px;
+  margin: 20px 0px 30px 0px;
   font-size: 20px;
 `;
 
@@ -54,6 +58,7 @@ function FancyModalButton({
   beforeClose,
   isOpen,
   opacity,
+  propsContent,
 }) {
   return (
     <StyledModal
@@ -69,7 +74,8 @@ function FancyModalButton({
         <ExitBtn src={exit} />
       </ExitDiv>
       <Title>일기장 도착!</Title>
-      <Message>000과의 교환 일기가 도착하였습니다.</Message>
+      <Mascot src={arriveDiaryHedgehogs} />
+      <Message>{propsContent}</Message>
     </StyledModal>
   );
 }

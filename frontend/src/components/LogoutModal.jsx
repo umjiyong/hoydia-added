@@ -7,45 +7,67 @@ import Modal, { ModalProvider, BaseModalBackground } from 'styled-react-modal';
 import { Link } from 'react-router-dom';
 
 const StyledModal = Modal.styled`
-       
-
-  
-    width: 500px;
-    height: 200px;
-    background: #FFFFFF;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 2px 4px rgba(0, 0, 0, 0.25);
-    backdrop-filter: blur(4px);
-    border-radius: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    
-    opacity: ${(props) => props.opacity};
-    // transition : all 0.3s ease-in-out;;`;
+  width: 500px;
+  height: 200px;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 2px 4px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(4px);
+  border-radius: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  opacity: ${(props) => props.opacity};
+  // transition : all 0.3s ease-in-out;;`;
 
 const Title = styled.span`
-  font-family: 'Noto Sans KR';
-  font-style: normal;
-  font-weight: 700;
+  font-weight: 800;
   font-size: 30px;
   justify-content: center;
   align-items: center;
-  margin-bottom: 30px;
   color: #ff8960;
 `;
-const GoButton = styled.button`
+
+const YesButton = styled.button`
   justify-content: center;
   align-items: center;
   padding: 8px 16px;
-
-  gap: 2px;
-
   width: 176px;
   height: 60px;
-
   background: #ffdbac;
   border-radius: 15px;
+  border: none;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 700;
+  // text-shadow: -1px 0px #ff8960, 0px 1px #ff8960, 1px 0px #ff8960,
+  //   0px -1px #ff8960;
+  // -webkit-text-stroke: 1px #ff8960;
+  &:hover {
+    cursor: pointer;
+    background-color: #ff8960;
+  }
+`;
+
+const NoButton = styled.button`
+  justify-content: center;
+  align-items: center;
+  padding: 8px 16px;
+  width: 176px;
+  height: 60px;
+  background: #ff8988;
+  border-radius: 15px;
+  border: none;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 700;
+  // text-shadow: -1px 0px #d43e3c, 0px 1px #d43e3c, 1px 0px #d43e3c,
+  //   0px -1px #d43e3c;
+  // -webkit-text-stroke: 1px #d43e3c;
+  &:hover {
+    cursor: pointer;
+    background: #d43e3c;
+  }
 `;
 
 const Atag = styled.a`
@@ -54,14 +76,19 @@ const Atag = styled.a`
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
-  &:hover {
+  &:hover,
+  &:active {
     cursor: pointer;
+    color: #fff;
+    background-color: #ff8960;
+    border-radius: 10px;
   }
 `;
 
 const BtnDiv = styled.div`
   display: flex;
   justify-content: space-around;
+  margin-top: 20px;
   gap: 30px;
   flex-direction: row;
 `;
@@ -107,13 +134,13 @@ function FancyModalButton() {
 
         <BtnDiv>
           <Link to="/">
-            <GoButton type="button" onClick={(toggleModal, deleteLocal)}>
-              예 로그아웃 합니다
-            </GoButton>
+            <YesButton type="button" onClick={(toggleModal, deleteLocal)}>
+              네 로그아웃 합니다
+            </YesButton>
           </Link>
-          <GoButton type="button" onClick={toggleModal}>
+          <NoButton type="button" onClick={toggleModal}>
             아니요
-          </GoButton>
+          </NoButton>
         </BtnDiv>
       </StyledModal>
     </div>

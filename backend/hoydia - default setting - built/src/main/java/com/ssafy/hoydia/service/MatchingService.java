@@ -112,13 +112,13 @@ public class MatchingService {
 
                 diaryRepository.regist(diary);
 
-                sendMatchingNotice(matchingNote.getUser() , noteRepository.findById(matchingNote.getPairId()).getUser() , "교환 일기 만들기 성공!" , "님과 다이어리가 만들어 졌어요." );
+                sendMatchingNotice(userRepository.findById(matchingNote.getOwnerId()) , userRepository.findById(matchingNote.getPairId()) , "교환 일기 만들기 성공!" , "님과 다이어리가 만들어 졌어요." );
 
             }
 
             else {
 
-                sendMatchingNotice(matchingNote.getUser() , noteRepository.findById(matchingNote.getPairId()).getUser() , "교환 일기 만들기 실패!" , "님과 매칭 중 한 분이 거절하였습니다 ㅠ_ㅠ" );
+                sendMatchingNotice(userRepository.findById(matchingNote.getOwnerId()) ,  userRepository.findById(matchingNote.getPairId()) , "교환 일기 만들기 실패!" , "님과 매칭 중 한 분이 거절하였습니다 ㅠ_ㅠ" );
 
             }
 

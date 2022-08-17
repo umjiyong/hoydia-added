@@ -45,7 +45,11 @@ public class Page {
 
     private String bgmPath;
 
-    private String location;
+    private String imgPath;
+
+    private String locationx;
+
+    private String locationy;
 
     @OneToMany(mappedBy = "page")
     @JsonIgnore
@@ -62,7 +66,9 @@ public class Page {
             String contentFontStyle,
             String contentFontSize,
             String bgmPath,
-            String location
+            String imgPath,
+            String locationx,
+            String locationy
     )
     {
 
@@ -82,7 +88,9 @@ public class Page {
         this.contentFontStyle = contentFontStyle;
         this.contentFontSize = contentFontSize;
         this.bgmPath = bgmPath;
-        this.location = location;
+        this.imgPath = imgPath;
+        this.locationx = locationx;
+        this.locationy = locationy;
 
     }
 

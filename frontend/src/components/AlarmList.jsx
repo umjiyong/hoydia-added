@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+/* eslint-disable dot-notation */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable array-callback-return */
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
+import axios from 'axios';
 import AlarmAnswerModal from 'components/AlarmAnswerModal';
-// import AlarmMatchingResultModal from './AlarmMatchingResultModal';
-// import AlarmDiaryArriveModal from './AlarmDiaryArriveModal';
+import AlarmMatchingResultModal from './AlarmMatchingResultModal';
+import AlarmDiaryArriveModal from './AlarmDiaryArriveModal';
 
 const Container = styled.div`
   width: 30%;
@@ -36,7 +40,13 @@ const Date = styled.div`
   font-weight: 700;
 `;
 
-const Detail1 = styled.a`
+const NoticeListDiv = styled.div`
+  margin: 10px 0px 10px 0px;
+  height: 230px;
+  overflow: auto;
+`;
+
+const Detail = styled.a`
   display: block;
   color: black;
   text-align: center;
@@ -50,11 +60,11 @@ const Detail1 = styled.a`
 function AlarmList() {
   const [isOpen, setIsOpen] = useState(false);
   const [opacity, setOpacity] = useState(0);
-
-  function toggleModal() {
-    setOpacity(0);
-    setIsOpen(!isOpen);
-  }
+  const [noticeList, setnoticeList] = useState();
+  // const [test, setTest] = useState();
+  const [selectName, setSelectName] = useState();
+  const [propsContent, setpropsContent] = useState();
+  const [answermodal, setAnswermodal] = useState();
 
   function afterOpen() {
     setTimeout(() => {
@@ -68,6 +78,62 @@ function AlarmList() {
       setTimeout(resolve, 300);
     });
   }
+
+  function toggleoff() {
+    setOpacity(0);
+    setIsOpen(!isOpen);
+  }
+
+  function toggleModal(item, content) {
+    setOpacity(0);
+    setIsOpen(!isOpen);
+
+    // setTest(item.substring(12));
+
+    setpropsContent(content);
+    if (item.includes('매칭중!')) {
+      axios({
+        headers: {
+          'access-token': `${localStorage.getItem('access-token')}`,
+        },
+        url: `/match/${item.substring(12)}`,
+        method: 'GET',
+      })
+        .then((res) => {
+          setAnswermodal(res.data.data);
+          // console.log(res.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
+    if (item.includes('매칭중!')) {
+      setSelectName(1);
+    } else if (item.includes('교환 일기 만들기')) {
+      setSelectName(2);
+    } else if (item.includes('일기 교환')) {
+      setSelectName(3);
+    } else setSelectName(4);
+  }
+
+  useEffect(() => {
+    axios({
+      headers: {
+        'access-token': `${localStorage.getItem('access-token')}`,
+      },
+      url: '/notice',
+      method: 'GET',
+    })
+      .then((res) => {
+        setnoticeList(res.data.data);
+        console.log(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <div className="AlarmList">
       <Container>
@@ -75,30 +141,54 @@ function AlarmList() {
           <Title>알림함</Title>
           <Date>{moment().format('YYYY. M. D (ddd)')}</Date>
         </Header>
-        <Detail1 onClick={toggleModal}>Answer1</Detail1>
+        <NoticeListDiv>
+          {noticeList &&
+            noticeList.map((item, index) => (
+              <Detail
+                key={index}
+                onClick={() => toggleModal(item.title, item.content)}
+              >
+                {item['title'].length > 20
+                  ? item['title'].substring(0, 4)
+                  : item['title']}
+              </Detail>
+            ))}
+        </NoticeListDiv>
       </Container>
-      <AlarmAnswerModal
-        toggleModal={toggleModal}
-        afterOpen={afterOpen}
-        beforeClose={beforeClose}
-        isOpen={isOpen}
-        opacity={opacity}
-      />
-      {/* <AlarmMatchingResultModal
-        toggleModal={toggleModal}
-        afterOpen={afterOpen}
-        beforeClose={beforeClose}
-        isOpen={isOpen}
-        opacity={opacity}
-      /> */}
-      {/* <AlarmDiaryArriveModal
-        toggleModal={toggleModal}
-        afterOpen={afterOpen}
-        beforeClose={beforeClose}
-        isOpen={isOpen}
-        opacity={opacity}
-      /> */}
+      {selectName === 1 ? (
+        <AlarmAnswerModal
+          toggleModal={toggleoff}
+          afterOpen={afterOpen}
+          beforeClose={beforeClose}
+          isOpen={isOpen}
+          opacity={opacity}
+          answermodal={answermodal}
+          // test={test}
+          // propsContent={propsContent}
+        />
+      ) : null}
+      {selectName === 2 ? (
+        <AlarmMatchingResultModal
+          toggleModal={toggleoff}
+          afterOpen={afterOpen}
+          beforeClose={beforeClose}
+          isOpen={isOpen}
+          opacity={opacity}
+          propsContent={propsContent}
+        />
+      ) : null}
+      {selectName === 3 ? (
+        <AlarmDiaryArriveModal
+          toggleModal={toggleoff}
+          afterOpen={afterOpen}
+          beforeClose={beforeClose}
+          isOpen={isOpen}
+          opacity={opacity}
+          propsContent={propsContent}
+        />
+      ) : null}
     </div>
   );
 }
+
 export default AlarmList;

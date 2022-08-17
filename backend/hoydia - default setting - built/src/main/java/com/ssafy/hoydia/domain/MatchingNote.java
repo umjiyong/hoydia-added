@@ -37,8 +37,8 @@ public class MatchingNote {
     private String ownerAnswer;
     private String pairAnswer;
 
-    private int ownerPermit;
-    private int pairPermit;
+    private Integer ownerPermit;
+    private Integer pairPermit;
 
     @Builder
     public MatchingNote (

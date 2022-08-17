@@ -5,7 +5,7 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable no-unused-vars */
 /* eslint implicit-arrow-linebreak: ["error", "beside"] */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Navbar from 'components/Navbar';
 import Diary from 'assets/CreateDiaryBackground.png';
@@ -144,13 +144,7 @@ const ContentDiv = styled.div`
   margin-top: 40px;
 `;
 
-const ImgDiv = styled.div`
-  height: 200px;
-  width: 50px;
-  margin-bottom: 100px;
-`;
-
-function createPage() {
+function updatePage() {
   const userId = window.localStorage.getItem('userId');
   const accessToken = window.localStorage.getItem('access-token');
   const [inputs, setInputs] = useState({});
@@ -167,6 +161,8 @@ function createPage() {
   });
   const params = useParams();
   const navigate = useNavigate();
+  const [bgmPath, setBgmPath] = useState();
+  const [imageUrl, setImageUrl] = useState();
 
   const saveFileImage = (event) => {
     setFileImage(event.target.files[0]);
@@ -213,12 +209,27 @@ function createPage() {
     setMapbutton(false);
   };
 
-  function handleSubmit(event) {
+  function fileSubmit(event) {
     event.preventDefault();
+    const url = `/page/image/${params.pageId}`;
+    const formData = new FormData();
+    if (fileImage) {
+      formData.append('file', fileImage);
+      formData.append('fileName', fileImage.name);
+    }
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
+    };
+    axios.put(url, formData, config).then((response) => {});
+  }
 
+  function pageSubmit(event) {
+    event.preventDefault();
     axios({
-      method: 'post',
-      url: '/page',
+      method: 'put',
+      url: `/page/update/${params.pageId}`,
       headers: {
         'access-token': accessToken,
       },
@@ -234,28 +245,40 @@ function createPage() {
         titleFontSize: '20',
         titleFontStyle: fontName,
       },
-    }).then((res) => {
-      console.log(res);
-      const url = `/page/image/${res.data.id}`;
-      const formData = new FormData();
-      formData.append('file', fileImage);
-      if (fileImage) {
-        formData.append('fileName', fileImage.name);
-      }
-
-      const config = {
-        headers: {
-          'content-type': 'multipart/form-data',
-        },
-      };
-      axios.put(url, formData, config).then((response) => {
-        console.log(response);
-      });
-      navigate(`/diaryDetailPage/${params.diaryId}/${res.data.id}`);
-      window.location.reload();
-    });
+    }).then();
   }
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    fileSubmit(event);
+    pageSubmit(event);
+    navigate(`/diaryDetailPage/${params.diaryId}/${params.pageId}`);
+  };
 
+  useEffect(() => {
+    axios({
+      method: 'get',
+      url: `/page/${params.pageId}`,
+      headers: {
+        'access-token': accessToken,
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        setfontName(res.data.data.titleFontstyle);
+        setInputs({
+          title: res.data.data.title,
+          content: res.data.data.content,
+        });
+        setBgmPath(res.data.data.bgmPath);
+        setFileImage(res.data.data.imgPath);
+        setFileImageView(res.data.data.imgPath);
+        setPosition({
+          lat: res.data.data.locationx,
+          lng: res.data.data.locationy,
+        });
+      })
+      .catch((res) => {});
+  }, []);
   return (
     <div className="diaryEdit">
       <Navbar />
@@ -276,12 +299,12 @@ function createPage() {
                 <NamingDiv onClick={toggleMusic}>음악 선택 &nbsp; </NamingDiv>
               </SelectDiv>
             </LeftmainDiv>
+
             <ShowDiv>
               {filebutton ? (
                 <div>
-                  <ImgDiv>
-                    <FileImage alt="image" src={fileImageView} />
-                  </ImgDiv>
+                  <h1>File Upload</h1>
+                  <FileImage alt="image" src={fileImageView} />
                   <input
                     type="file"
                     name="imgUpload"
@@ -351,6 +374,7 @@ function createPage() {
                 style={{ fontFamily: fontName, fontSize: 20 }}
               />
             </ContentDiv>
+
             <ButtonDiv>
               <GoButton type="submit" value="저장" />
             </ButtonDiv>
@@ -361,4 +385,4 @@ function createPage() {
   );
 }
 
-export default createPage;
+export default updatePage;

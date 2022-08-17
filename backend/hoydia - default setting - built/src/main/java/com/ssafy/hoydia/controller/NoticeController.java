@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/notice")
+@RequestMapping("/api/notice")
 @Slf4j
 @Api(value = "NoticeController", description = ("유저에게 고지할 사항에 관한 컨트롤러"))
 public class NoticeController {

@@ -16,7 +16,7 @@ const Container = styled.div`
   position: relative;
   width: 240px;
   height: 300px;
-  top: 30px;
+  cursor: pointer;
   .plus_icon {
     .first {
       fill: ${(props) => props.color1 || '#FF8960'};
@@ -29,7 +29,7 @@ const Container = styled.div`
 
 const Title = styled.p`
   position: absolute;
-  top: 60px;
+  top: 30px;
   left: 15px;
   color: ${(props) => props.color3 || 'black'};
   font-family: ${(props) => props.font}, 'sans-serif';
@@ -40,13 +40,13 @@ function DiaryCompo(props) {
   return (
     <div className="DiaryCompo">
       <Container
-        color1={props.DiaryInfo.color1}
-        color2={props.DiaryInfo.color2}
+        color1={props.DiaryInfo.diaryColor}
+        color2={props.DiaryInfo.buttonColor}
       >
         <Title
-          color3={props.DiaryInfo.color3}
-          font={props.DiaryInfo.font}
-          fontsize={props.DiaryInfo.fontsize}
+          color3={props.DiaryInfo.fontColor}
+          font={props.DiaryInfo.fontStyle}
+          fontsize={props.DiaryInfo.fontSize}
         >
           {props.DiaryInfo.title}
         </Title>

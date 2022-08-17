@@ -36,6 +36,7 @@ const Title = styled.span`
   align-items: center;
   color: #ff8960;
 `;
+
 const GoButton = styled.button`
   justify-content: center;
   align-items: center;
@@ -63,10 +64,15 @@ const Atag = styled.a`
   text-align: center;
   padding: 0.875rem 1rem;
   text-decoration: none;
-  &:hover {
+  &:hover,
+  &:active {
     cursor: pointer;
+    color: #fff;
+    background-color: #ff8960;
+    border-radius: 10px;
   }
 `;
+
 const InputCode = styled.input`
   box-sizing: border-box;
   margin-bottom: 20px;
@@ -113,6 +119,7 @@ function FancyModalButton() {
   function toggleModal() {
     setOpacity(0);
     setIsOpen(!isOpen);
+    setfriendPost('');
   }
 
   function afterOpen() {
@@ -133,7 +140,7 @@ function FancyModalButton() {
       headers: {
         'access-token': `${localStorage.getItem('access-token')}`,
       },
-      url: 'http://localhost:8080/diary',
+      url: '/diary',
       method: 'POST',
       data: {
         buttonColor: '',
