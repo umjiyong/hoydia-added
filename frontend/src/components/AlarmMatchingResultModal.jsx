@@ -1,13 +1,13 @@
 /* eslint-disable react/jsx-no-bind */
 import React from 'react';
-
 import styled from 'styled-components';
 import Modal, { ModalProvider, BaseModalBackground } from 'styled-react-modal';
 import exit from 'assets/exit.png';
+import pairHedgehogs from 'assets/pairHedgehogs.png';
 
 const StyledModal = Modal.styled`
   width: 600px;
-  height 400px;
+  height 410px;
   background: #FFFFFF;
   box-shadow: 0rem 0.25rem 0.25rem  rgba(0, 0, 0, 0.25), 0rem 0.125rem 0.25rem  rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(0.25rem );
@@ -42,58 +42,14 @@ const ExitBtn = styled.img`
   }
 `;
 
+const Mascot = styled.img`
+  width: 300px;
+  height: auto;
+`;
+
 const Message = styled.p`
-  margin: 40px 0px 30px 0px;
+  margin: 20px 0px 30px 0px;
   font-size: 20px;
-`;
-
-const Pair = styled.p`
-  margin-bottom: 20px;
-  font-size: 20px;
-`;
-
-const PairBtn = styled.div`
-  display: flex;
-  justify-content: space-around;
-  gap: 30px;
-`;
-
-const Yes = styled.button`
-  justify-content: center;
-  align-items: center;
-  padding: 8px 16px;
-  width: 176px;
-  height: 60px;
-  background: #ffdbac;
-  border-radius: 15px;
-  border: none;
-  color: #ffffff;
-  font-size: 30px;
-  font-weight: 700;
-  -webkit-text-stroke: 1px #ff8960;
-  &:hover {
-    cursor: pointer;
-    background-color: #ff8960;
-  }
-`;
-
-const No = styled.button`
-  justify-content: center;
-  align-items: center;
-  padding: 8px 16px;
-  width: 176px;
-  height: 60px;
-  background: #ff8988;
-  border-radius: 15px;
-  border: none;
-  color: #ffffff;
-  font-size: 30px;
-  font-weight: 400;
-  -webkit-text-stroke: 1px #d43e3c;
-  &:hover {
-    cursor: pointer;
-    background: #d43e3c;
-  }
 `;
 
 function FancyModalButton({
@@ -102,6 +58,7 @@ function FancyModalButton({
   beforeClose,
   isOpen,
   opacity,
+  propsContent,
 }) {
   return (
     <StyledModal
@@ -117,12 +74,8 @@ function FancyModalButton({
         <ExitBtn src={exit} />
       </ExitDiv>
       <Title>매칭결과</Title>
-      <Message>감성 페어와 매칭이 완료되었습니다.</Message>
-      <Pair>교환 일기를 시작하시겠습니까?</Pair>
-      <PairBtn>
-        <Yes>네</Yes>
-        <No onClick={toggleModal}>아니오</No>
-      </PairBtn>
+      <Mascot src={pairHedgehogs} />
+      <Message>{propsContent}</Message>
     </StyledModal>
   );
 }

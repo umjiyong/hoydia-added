@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/sticker")
+@RequestMapping("/api/sticker")
 @Slf4j
 @Api(value = "StickerController", description = ("스티커 컨트롤러"))
 public class StickerController {

@@ -45,6 +45,22 @@ public class PageService {
     }
 
     @Transactional
+    public void setImgPath (String pageId,String imgPath) {
+        pageRepository.findById(pageId).setImgPath(imgPath);
+    }
+
+    @Transactional
+    public void setBgmPath (String pageId,String bgmPath) {
+        pageRepository.findById(pageId).setBgmPath(bgmPath);
+    }
+
+    @Transactional
+    public void setLocation (String pageId,String locationx, String locationy) {
+        pageRepository.findById(pageId).setLocationx(locationx);
+        pageRepository.findById(pageId).setLocationy(locationy);
+    }
+
+    @Transactional
     public String update (String id,
                           String title,
                           String titleFontStyle,
@@ -53,7 +69,8 @@ public class PageService {
                           String contentFontStyle,
                           String contentFontSize,
                           String bgmPath,
-                          String location) {
+                          String locationx,
+                          String locationy) {
 
         Page page = pageRepository.findById(id);
 
@@ -70,7 +87,8 @@ public class PageService {
             page.setContentFontStyle(contentFontStyle);
             page.setContentFontStyle(contentFontSize);
             page.setBgmPath(bgmPath);
-            page.setLocation(location);
+            page.setLocationx(locationx);
+            page.setLocationy(locationy);
 
             return "Loc-Service : "+page.getId();
         }

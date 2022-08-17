@@ -5,11 +5,18 @@
 import React from 'react';
 import styled from 'styled-components';
 import Logo from 'components/Logo';
-import kakaoLogin from 'assets/kakaoLogin.png';
+import kakaoLogin from 'assets/kakao_login.png';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import mainBack from 'assets/Mainbackground.png';
 
+const Main = styled.img`
+  position: absolute;
+  width: 1536px; //빡빡하게 맞춰야함 안에 컴포 움직이면 필수 수정
+  height: 778px;
+  z-index: -1;
+`;
 const Hoydia = styled.h1`
   margin: 0px;
   // font-family: 'SeoulNamsan';
@@ -26,11 +33,12 @@ const Slogan = styled.p`
   font-weight: 400;
   font-size: 30px;
   color: #000000;
+  margin-bottom: 30px;
 `;
 
 const KakaoBtn = styled.img`
-  width: 312px;
-  height: 75px;
+  width: 300px;
+  height: 45px;
   border-radius: 100px;
 `;
 
@@ -39,12 +47,13 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 40px;
 `;
 
 const BtnContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: 15px;
+  // flex-direction: column;
+  gap: 120px;
   margin-top: 30px;
 `;
 
@@ -56,9 +65,12 @@ function loginPage() {
   return (
     <div className="login">
       <Container>
+        <Main src={mainBack} />
         <Hoydia>HOYDIA</Hoydia>
         <Slogan>감성 페어와 공유하는 당신의 요즈음</Slogan>
-        <Logo />
+        <div style={{ marginLeft: '90px' }}>
+          <Logo />
+        </div>
         <BtnContainer>
           <GoogleOAuthProvider
             clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
@@ -70,10 +82,7 @@ function loginPage() {
                 };
                 const async = async () => {
                   try {
-                    const res = await axios.post(
-                      'http://localhost:8080/auth/google',
-                      authRequest,
-                    );
+                    const res = await axios.post('/auth/google', authRequest);
                     window.localStorage.setItem(
                       'access-token',
                       res.data['access-token'],
@@ -84,10 +93,7 @@ function loginPage() {
                     const onSilentRefresh = () => {
                       const header =
                         window.localStorage.getItem('access-token');
-                      const response = axios.post(
-                        'http://localhost:8080/auth/refresh',
-                        header,
-                      );
+                      const response = axios.post('/auth/refresh', header);
                       window.localStorage.setItem(
                         'access-token',
                         response.data['access-token'],
@@ -109,6 +115,9 @@ function loginPage() {
               onError={() => {
                 console.log('Login Failed');
               }}
+              width="300"
+              theme="filled_blue"
+              shape="circle"
             />
           </GoogleOAuthProvider>
           <a href={KAKAO_AUTH_URI}>

@@ -9,6 +9,7 @@ import DiaryEdit from 'pages/diaryEdit';
 import KakaoLogin from 'pages/kakaoPage';
 import CreateDiary from 'pages/createDiary';
 import DiaryDetailPage from 'pages/DiaryDetailPage';
+import UpdatePage from 'pages/UpdatePage';
 
 function App() {
   // const [islogIn, setIslogIn] = useState(false);
@@ -23,12 +24,16 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/mainPage" element={<MainPage />} />
-        <Route path="/drawerPage" element={<DrawerPage />} />
-        <Route path="/diaryEdit" element={<DiaryEdit />} />
+        <Route path="/mainpage" element={<MainPage />} />
+        <Route path="/drawerpage" element={<DrawerPage />} />
+        <Route path="/diaryedit/:diaryId" element={<DiaryEdit />} />
         <Route path="/kakaologin" element={<KakaoLogin />} />
-        <Route path="/createDiary" element={<CreateDiary />} />
-        <Route path="/diaryDetailPage" element={<DiaryDetailPage />} />
+        <Route path="/creatediary/:diaryId" element={<CreateDiary />} />
+        <Route path="/updatepage/:diaryId/:pageId" element={<UpdatePage />} />
+        <Route
+          path="/diaryDetailPage/:diaryId/:pageId"
+          element={<DiaryDetailPage />}
+        />
       </Routes>
     </div>
   );

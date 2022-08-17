@@ -31,6 +31,15 @@ public class DiaryService {
        return "Loc-Service : "+diary.getId();
     }
 
+    @Transactional
+    public void diaryOwnShift(String id) {
+
+        Diary diary = diaryRepository.findById(id);
+
+        diary.setOwn(!diary.isOwn());
+
+    }
+
 
     public List<Diary> searchAllDiaryOrderByRegTime(){        // 관리자용 서비스 - 모든 일기 불러오기 (시간순)
         return diaryRepository.findAllDiaryOrderByRegTime();

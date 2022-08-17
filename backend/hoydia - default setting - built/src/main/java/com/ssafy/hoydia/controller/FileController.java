@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/file")
+@RequestMapping("/api/file")
 @Slf4j
 @Api(value = "FileController", description = ("파일 컨트롤러"))
 public class FileController {

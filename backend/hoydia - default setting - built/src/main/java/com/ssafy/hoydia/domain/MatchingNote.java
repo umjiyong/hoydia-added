@@ -2,10 +2,7 @@ package com.ssafy.hoydia.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.hoydia.util.SHA256;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.security.NoSuchAlgorithmException;
@@ -15,6 +12,7 @@ import java.util.List;
 
 @Entity
 @Getter @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 
 public class MatchingNote {
 
@@ -39,8 +37,8 @@ public class MatchingNote {
     private String ownerAnswer;
     private String pairAnswer;
 
-    private int ownerPermit;
-    private int pairPermit;
+    private Integer ownerPermit;
+    private Integer pairPermit;
 
     @Builder
     public MatchingNote (
