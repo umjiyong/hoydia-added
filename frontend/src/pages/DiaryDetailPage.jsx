@@ -19,11 +19,15 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
 const ButtonDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 5px;
+  gap: 10px;
+  position: absolute;
+  top: 64px;
+  left: 950px;
 `;
 
 const DetailSendBtn = styled.img`
@@ -31,8 +35,8 @@ const DetailSendBtn = styled.img`
   // top: 9.8%;
   // right: 39%;
   z-index: 2;
-  width: 70px;
-  height: 47px;
+  width: 68px;
+  height: 40px;
   cursor: pointer;
 `;
 
@@ -43,8 +47,8 @@ const DetailCreateBtn = styled.img`
   // top: 9.8%;
   // right: 34%;
   z-index: 2;
-  width: 70px;
-  height: 47px;
+  width: 68px;
+  height: 40px;
   cursor: pointer;
 `;
 
@@ -53,8 +57,8 @@ const DetailEditBtn = styled.img`
   // top: 9.8%;
   // right: 29%;
   z-index: 2;
-  width: 70px;
-  height: 47px;
+  width: 68px;
+  height: 40px;
   cursor: pointer;
 `;
 
@@ -63,8 +67,8 @@ const DetailUpdateBtn = styled.img`
   // top: 9.8%;
   // right: 24%;
   // z-index: 2;
-  width: 70px;
-  height: 47px;
+  width: 68px;
+  height: 40px;
   cursor: pointer;
 `;
 
@@ -100,6 +104,7 @@ const DiaryPaperImg = styled.img`
 
 const MainDiv = styled.div`
   display: flex;
+  height: 600px;
 `;
 
 const LeftDiv = styled.div`
@@ -111,15 +116,16 @@ const LeftDiv = styled.div`
   // height: 100%;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
-  margin-top: 80px;
+  gap: 60px;
+  // justify-content: space-around;
+  margin-top: 30px;
   margin-left: 15px;
 `;
 
 const RightDiv = styled.div`
   // background-color: blue;
   width: 50%;
-  height: 650px;
+  height: 500px;
   // position: relative;
   // display: flex;
   // height: 100%;
@@ -134,7 +140,7 @@ const ImageBox = styled.img`
   // position: absolute;
   // top: 10%;
   // left: 18%;
-  // margin-top: 50px;
+  margin-top: 65px;
   width: 400px;
   height: 300px;
   // border: solid 1px red;
@@ -142,8 +148,7 @@ const ImageBox = styled.img`
 
 const MusicPlayer = styled.div`
   width: 400px;
-  height: 250px;
-  margin-top: 40px;
+  height: 180px;
 `;
 
 const CaretLeftBtn = styled.div`
@@ -154,6 +159,7 @@ const CaretLeftBtn = styled.div`
   left: 8%;
   cursor: pointer;
 `;
+
 const CaretRightBtn = styled.div`
   position: absolute;
   width: 48px;
@@ -162,6 +168,7 @@ const CaretRightBtn = styled.div`
   right: 8%;
   cursor: pointer;
 `;
+
 const TitleDiv = styled.textarea`
   margin-left: 70px;
   margin-bottom: 10px;
@@ -178,13 +185,14 @@ const TitleDiv = styled.textarea`
   padding-left: 10px;
   overflow: hidden;
 `;
+
 const ContentDiv = styled.textarea`
   margin-left: 70px;
   width: 400px;
   height: 400px;
   border: 2px solid #dfba88;
   border-radius: 16px;
-  margin-top: 20px;
+  margin-top: 5px;
   resize: none;
   &:active,
   &:focus {
@@ -325,31 +333,32 @@ function DetailPage() {
           <DetailSendBtn onClick={sendDiary} src={sendbtn} alt="sendbtn" />
           <DetailCreateBtn
             onClick={createDiary}
+            s
             src={createpagebtn}
             alt="createpagebtn"
           />
-          <DetailEditBtn onClick={editDiary} src={editbtn} alt="editbtn" />
           <DetailUpdateBtn
             onClick={updatePage}
             src={updatebtn}
             alt="updatebtn"
           />
+          <DetailEditBtn onClick={editDiary} src={editbtn} alt="editbtn" />
         </ButtonDiv>
-        <KakaoMapModal propLocation={location} />
-        <CaretLeftBtn
+        {/* <CaretLeftBtn
           onClick={() => {
             pageOverLeft();
           }}
           onMouseOver={() => setOverLeft(true)}
           onMouseLeave={() => setOverLeft(false)}
-        >
+          >
           <FontAwesomeIcon
-            size="6x"
-            icon={faCaretLeft}
-            style={overLeft ? { color: '#FF8960' } : { color: '#FFDBAC' }}
+          size="6x"
+          icon={faCaretLeft}
+          style={overLeft ? { color: '#FF8960' } : { color: '#FFDBAC' }}
           />
-        </CaretLeftBtn>
+        </CaretLeftBtn> */}
         <DiaryContainer style={{ backgroundColor: diaryColor }}>
+          <KakaoMapModal propLocation={location} />
           <DiaryPaperImg src={DiaryPaper} alt="DiaryPaper" />
           <MainDiv>
             <LeftDiv>
@@ -374,7 +383,7 @@ function DetailPage() {
                 style={{ fontFamily: titleFontStyle, fontSize: titleFontSize }}
               >
                 {/* {title} */}
-                일기장
+                {/* 일기장 */}
               </TitleDiv>
               <ContentDiv
                 type="text"
@@ -386,13 +395,13 @@ function DetailPage() {
                   fontSize: contentFontSize,
                 }}
               >
-                일기장 내용~!
+                {/* 일기장 내용~! */}
                 {/* {content} */}
               </ContentDiv>
             </RightDiv>
           </MainDiv>
         </DiaryContainer>
-        <CaretRightBtn
+        {/* <CaretRightBtn
           onClick={() => {
             pageOverRight();
           }}
@@ -404,7 +413,7 @@ function DetailPage() {
             icon={faCaretRight}
             style={overRight ? { color: '#FF8960' } : { color: '#FFDBAC' }}
           />
-        </CaretRightBtn>
+        </CaretRightBtn> */}
       </Container>
     </div>
   );
