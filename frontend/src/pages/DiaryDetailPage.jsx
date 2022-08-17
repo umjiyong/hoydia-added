@@ -328,6 +328,7 @@ function DetailPage() {
   return (
     <div className="diaryDetailPage">
       <Navbar />
+      <KakaoMapModal propLocation={location} />
       <Container>
         <ButtonDiv>
           <DetailSendBtn onClick={sendDiary} src={sendbtn} alt="sendbtn" />
@@ -358,7 +359,6 @@ function DetailPage() {
           />
         </CaretLeftBtn> */}
         <DiaryContainer style={{ backgroundColor: diaryColor }}>
-          <KakaoMapModal propLocation={location} />
           <DiaryPaperImg src={DiaryPaper} alt="DiaryPaper" />
           <MainDiv>
             <LeftDiv>
