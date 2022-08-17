@@ -65,7 +65,7 @@ function desk() {
   const DiaryAsync = () => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/api/diary/user/${userId}/drawn`,
+      url: `/diary/user/${userId}/drawn`,
       headers: {
         'access-token': accessToken,
       },
@@ -77,7 +77,7 @@ function desk() {
   const DiaryDetailBtn = (diaryId) => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/api/page/diary/${diaryId}`,
+      url: `/page/diary/${diaryId}`,
       headers: {
         'access-token': accessToken,
       },
@@ -123,7 +123,7 @@ function desk() {
     ) {
       axios({
         method: 'put',
-        url: `http://localhost:8080/api/diary/${dragItemContent.id}`,
+        url: `/diary/${dragItemContent.id}`,
         headers: {
           'access-token': accessToken,
         },

@@ -174,7 +174,7 @@ function FancyModalButton() {
       headers: {
         'access-token': `${localStorage.getItem('access-token')}`,
       },
-      url: 'http://localhost:8080/api/user',
+      url: '/user',
       method: 'GET',
     })
       .then((res) => {
@@ -199,7 +199,7 @@ function FancyModalButton() {
       headers: {
         'access-token': `${localStorage.getItem('access-token')}`,
       },
-      url: 'http://localhost:8080/api/user/',
+      url: '/user/',
       method: 'DELETE',
     })
       .then((res) => {
@@ -223,7 +223,7 @@ function FancyModalButton() {
       headers: {
         'access-token': `${localStorage.getItem('access-token')}`,
       },
-      url: `http://localhost:8080/api/user/${user_id}`,
+      url: `/user/${user_id}`,
       method: 'PUT',
       data: {
         nickname: change_nickname,

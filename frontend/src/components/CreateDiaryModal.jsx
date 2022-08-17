@@ -140,7 +140,7 @@ function FancyModalButton() {
       headers: {
         'access-token': `${localStorage.getItem('access-token')}`,
       },
-      url: 'http://localhost:8080/api/diary',
+      url: '/diary',
       method: 'POST',
       data: {
         buttonColor: '',
