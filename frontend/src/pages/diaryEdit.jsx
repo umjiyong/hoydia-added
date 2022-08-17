@@ -58,20 +58,28 @@ const SelectDiv = styled.div`
 `;
 
 const InputBar = styled.input`
+  box-sizing: border-box;
   padding: 0.01rem 0.5rem;
-  // gap: 0.125rem;
   text-align: center;
-  width: 70%;
-  height: 5rem;
-
-  background: #ffffff;
+  width: 600px;
+  height: 60px;
   border: 0.125rem solid #dfba88;
   border-radius: 1rem;
+  &:active,
+  &:focus {
+    outline-color: #ff8960;
+  }
+  &::placeholder {
+    color: #888888;
+  }
+  font-size: 20px;
 `;
+
 const NamingDiv = styled.span`
   display: flex;
-
   justify-content: center;
+  font-size: 20px;
+  font-weight: 600;
 `;
 
 const ColorPalette = styled.div`
@@ -113,6 +121,7 @@ const RightDiv = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
 const IndexDiv = styled.p`
   position: absolute;
   top: 200px;
@@ -120,6 +129,7 @@ const IndexDiv = styled.p`
   font-family: ${(props) => props.fontName}, 'sans-serif';
   z-index: 1;
 `;
+
 const GoButton = styled.input`
   padding: 8px 16px;
   width: 150px;
@@ -130,9 +140,6 @@ const GoButton = styled.input`
   color: #ffffff;
   font-size: 30px;
   font-weight: 700;
-  -webkit-text-stroke: 1px #ff8960;
-  text-shadow: -1px 0px #ff8960, 0px 1px #ff8960, 1px 0px #ff8960,
-    0px -1px #ff8960;
   &:hover {
     cursor: pointer;
     background-color: #ff8960;
@@ -142,7 +149,7 @@ const GoButton = styled.input`
 const ButtonDiv = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin: 25px 100px 0 0;
+  margin: 50px 60px 0 0;
 `;
 
 const DiaryIcon = <FontAwesomeIcon size="lg" icon={faBook} />;

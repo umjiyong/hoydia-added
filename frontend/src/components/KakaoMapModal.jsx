@@ -66,10 +66,11 @@ const ExitDiv = styled.div`
 const DetailKakaoBtn = styled.div`
   position: absolute;
   bottom: 25%;
-  left: 14.3%;
+  left: 1.35%;
+  // left: 14.3%;
   z-index: 2;
-  width: 72px;
-  height: 118px;
+  width: 60px;
+  height: 90px;
   background-image: url(${kakaomapbtn});
   background-repeat: no-repeat;
   background-size: 100%;
