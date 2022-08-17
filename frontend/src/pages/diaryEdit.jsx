@@ -150,7 +150,7 @@ const ClipIcon = <FontAwesomeIcon size="lg" icon={faPaperclip} />;
 const FontIcon = <FontAwesomeIcon size="lg" icon={faFont} />;
 
 const userId = window.localStorage.getItem('userId');
-const accessToken = window.localStorage.getItem('access-token');
+const accessToken = localStorage.getItem('access-token');
 
 function diaryEdit() {
   const params = useParams();

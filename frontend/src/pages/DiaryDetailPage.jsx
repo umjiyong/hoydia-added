@@ -4,114 +4,146 @@ import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
-import Diary from 'assets/CreateDiaryBackground.png';
+import DiaryPaper from 'assets/DiaryPaper.png';
 import createpagebtn from 'assets/CreatePageBtn.png';
 import sendbtn from 'assets/SendBtn.png';
 import editbtn from 'assets/EditBtn.png';
-import UpdateBtn from 'assets/UpdateBtn.png';
+import updatebtn from 'assets/UpdateBtn.png';
 import KakaoMapModal from 'components/KakaoMapModal';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
-const MusicPlayer = styled.div`
-  width: 300px;
-  height: 170px;
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const ButtonDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
 `;
 
-const DetailSendBtn = styled.div`
-  position: absolute;
-  top: 9.8%;
-  right: 39%;
+const DetailSendBtn = styled.img`
+  // position: absolute;
+  // top: 9.8%;
+  // right: 39%;
   z-index: 2;
   width: 70px;
   height: 47px;
-  background-image: url(${sendbtn});
-  background-repeat: no-repeat;
-  background-size: 100%;
   cursor: pointer;
 `;
 
-const DetailCreateBtn = styled.div`
-  position: absolute;
-  top: 9.8%;
-  right: 34%;
+const DetailCreateBtn = styled.img`
+  // display: flex;
+  // justify-content
+  // position: absolute;
+  // top: 9.8%;
+  // right: 34%;
   z-index: 2;
   width: 70px;
   height: 47px;
-  background-image: url(${createpagebtn});
-  background-repeat: no-repeat;
-  background-size: 100%;
   cursor: pointer;
 `;
 
-const DetailEditBtn = styled.div`
-  position: absolute;
-  top: 9.8%;
-  right: 29%;
+const DetailEditBtn = styled.img`
+  // position: absolute;
+  // top: 9.8%;
+  // right: 29%;
   z-index: 2;
   width: 70px;
   height: 47px;
-  background-image: url(${editbtn});
-  background-repeat: no-repeat;
-  background-size: 100%;
-  cursor: pointer;
-`;
-const DetailUpdateBtn = styled.div`
-  position: absolute;
-  top: 9.8%;
-  right: 24%;
-  z-index: 2;
-  width: 70px;
-  height: 47px;
-  background-image: url(${UpdateBtn});
-  background-repeat: no-repeat;
-  background-size: 100%;
   cursor: pointer;
 `;
 
-const DetailContainer = styled.div`
-  position: absolute;
-  bottom: 4%;
-  left: 14%;
+const DetailUpdateBtn = styled.img`
+  // position: absolute;
+  // top: 9.8%;
+  // right: 24%;
+  // z-index: 2;
+  width: 70px;
+  height: 47px;
+  cursor: pointer;
+`;
+
+const DiaryContainer = styled.div`
+  position: relative;
   background-color: #ff8960;
+  width: 1200px;
+  height: 650px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 35px;
-  width: 72%;
-  height: 88%;
-  padding: 60px 76px 26px 76px;
+  margin: 20px; 0px; 20px; 0px;
+  z-index: -2;
+  // padding: 60px 76px 26px 76px;
+`;
+
+const DiaryPaperImg = styled.img`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  // display: grid;
+  // height: 100%;
+  // grid-template-columns: 1fr 1fr;
+  // grid-gap: 0.25rem;
+  // background-image: url(${DiaryPaper});
+  width: 1050px;
+  height: 640px;
+  z-index: -1;
+  // background-repeat: no-repeat;
+  // background-size: cover;
+  // padding-bottom: 10px;
 `;
 
 const MainDiv = styled.div`
-  display: grid;
-  height: 100%;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 0.25rem;
-  background-image: url(${Diary});
-  background-repeat: no-repeat;
-  background-size: cover;
-  padding-bottom: 10px;
+  display: flex;
 `;
 
 const LeftDiv = styled.div`
+  // background-color: red;
+  width: 50%;
+  height: 650px;
+  position: relative;
   display: flex;
-  height: 100%;
+  // height: 100%;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
+  margin-top: 80px;
+  margin-left: 15px;
 `;
 
 const RightDiv = styled.div`
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
+  // background-color: blue;
+  width: 50%;
+  height: 650px;
+  // position: relative;
+  // display: flex;
+  // height: 100%;
+  // flex-direction: column;
+  // justify-content: space-around;
+  // align-items: center;
+  margin-top: 95px;
+  margin-left: 15px;
 `;
+
 const ImageBox = styled.img`
-  margin-top: 50px;
-  width: 300px;
+  // position: absolute;
+  // top: 10%;
+  // left: 18%;
+  // margin-top: 50px;
+  width: 400px;
   height: 300px;
+  // border: solid 1px red;
+`;
+
+const MusicPlayer = styled.div`
+  width: 400px;
+  height: 250px;
+  margin-top: 40px;
 `;
 
 const CaretLeftBtn = styled.div`
@@ -130,14 +162,44 @@ const CaretRightBtn = styled.div`
   right: 8%;
   cursor: pointer;
 `;
-const TitleDiv = styled.div``;
-const ContentDiv = styled.div``;
+const TitleDiv = styled.textarea`
+  margin-left: 70px;
+  margin-bottom: 10px;
+  width: 400px;
+  height: 50px;
+  border: 2px solid #dfba88;
+  border-radius: 16px;
+  resize: none;
+  &:active,
+  &:focus {
+    outline-color: #ff8960;
+  }
+  line-height: 50px;
+  padding-left: 10px;
+  overflow: hidden;
+`;
+const ContentDiv = styled.textarea`
+  margin-left: 70px;
+  width: 400px;
+  height: 400px;
+  border: 2px solid #dfba88;
+  border-radius: 16px;
+  margin-top: 20px;
+  resize: none;
+  &:active,
+  &:focus {
+    outline-color: #ff8960;
+  }
+  padding-left: 10px;
+  padding-top: 20px;
+`;
 
 function DetailPage() {
   const userId = window.localStorage.getItem('userId');
   const accessToken = window.localStorage.getItem('access-token');
   const navigate = useNavigate();
   const params = useParams();
+  const [diaryColor, setDiaryColor] = useState();
   const [pageList, setPageList] = useState([]);
   const [title, setTitle] = useState();
   const [titleFontStyle, setTitleFontStyle] = useState();
@@ -218,9 +280,24 @@ function DetailPage() {
       .catch((res) => {});
   };
 
+  const diaryLoading = () => {
+    axios({
+      method: 'get',
+      url: `http://localhost:8080/api/diary/${params.diaryId}`,
+      headers: {
+        'access-token': accessToken,
+      },
+    })
+      .then((res) => {
+        setDiaryColor(res.data.data.diaryColor);
+      })
+      .catch((res) => {});
+  };
+
   useEffect(() => {
     pageListLoading();
     pageLoading();
+    diaryLoading();
   }, []);
 
   const pageOverLeft = () => {
@@ -243,73 +320,92 @@ function DetailPage() {
   return (
     <div className="diaryDetailPage">
       <Navbar />
-      <DetailSendBtn onClick={sendDiary} />
-      <DetailCreateBtn onClick={createDiary} />
-      <DetailEditBtn onClick={editDiary} />
-      <DetailUpdateBtn onClick={updatePage} />
-      <KakaoMapModal propLocation={location} />
-      <CaretLeftBtn
-        onClick={() => {
-          pageOverLeft();
-        }}
-        onMouseOver={() => setOverLeft(true)}
-        onMouseLeave={() => setOverLeft(false)}
-      >
-        <FontAwesomeIcon
-          size="6x"
-          icon={faCaretLeft}
-          style={overLeft ? { color: '#FF8960' } : { color: '#FFDBAC' }}
-        />
-      </CaretLeftBtn>
-      <DetailContainer>
-        <MainDiv>
-          <LeftDiv>
-            <ImageBox src={imageUrl} onerror="this.style.display='none'" />
-            <MusicPlayer>
-              <AudioPlayer
-                // autoPlay
-                loop
-                onPlay={(e) => console.log('onPlay')}
-                volume={0.1}
-                src="https://hoydia-bucket.s3.ap-northeast-2.amazonaws.com/test/%EB%85%B9%EC%9D%8C_1660283408316.m4a"
-                showJumpControls={false}
-              />
-            </MusicPlayer>
-          </LeftDiv>
-          <RightDiv>
-            <TitleDiv
-              type="text"
-              name="title"
-              style={{ fontFamily: titleFontStyle, fontSize: titleFontSize }}
-            >
-              {title}
-            </TitleDiv>
-            <ContentDiv
-              type="text"
-              name="content"
-              style={{
-                fontFamily: contentFontStyle,
-                fontSize: contentFontSize,
-              }}
-            >
-              {content}
-            </ContentDiv>
-          </RightDiv>
-        </MainDiv>
-      </DetailContainer>
-      <CaretRightBtn
-        onClick={() => {
-          pageOverRight();
-        }}
-        onMouseOver={() => setOverRight(true)}
-        onMouseLeave={() => setOverRight(false)}
-      >
-        <FontAwesomeIcon
-          size="6x"
-          icon={faCaretRight}
-          style={overRight ? { color: '#FF8960' } : { color: '#FFDBAC' }}
-        />
-      </CaretRightBtn>
+      <Container>
+        <ButtonDiv>
+          <DetailSendBtn onClick={sendDiary} src={sendbtn} alt="sendbtn" />
+          <DetailCreateBtn
+            onClick={createDiary}
+            src={createpagebtn}
+            alt="createpagebtn"
+          />
+          <DetailEditBtn onClick={editDiary} src={editbtn} alt="editbtn" />
+          <DetailUpdateBtn
+            onClick={updatePage}
+            src={updatebtn}
+            alt="updatebtn"
+          />
+        </ButtonDiv>
+        <KakaoMapModal propLocation={location} />
+        <CaretLeftBtn
+          onClick={() => {
+            pageOverLeft();
+          }}
+          onMouseOver={() => setOverLeft(true)}
+          onMouseLeave={() => setOverLeft(false)}
+        >
+          <FontAwesomeIcon
+            size="6x"
+            icon={faCaretLeft}
+            style={overLeft ? { color: '#FF8960' } : { color: '#FFDBAC' }}
+          />
+        </CaretLeftBtn>
+        <DiaryContainer style={{ backgroundColor: diaryColor }}>
+          <DiaryPaperImg src={DiaryPaper} alt="DiaryPaper" />
+          <MainDiv>
+            <LeftDiv>
+              <ImageBox src={imageUrl} onerror="this.style.display='none'" />
+              <MusicPlayer>
+                <AudioPlayer
+                  // autoPlay
+                  loop
+                  onPlay={(e) => console.log('onPlay')}
+                  volume={0.1}
+                  src="https://hoydia-bucket.s3.ap-northeast-2.amazonaws.com/test/%EB%85%B9%EC%9D%8C_1660283408316.m4a"
+                  showJumpControls={false}
+                />
+              </MusicPlayer>
+            </LeftDiv>
+            <RightDiv>
+              <TitleDiv
+                type="text"
+                name="title"
+                value={title}
+                readOnly
+                style={{ fontFamily: titleFontStyle, fontSize: titleFontSize }}
+              >
+                {/* {title} */}
+                일기장
+              </TitleDiv>
+              <ContentDiv
+                type="text"
+                name="content"
+                value={content}
+                readOnly
+                style={{
+                  fontFamily: contentFontStyle,
+                  fontSize: contentFontSize,
+                }}
+              >
+                일기장 내용~!
+                {/* {content} */}
+              </ContentDiv>
+            </RightDiv>
+          </MainDiv>
+        </DiaryContainer>
+        <CaretRightBtn
+          onClick={() => {
+            pageOverRight();
+          }}
+          onMouseOver={() => setOverRight(true)}
+          onMouseLeave={() => setOverRight(false)}
+        >
+          <FontAwesomeIcon
+            size="6x"
+            icon={faCaretRight}
+            style={overRight ? { color: '#FF8960' } : { color: '#FFDBAC' }}
+          />
+        </CaretRightBtn>
+      </Container>
     </div>
   );
 }
