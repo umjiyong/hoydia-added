@@ -211,7 +211,7 @@ function updatePage() {
 
   function fileSubmit(event) {
     event.preventDefault();
-    const url = `http://localhost:8080/api/page/image/${params.pageId}`;
+    const url = `/page/image/${params.pageId}`;
     const formData = new FormData();
     if (fileImage) {
       formData.append('file', fileImage);
@@ -229,7 +229,7 @@ function updatePage() {
     event.preventDefault();
     axios({
       method: 'put',
-      url: `http://localhost:8080/api/page/update/${params.pageId}`,
+      url: `/page/update/${params.pageId}`,
       headers: {
         'access-token': accessToken,
       },
@@ -257,7 +257,7 @@ function updatePage() {
   useEffect(() => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/api/page/${params.pageId}`,
+      url: `/page/${params.pageId}`,
       headers: {
         'access-token': accessToken,
       },

@@ -82,10 +82,7 @@ function loginPage() {
                 };
                 const async = async () => {
                   try {
-                    const res = await axios.post(
-                      'http://localhost:8080/api/auth/google',
-                      authRequest,
-                    );
+                    const res = await axios.post('/auth/google', authRequest);
                     window.localStorage.setItem(
                       'access-token',
                       res.data['access-token'],
@@ -96,10 +93,7 @@ function loginPage() {
                     const onSilentRefresh = () => {
                       const header =
                         window.localStorage.getItem('access-token');
-                      const response = axios.post(
-                        'http://localhost:8080/auth/refresh',
-                        header,
-                      );
+                      const response = axios.post('/auth/refresh', header);
                       window.localStorage.setItem(
                         'access-token',
                         response.data['access-token'],
