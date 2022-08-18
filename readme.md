@@ -71,7 +71,7 @@ hoydia는 친구 or 감성 페어와 사진, 음악, 내용을 일기에 작성�
 
 ## 주요 기술
 
-**Backend **
+**Backend**
 
 - IntelliJ IDE
 - Springboot 2.6.3
