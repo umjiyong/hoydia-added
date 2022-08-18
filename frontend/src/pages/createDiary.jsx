@@ -213,6 +213,7 @@ const ContentP = styled.p`
   font-size: 20px;
   margin-bottom: 5px;
 `;
+
 const ImgDiv = styled.div`
   height: 200px;
   width: 50px;

@@ -70,6 +70,7 @@ const InputQ = styled.textarea`
   border: 2px solid #dfba88;
   border-radius: 16px;
   margin: 20px 0 25px 0;
+  padding: 0.5rem 1rem;
   box-sizing: border-box;
   &:active,
   &:focus {
