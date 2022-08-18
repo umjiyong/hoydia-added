@@ -350,8 +350,8 @@ function DetailPage() {
           onClick={() => {
             pageOverRight();
           }}
-          onMouseOver={() => setOverRight(true)}
-          onMouseLeave={() => setOverRight(false)}
+          onMouseOver={() => setOverLeft(true)}
+          onMouseLeave={() => setOverLeft(false)}
         >
           <FontAwesomeIcon
             size="6x"
@@ -405,8 +405,8 @@ function DetailPage() {
           onClick={() => {
             pageOverLeft();
           }}
-          onMouseOver={() => setOverLeft(true)}
-          onMouseLeave={() => setOverLeft(false)}
+          onMouseOver={() => setOverRight(true)}
+          onMouseLeave={() => setOverRight(false)}
         >
           <FontAwesomeIcon
             size="6x"
