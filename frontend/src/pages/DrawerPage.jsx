@@ -60,7 +60,6 @@ function DrawerPage() {
         'access-token': accessToken,
       },
     }).then((res) => {
-      console.log(res);
       setList(res.data.data);
     });
   };
@@ -114,7 +113,6 @@ function DrawerPage() {
       visualwidth1 >= width &&
       width >= visualwidth2
     ) {
-      console.log(dragItemContent);
       axios({
         method: 'PUT',
         url: `/diary/${dragItemContent.id}`,
@@ -132,12 +130,10 @@ function DrawerPage() {
         },
       })
         .then((res) => {
-          console.log(res);
           DiaryAsync();
         })
         .catch((err) => {
           handleToast();
-          console.log(err);
         });
     }
   };

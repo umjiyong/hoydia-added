@@ -4,7 +4,6 @@ import Modal, { ModalProvider, BaseModalBackground } from 'styled-react-modal';
 import exit from 'assets/exit.png';
 import kakaomapbtn from 'assets/KakaoMapBtn.png';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
-// import axios from 'axios';
 
 const StyledModal = Modal.styled`
   width: 59.25rem;
@@ -85,7 +84,6 @@ function FancyModalButton({ props }) {
   };
 
   useEffect(() => {}, []);
-  // console.log(position);
   const [isOpen, setIsOpen] = useState(false);
   const [opacity, setOpacity] = useState(0);
 
@@ -123,13 +121,13 @@ function FancyModalButton({ props }) {
           <ExitBtn src={exit} />
         </ExitDiv>
         <Title>카카오 맵</Title>
-        <Map // 지도를 표시할 Container
+        <Map
           center={{ lat: position.lat, lng: position.lng }}
           style={{
             width: '100%',
             height: '450px',
           }}
-          level={3} // 지도의 확대 레벨
+          level={3}
           draggable={false}
           zoomable={false}
         >

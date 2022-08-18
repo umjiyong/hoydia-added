@@ -148,12 +148,8 @@ function FancyModalButton() {
         pairId: `${friendPost}`,
       },
     })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      .then((res) => {})
+      .catch((err) => {});
     setOpacity(0);
     setIsOpen(!isOpen);
     setfriendPost('');

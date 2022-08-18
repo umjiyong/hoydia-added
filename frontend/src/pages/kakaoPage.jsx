@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 
 const Kakao = () => {
   const code = new URL(window.location.href).searchParams.get('code');
-  console.log(code);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,7 +26,6 @@ const Kakao = () => {
         setTimeout(onSilentRefresh, JWT_EXPIRE_TIME - 60000);
         navigate('/mainPage');
       } catch (e) {
-        console.error(e);
         navigate('/');
       }
     })();

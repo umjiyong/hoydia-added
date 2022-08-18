@@ -117,7 +117,6 @@ const EditDiv = styled.div`
 
 const RightDiv = styled.div`
   display: flex;
-  // width: 60%;
   justify-content: center;
   align-items: center;
 `;
