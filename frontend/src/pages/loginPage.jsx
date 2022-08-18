@@ -60,7 +60,7 @@ const BtnContainer = styled.div`
 function loginPage() {
   const navigate = useNavigate();
   const KAKAO_CLIENT_ID = process.env.REACT_APP_KAKAO_CLIENT_ID;
-  const REDIRECT_URI = 'http://localhost:3000/kakaoLogin';
+  const REDIRECT_URI = 'http://i7a103.p.ssafy.io:3000/kakaoLogin';
   const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
   return (
     <div className="login">
