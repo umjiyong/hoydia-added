@@ -56,6 +56,7 @@ const Answer = styled.textarea`
   border: 2px solid #dfba88;
   border-radius: 16px;
   margin-top: 20px;
+  padding: 0.5rem 1rem;
   resize: none;
   &:active,
   &:focus {
