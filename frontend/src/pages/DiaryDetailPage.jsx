@@ -365,11 +365,10 @@ function DetailPage() {
               <ImageBox src={imageUrl} onerror="this.style.display='none'" />
               <MusicPlayer>
                 <AudioPlayer
-                  // autoPlay
+                  autoPlay
                   loop
-                  onPlay={(e) => console.log('onPlay')}
                   volume={0.1}
-                  src="https://hoydia-bucket.s3.ap-northeast-2.amazonaws.com/test/%EB%85%B9%EC%9D%8C_1660283408316.m4a"
+                  src={bgmPath}
                   showJumpControls={false}
                 />
               </MusicPlayer>
