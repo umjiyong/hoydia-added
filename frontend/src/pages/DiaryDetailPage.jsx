@@ -213,7 +213,9 @@ function DetailPage() {
       },
     })
       .then((res) => {
-        setPageList(res.data.data);
+        const date = res.data.data;
+        date.sort((a, b) => -a.regTime.localeCompare(b.regTime));
+        setPageList(date);
       })
       .catch((err) => {});
   };
