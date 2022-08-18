@@ -309,7 +309,7 @@ function createPage() {
       },
     }).then((res) => {
       console.log(res);
-      const url = `/image/${res.data.id}`;
+      const url = `page/image/${res.data.id}`;
       const formData = new FormData();
       formData.append('file', fileImage);
       if (fileImage) {
