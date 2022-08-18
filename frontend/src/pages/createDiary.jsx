@@ -168,9 +168,10 @@ const MusicIconImg = styled.img`
 
 const ShowDiv = styled.div`
   margin-top: 200px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+  // margin-right: 150px;
 `;
 
 const LeftmainDiv = styled.div`
@@ -216,6 +217,7 @@ const ContentP = styled.p`
   font-size: 20px;
   margin-bottom: 5px;
 `;
+
 const ImgDiv = styled.div`
   height: 200px;
   width: 50px;

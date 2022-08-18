@@ -138,9 +138,12 @@ const TitleDiv = styled.textarea`
   &:focus {
     outline-color: #ff8960;
   }
+  // padding: 0.5rem 1rem;
   line-height: 50px;
+  padding-right: 10px;
   padding-left: 10px;
   overflow: hidden;
+  font-size: 20px;
 `;
 
 const ContentDiv = styled.textarea`
@@ -155,8 +158,11 @@ const ContentDiv = styled.textarea`
   &:focus {
     outline-color: #ff8960;
   }
-  padding-left: 10px;
-  padding-top: 20px;
+  padding: 0.5rem 1rem;
+  // padding-left: 10px;
+  // pdding-right: 10px;
+  // padding-top: 20px;
+  font-size: 18px;
 `;
 
 function DetailPage() {
