@@ -163,7 +163,7 @@ function FancyModalButton({
         headers: {
           'access-token': `${localStorage.getItem('access-token')}`,
         },
-        url: `/match/${MainId}`,
+        url: `http://i7a103.p.ssafy.io:8080/api/match/${MainId}`,
         method: 'PUT',
         data: {
           permit: true,

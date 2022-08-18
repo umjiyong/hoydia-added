@@ -228,7 +228,7 @@ function DetailPage() {
   const sendDiary = () => {
     axios({
       method: 'put',
-      url: `/page/send/${params.pageId}`,
+      url: `http://i7a103.p.ssafy.io:8080/api/page/send/${params.pageId}`,
       headers: {
         'access-token': accessToken,
       },
@@ -252,7 +252,7 @@ function DetailPage() {
   const pageListLoading = () => {
     axios({
       method: 'get',
-      url: `/page/diary/${params.diaryId}`,
+      url: `http://i7a103.p.ssafy.io:8080/api/page/diary/${params.diaryId}`,
       headers: {
         'access-token': accessToken,
       },
@@ -267,7 +267,7 @@ function DetailPage() {
   const pageLoading = () => {
     axios({
       method: 'get',
-      url: `/page/${params.pageId}`,
+      url: `http://i7a103.p.ssafy.io:8080/api/page/${params.pageId}`,
       headers: {
         'access-token': accessToken,
       },
@@ -292,7 +292,7 @@ function DetailPage() {
   const diaryLoading = () => {
     axios({
       method: 'get',
-      url: `/diary/${params.diaryId}`,
+      url: `http://i7a103.p.ssafy.io:8080/api/diary/${params.diaryId}`,
       headers: {
         'access-token': accessToken,
       },

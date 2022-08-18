@@ -153,7 +153,7 @@ function FancyModalButton() {
       headers: {
         'access-token': `${localStorage.getItem('access-token')}`,
       },
-      url: '/note',
+      url: 'http://i7a103.p.ssafy.io:8080/api/note',
       method: 'POST',
       data: {
         question: `${questList[num]}`,

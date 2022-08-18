@@ -211,7 +211,7 @@ function updatePage() {
 
   function fileSubmit(event) {
     event.preventDefault();
-    const url = `/page/image/${params.pageId}`;
+    const url = `http://i7a103.p.ssafy.io:8080/api/page/image/${params.pageId}`;
     const formData = new FormData();
     if (fileImage) {
       formData.append('file', fileImage);
@@ -229,7 +229,7 @@ function updatePage() {
     event.preventDefault();
     axios({
       method: 'put',
-      url: `/page/update/${params.pageId}`,
+      url: `http://i7a103.p.ssafy.io:8080/api/page/update/${params.pageId}`,
       headers: {
         'access-token': accessToken,
       },
