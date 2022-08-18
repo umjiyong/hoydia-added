@@ -18,6 +18,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 10px;
 `;
 
 const ButtonDiv = styled.div`
@@ -152,20 +153,20 @@ const MusicPlayer = styled.div`
 `;
 
 const CaretLeftBtn = styled.div`
-  position: absolute;
+  // position: absolute;
   width: 48px;
   height: 96px;
-  top: 45%;
-  left: 8%;
+  // top: 45%;
+  // left: 8%;
   cursor: pointer;
 `;
 
 const CaretRightBtn = styled.div`
-  position: absolute;
+  // position: absolute;
   width: 48px;
   height: 96px;
-  top: 45%;
-  right: 8%;
+  // top: 45%;
+  // right: 8%;
   cursor: pointer;
 `;
 
@@ -345,19 +346,19 @@ function DetailPage() {
           />
           <DetailEditBtn onClick={editDiary} src={editbtn} alt="editbtn" />
         </ButtonDiv>
-        {/* <CaretLeftBtn
+        <CaretLeftBtn
           onClick={() => {
             pageOverLeft();
           }}
           onMouseOver={() => setOverLeft(true)}
           onMouseLeave={() => setOverLeft(false)}
-          >
+        >
           <FontAwesomeIcon
-          size="6x"
-          icon={faCaretLeft}
-          style={overLeft ? { color: '#FF8960' } : { color: '#FFDBAC' }}
+            size="6x"
+            icon={faCaretLeft}
+            style={overLeft ? { color: '#FF8960' } : { color: '#FFDBAC' }}
           />
-        </CaretLeftBtn> */}
+        </CaretLeftBtn>
         <DiaryContainer style={{ backgroundColor: diaryColor }}>
           <DiaryPaperImg src={DiaryPaper} alt="DiaryPaper" />
           <MainDiv>
@@ -401,7 +402,7 @@ function DetailPage() {
             </RightDiv>
           </MainDiv>
         </DiaryContainer>
-        {/* <CaretRightBtn
+        <CaretRightBtn
           onClick={() => {
             pageOverRight();
           }}
@@ -413,7 +414,7 @@ function DetailPage() {
             icon={faCaretRight}
             style={overRight ? { color: '#FF8960' } : { color: '#FFDBAC' }}
           />
-        </CaretRightBtn> */}
+        </CaretRightBtn>
       </Container>
     </div>
   );
