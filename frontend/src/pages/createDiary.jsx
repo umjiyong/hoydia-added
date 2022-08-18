@@ -46,7 +46,7 @@ const RightDiv = styled.div`
 const Container = styled.img`
   position: absolute;
   width: 100%;
-  height: 93.5%;
+  height: 92.8%;
   padding: 30px;
   z-index: -1;
   background-color: #ffca8c;
@@ -168,10 +168,6 @@ const MusicIconImg = styled.img`
 
 const ShowDiv = styled.div`
   margin-top: 200px;
-  // display: flex;
-  // justify-content: center;
-  // align-items: center;
-  // margin-right: 150px;
 `;
 
 const LeftmainDiv = styled.div`
@@ -423,6 +419,11 @@ function createPage() {
                       onChange={musicHandleChange}
                     >
                       <FormControlLabel
+                        value=" "
+                        control={<Radio />}
+                        label="없음"
+                      />
+                      <FormControlLabel
                         value="https://hoydia-bucket.s3.ap-northeast-2.amazonaws.com/bgm/%EB%B0%A4%ED%8E%B8%EC%A7%80.mp3"
                         control={<Radio />}
                         label="밤편지"
@@ -461,11 +462,6 @@ function createPage() {
                         value="https://hoydia-bucket.s3.ap-northeast-2.amazonaws.com/bgm/Morning+Kiss.mp3"
                         control={<Radio />}
                         label="Moring+Kiss"
-                      />
-                      <FormControlLabel
-                        value="https://hoydia-bucket.s3.ap-northeast-2.amazonaws.com/bgm/PIANO+MAN.mp3"
-                        control={<Radio />}
-                        label="PIANO+MAN"
                       />
                     </RadioGroup>
                   </FormControl>

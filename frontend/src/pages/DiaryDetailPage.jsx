@@ -110,8 +110,11 @@ const ImageBox = styled.img`
 `;
 
 const MusicPlayer = styled.div`
+  position: absolute;
   width: 400px;
   height: 180px;
+  left: 17.5%;
+  bottom: 5.5%;
 `;
 
 const CaretLeftBtn = styled.div`
@@ -219,7 +222,9 @@ function DetailPage() {
       },
     })
       .then((res) => {
-        setPageList(res.data.data);
+        const date = res.data.data;
+        date.sort((a, b) => -a.regTime.localeCompare(b.regTime));
+        setPageList(date);
       })
       .catch((err) => {});
   };
@@ -289,6 +294,15 @@ function DetailPage() {
     <div className="diaryDetailPage">
       <Navbar />
       <KakaoMapModal propLocation={location} />
+      <MusicPlayer>
+        <AudioPlayer
+          autoPlay
+          loop
+          volume={0.1}
+          src={bgmPath}
+          showJumpControls={false}
+        />
+      </MusicPlayer>
       <Container>
         <ButtonDiv>
           <DetailSendBtn onClick={sendDiary} src={sendbtn} alt="sendbtn" />
@@ -323,15 +337,6 @@ function DetailPage() {
           <MainDiv>
             <LeftDiv>
               <ImageBox src={imageUrl} onerror="this.style.display='none'" />
-              <MusicPlayer>
-                <AudioPlayer
-                  autoPlay
-                  loop
-                  volume={0.1}
-                  src={bgmPath}
-                  showJumpControls={false}
-                />
-              </MusicPlayer>
             </LeftDiv>
             <RightDiv>
               <TitleDiv
