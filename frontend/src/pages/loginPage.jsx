@@ -14,7 +14,7 @@ import mainBack from 'assets/Mainbackground.png';
 const Main = styled.img`
   position: absolute;
   width: 1536px; //빡빡하게 맞춰야함 안에 컴포 움직이면 필수 수정
-  height: 778px;
+  height: 806px;
   z-index: -1;
 `;
 const Hoydia = styled.h1`
