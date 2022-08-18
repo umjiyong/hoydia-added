@@ -18,6 +18,10 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import imageIcon from 'assets/imageIcon.png';
+import textIcon from 'assets/textIcon.png';
+import mapIcon from 'assets/mapIcon.png';
+import musicIcon from 'assets/musicIcon.png';
 
 const MainDiv = styled.div`
   display: flex;
@@ -42,7 +46,7 @@ const RightDiv = styled.div`
 const Container = styled.img`
   position: absolute;
   width: 100%;
-  height: 93.5%;
+  height: 92.8%;
   padding: 30px;
   z-index: -1;
   background-color: #ffca8c;
@@ -93,28 +97,87 @@ const FileImage = styled.img`
   height: 300px;
 `;
 
-const NamingDiv = styled.span``;
+const SelectP = styled.p`
+  font-size: 20px;
+  font-weight: 600;
+`;
+
+const NamingDiv = styled.span`
+  font-weight: 500;
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 const SelectDiv = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
   margin-right: 50px;
-  &:hover {
-    cursor: pointer;
-  }
-  gap: 90px;
+  gap: 20px;
   margin-top: 50px;
 `;
 
+const PhotoDiv = styled.div`
+  display: flex;
+  justify-contet: center;
+  align-items: center;
+  gap: 5px;
+`;
+
+const PhotoIconImg = styled.img`
+  width: 40px;
+  height: auto;
+`;
+
+const TextDiv = styled.div`
+  display: flex;
+  justify-contet: center;
+  align-items: center;
+  gap: 5px;
+`;
+
+const TextIconImg = styled.img`
+  width: 40px;
+  height: auto;
+`;
+
+const LocationDiv = styled.div`
+  display: flex;
+  justify-contet: center;
+  align-items: center;
+  gap: 5px;
+`;
+
+const LocationIconImg = styled.img`
+  width: 40px;
+  height: auto;
+`;
+
+const MusicDiv = styled.div`
+  display: flex;
+  justify-contet: center;
+  align-items: center;
+  gap: 5px;
+`;
+
+const MusicIconImg = styled.img`
+  width: 40px;
+  height: auto;
+`;
+
 const ShowDiv = styled.div`
-  margin-top: 100px;
+  margin-top: 200px;
 `;
 
 const LeftmainDiv = styled.div`
   position: absolute;
-
   top: 100px;
+`;
+
+const TitleP = styled.p`
+  font-size: 20px;
+  margin-bottom: 5px; ;
 `;
 
 const TitleDiv = styled.div`
@@ -131,9 +194,6 @@ const GoButton = styled.input`
   color: #ffffff;
   font-size: 30px;
   font-weight: 700;
-  -webkit-text-stroke: 1px #ff8960;
-  text-shadow: -1px 0px #ff8960, 0px 1px #ff8960, 1px 0px #ff8960,
-    0px -1px #ff8960;
   &:hover {
     cursor: pointer;
     background-color: #ff8960;
@@ -147,6 +207,16 @@ const ButtonDiv = styled.div`
 
 const ContentDiv = styled.div`
   margin-top: 40px;
+`;
+
+const ContentP = styled.p`
+  font-size: 20px;
+  margin-bottom: 5px;
+`;
+const ImgDiv = styled.div`
+  height: 200px;
+  width: 50px;
+  margin-bottom: 100px;
 `;
 
 function updatePage() {
@@ -301,23 +371,35 @@ function updatePage() {
         <MainDiv>
           <LeftDiv>
             <LeftmainDiv>
-              <p>원하는 작업을 선택해주세요</p>
+              <SelectP>원하는 작업을 선택해주세요</SelectP>
 
               <SelectDiv>
-                <NamingDiv onClick={toggleFile}>
-                  사진파일 업로드 &nbsp;{' '}
-                </NamingDiv>
-                <NamingDiv onClick={toggleFont}>폰트 선택 &nbsp; </NamingDiv>
-                <NamingDiv onClick={toggleMap}>위치 선택 &nbsp; </NamingDiv>
-                <NamingDiv onClick={toggleMusic}>음악 선택 &nbsp; </NamingDiv>
+                <PhotoDiv>
+                  <PhotoIconImg src={imageIcon} alt="imageIcon" />
+                  <NamingDiv onClick={toggleFile}>
+                    사진파일 업로드 &nbsp;{' '}
+                  </NamingDiv>
+                </PhotoDiv>
+                <TextDiv>
+                  <TextIconImg src={textIcon} alt="textIcon" />
+                  <NamingDiv onClick={toggleFont}>폰트 선택 &nbsp; </NamingDiv>
+                </TextDiv>
+                <LocationDiv>
+                  <LocationIconImg src={mapIcon} alt="mapIcon" />
+                  <NamingDiv onClick={toggleMap}>위치 선택 &nbsp; </NamingDiv>
+                </LocationDiv>
+                <MusicDiv>
+                  <MusicIconImg src={musicIcon} alt="musicIcon" />
+                  <NamingDiv onClick={toggleMusic}>음악 선택 &nbsp; </NamingDiv>
+                </MusicDiv>
               </SelectDiv>
             </LeftmainDiv>
-
             <ShowDiv>
               {filebutton ? (
                 <div>
-                  <h1>File Upload</h1>
-                  <FileImage alt="image" src={fileImageView} />
+                  <ImgDiv>
+                    <FileImage alt="image" src={fileImageView} />
+                  </ImgDiv>
                   <input
                     type="file"
                     name="imgUpload"
@@ -412,11 +494,6 @@ function updatePage() {
                         control={<Radio />}
                         label="Moring+Kiss"
                       />
-                      <FormControlLabel
-                        value="https://hoydia-bucket.s3.ap-northeast-2.amazonaws.com/bgm/PIANO+MAN.mp3"
-                        control={<Radio />}
-                        label="PIANO+MAN"
-                      />
                     </RadioGroup>
                   </FormControl>
                 </div>
@@ -426,7 +503,7 @@ function updatePage() {
 
           <RightDiv>
             <TitleDiv>
-              <p>일기장 제목</p>
+              <TitleP>제목</TitleP>
               <InputTitle
                 maxLength={30}
                 type="text"
@@ -438,8 +515,7 @@ function updatePage() {
             </TitleDiv>
 
             <ContentDiv>
-              <p>일기장 내용</p>
-
+              <ContentP>내용</ContentP>
               <InputContent
                 type="textarea"
                 name="content"
@@ -448,7 +524,6 @@ function updatePage() {
                 style={{ fontFamily: fontName, fontSize: 20 }}
               />
             </ContentDiv>
-
             <ButtonDiv>
               <GoButton type="submit" value="저장" />
             </ButtonDiv>

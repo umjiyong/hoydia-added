@@ -46,7 +46,7 @@ const RightDiv = styled.div`
 const Container = styled.img`
   position: absolute;
   width: 100%;
-  height: 93.5%;
+  height: 92.8%;
   padding: 30px;
   z-index: -1;
   background-color: #ffca8c;
@@ -168,9 +168,6 @@ const MusicIconImg = styled.img`
 
 const ShowDiv = styled.div`
   margin-top: 200px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 const LeftmainDiv = styled.div`
@@ -464,11 +461,6 @@ function createPage() {
                         value="https://hoydia-bucket.s3.ap-northeast-2.amazonaws.com/bgm/Morning+Kiss.mp3"
                         control={<Radio />}
                         label="Moring+Kiss"
-                      />
-                      <FormControlLabel
-                        value="https://hoydia-bucket.s3.ap-northeast-2.amazonaws.com/bgm/PIANO+MAN.mp3"
-                        control={<Radio />}
-                        label="PIANO+MAN"
                       />
                     </RadioGroup>
                   </FormControl>
