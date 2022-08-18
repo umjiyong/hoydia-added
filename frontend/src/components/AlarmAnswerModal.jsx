@@ -23,12 +23,9 @@ const StyledModal = Modal.styled`
   `;
 
 const ExitDiv = styled.div`
-  // display: flex;
-  // justify-content: flex-end;
   width: 1.875rem;
   height: 1.875rem;
-  // margin-left: 740px;
-  // margin-top: 24px;
+
   margin: 24px 24px 0px 740px;
 `;
 
@@ -90,9 +87,6 @@ const YesButton = styled.button`
   color: #ffffff;
   font-size: 30px;
   font-weight: 700;
-  // text-shadow: -1px 0px #ff8960, 0px 1px #ff8960, 1px 0px #ff8960,
-  //   0px -1px #ff8960;
-  // -webkit-text-stroke: 1px #ff8960;
   &:hover {
     cursor: pointer;
     background-color: #ff8960;
@@ -111,9 +105,6 @@ const NoButton = styled.button`
   color: #ffffff;
   font-size: 30px;
   font-weight: 700;
-  // text-shadow: -1px 0px #d43e3c, 0px 1px #d43e3c, 1px 0px #d43e3c,
-  //   0px -1px #d43e3c;
-  // -webkit-text-stroke: 1px #d43e3c;
   &:hover {
     cursor: pointer;
     background: #d43e3c;
@@ -128,18 +119,12 @@ function FancyModalButton({
   opacity,
   answermodal,
 }) {
-  // console.log(answermodal);
-
-  // console.log(localStorage.getItem('userId'));
   const [ToastStatus, setToastStatus] = useState(false);
-  // const [Main, setMain] = useState();
   let Main = null;
   const [MainQuestion, setMainquestion] = useState('');
   const [MainAnswer, setMainanswer] = useState('');
   const [MainId, setMainid] = useState('');
   useEffect(() => {
-    console.log(answermodal);
-    // setMain(answermodal);
     Main = answermodal;
     if (Main) {
       if (localStorage.getItem('userId') === Main.ownerId) {
@@ -158,7 +143,6 @@ function FancyModalButton({
     setToastStatus(true);
 
     if (MainId) {
-      console.log(MainId);
       axios({
         headers: {
           'access-token': `${localStorage.getItem('access-token')}`,
@@ -169,12 +153,8 @@ function FancyModalButton({
           permit: true,
         },
       })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+        .then((res) => {})
+        .catch((err) => {});
     }
   };
 
@@ -183,8 +163,7 @@ function FancyModalButton({
       setTimeout(() => setToastStatus(false), 2000);
     }
   }, [ToastStatus]);
-  console.log(MainAnswer);
-  console.log(MainQuestion);
+
   return (
     <StyledModal
       isOpen={isOpen}

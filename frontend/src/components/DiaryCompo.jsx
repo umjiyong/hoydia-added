@@ -3,15 +3,6 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as DiaryImg } from 'assets/diary.svg';
 
-// const DiaryInfo = {
-//   color1: '#4269f5',
-//   color2: '#a61f3d',
-//   color3: '#d1aa2a',
-//   title: 'ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ',
-//   font: 'Jua',
-//   fontsize: 24,
-// };
-
 const Container = styled.div`
   position: relative;
   width: 240px;

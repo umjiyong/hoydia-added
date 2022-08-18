@@ -32,9 +32,6 @@ const ButtonDiv = styled.div`
 `;
 
 const DetailSendBtn = styled.img`
-  // position: absolute;
-  // top: 9.8%;
-  // right: 39%;
   z-index: 2;
   width: 68px;
   height: 40px;
@@ -42,11 +39,6 @@ const DetailSendBtn = styled.img`
 `;
 
 const DetailCreateBtn = styled.img`
-  // display: flex;
-  // justify-content
-  // position: absolute;
-  // top: 9.8%;
-  // right: 34%;
   z-index: 2;
   width: 68px;
   height: 40px;
@@ -54,9 +46,6 @@ const DetailCreateBtn = styled.img`
 `;
 
 const DetailEditBtn = styled.img`
-  // position: absolute;
-  // top: 9.8%;
-  // right: 29%;
   z-index: 2;
   width: 68px;
   height: 40px;
@@ -64,10 +53,6 @@ const DetailEditBtn = styled.img`
 `;
 
 const DetailUpdateBtn = styled.img`
-  // position: absolute;
-  // top: 9.8%;
-  // right: 24%;
-  // z-index: 2;
   width: 68px;
   height: 40px;
   cursor: pointer;
@@ -82,7 +67,6 @@ const DiaryContainer = styled.div`
   border-radius: 35px;
   margin: 20px; 0px; 20px; 0px;
   z-index: -2;
-  // padding: 60px 76px 26px 76px;
 `;
 
 const DiaryPaperImg = styled.img`
@@ -90,17 +74,9 @@ const DiaryPaperImg = styled.img`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  // display: grid;
-  // height: 100%;
-  // grid-template-columns: 1fr 1fr;
-  // grid-gap: 0.25rem;
-  // background-image: url(${DiaryPaper});
   width: 1050px;
   height: 640px;
   z-index: -1;
-  // background-repeat: no-repeat;
-  // background-size: cover;
-  // padding-bottom: 10px;
 `;
 
 const MainDiv = styled.div`
@@ -109,42 +85,28 @@ const MainDiv = styled.div`
 `;
 
 const LeftDiv = styled.div`
-  // background-color: red;
   width: 50%;
   height: 650px;
   position: relative;
   display: flex;
-  // height: 100%;
   flex-direction: column;
   align-items: center;
   gap: 60px;
-  // justify-content: space-around;
   margin-top: 30px;
   margin-left: 15px;
 `;
 
 const RightDiv = styled.div`
-  // background-color: blue;
   width: 50%;
   height: 500px;
-  // position: relative;
-  // display: flex;
-  // height: 100%;
-  // flex-direction: column;
-  // justify-content: space-around;
-  // align-items: center;
   margin-top: 95px;
   margin-left: 15px;
 `;
 
 const ImageBox = styled.img`
-  // position: absolute;
-  // top: 10%;
-  // left: 18%;
   margin-top: 65px;
   width: 400px;
   height: 300px;
-  // border: solid 1px red;
 `;
 
 const MusicPlayer = styled.div`
@@ -153,20 +115,14 @@ const MusicPlayer = styled.div`
 `;
 
 const CaretLeftBtn = styled.div`
-  // position: absolute;
   width: 48px;
   height: 96px;
-  // top: 45%;
-  // left: 8%;
   cursor: pointer;
 `;
 
 const CaretRightBtn = styled.div`
-  // position: absolute;
   width: 48px;
   height: 96px;
-  // top: 45%;
-  // right: 8%;
   cursor: pointer;
 `;
 
@@ -236,7 +192,6 @@ function DetailPage() {
         diaryId: params.diaryId,
       },
     }).then((res) => {
-      console.log(res);
       navigate('/mainpage');
     });
   };
@@ -260,9 +215,7 @@ function DetailPage() {
       .then((res) => {
         setPageList(res.data.data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
   const pageLoading = () => {
     axios({
@@ -381,10 +334,7 @@ function DetailPage() {
                 value={title}
                 readOnly
                 style={{ fontFamily: titleFontStyle, fontSize: titleFontSize }}
-              >
-                {/* {title} */}
-                {/* 일기장 */}
-              </TitleDiv>
+              />
               <ContentDiv
                 type="text"
                 name="content"
@@ -394,10 +344,7 @@ function DetailPage() {
                   fontFamily: contentFontStyle,
                   fontSize: contentFontSize,
                 }}
-              >
-                {/* 일기장 내용~! */}
-                {/* {content} */}
-              </ContentDiv>
+              />
             </RightDiv>
           </MainDiv>
         </DiaryContainer>

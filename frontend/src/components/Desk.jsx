@@ -23,7 +23,6 @@ const Desk = styled.div`
 const PostDiv = styled.div`
   display: flex;
   justify-content: flex-end;
-  // margin-bottom: auto;
 `;
 
 const Post = styled.img`
@@ -71,7 +70,6 @@ function desk() {
       },
     }).then((res) => {
       setDiaryList(res.data.data);
-      console.log(res);
     });
   };
   const DiaryDetailBtn = (diaryId) => {

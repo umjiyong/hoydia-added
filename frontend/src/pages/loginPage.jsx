@@ -19,7 +19,6 @@ const Main = styled.img`
 `;
 const Hoydia = styled.h1`
   margin: 0px;
-  // font-family: 'SeoulNamsan';
   font-style: normal;
   font-weight: 400;
   font-size: 96px;
@@ -28,7 +27,6 @@ const Hoydia = styled.h1`
 
 const Slogan = styled.p`
   margin: 0px;
-  // font-family: 'SeoulNamsan';
   font-style: normal;
   font-weight: 400;
   font-size: 30px;
@@ -52,7 +50,6 @@ const Container = styled.div`
 
 const BtnContainer = styled.div`
   display: flex;
-  // flex-direction: column;
   gap: 120px;
   margin-top: 30px;
 `;
@@ -112,15 +109,12 @@ function loginPage() {
                     setTimeout(onSilentRefresh, JWT_EXPIRE_TIME - 60000);
                     navigate('/mainPage');
                   } catch (e) {
-                    console.error(e);
                     navigate('/');
                   }
                 };
                 async();
               }}
-              onError={() => {
-                console.log('Login Failed');
-              }}
+              onError={() => {}}
               width="300"
               theme="filled_blue"
               shape="circle"

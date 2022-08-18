@@ -133,7 +133,6 @@ function FancyModalButton() {
     setOpacity(0);
     setIsOpen(!isOpen);
     setNum(Math.floor(Math.random() * 5));
-    console.log(isOpen);
   }
 
   function toggleOn() {
@@ -160,12 +159,8 @@ function FancyModalButton() {
         answer: `${questionPost}`,
       },
     })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      .then((res) => {})
+      .catch((err) => {});
     setquestionrPost('');
     setOpacity(0);
     setIsOpen(!isOpen);

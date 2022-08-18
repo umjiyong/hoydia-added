@@ -309,9 +309,8 @@ function createPage() {
               {fontbutton ? <FontMenu parentFunction={parentFunction} /> : null}
 
               {mapbutton ? (
-                <Map // 지도를 표시할 Container
+                <Map
                   center={{
-                    // 지도의 중심좌표
                     lat: position.lat,
                     lng: position.lng,
                   }}
@@ -319,7 +318,7 @@ function createPage() {
                     width: '70%',
                     height: '300px',
                   }}
-                  level={3} // 지도의 확대 레벨
+                  level={3}
                   onClick={(_t, mouseEvent) => {
                     setPosition({
                       lat: mouseEvent.latLng.getLat(),

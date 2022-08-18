@@ -13,6 +13,11 @@ import FontMenu from 'components/FontMenu';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 
 const MainDiv = styled.div`
   display: flex;
@@ -147,6 +152,9 @@ const ContentDiv = styled.div`
 function updatePage() {
   const userId = window.localStorage.getItem('userId');
   const accessToken = window.localStorage.getItem('access-token');
+  const [selectedValue, setSelectedValue] = useState(
+    'https://hoydia-bucket.s3.ap-northeast-2.amazonaws.com/bgm/City+Key.mp3',
+  );
   const [inputs, setInputs] = useState({});
   const [fileImage, setFileImage] = useState();
   const [fileImageView, setFileImageView] = useState();
@@ -269,7 +277,7 @@ function updatePage() {
           title: res.data.data.title,
           content: res.data.data.content,
         });
-        setBgmPath(res.data.data.bgmPath);
+        setSelectedValue(res.data.data.bgmPath);
         setFileImage(res.data.data.imgPath);
         setFileImageView(res.data.data.imgPath);
         setPosition({
@@ -279,6 +287,11 @@ function updatePage() {
       })
       .catch((res) => {});
   }, []);
+
+  const musicHandleChange = (event) => {
+    setSelectedValue(event.target.value);
+  };
+
   return (
     <div className="diaryEdit">
       <Navbar />
@@ -344,7 +357,63 @@ function updatePage() {
 
               {musicbutton ? (
                 <div>
-                  <p>음악</p>
+                  <FormControl>
+                    <FormLabel id="demo-controlled-radio-buttons-group">
+                      Music
+                    </FormLabel>
+                    <RadioGroup
+                      aria-labelledby="demo-controlled-radio-buttons-group"
+                      name="controlled-radio-buttons-group"
+                      value={selectedValue}
+                      onChange={musicHandleChange}
+                    >
+                      <FormControlLabel
+                        value="https://hoydia-bucket.s3.ap-northeast-2.amazonaws.com/bgm/%EB%B0%A4%ED%8E%B8%EC%A7%80.mp3"
+                        control={<Radio />}
+                        label="밤편지"
+                      />
+                      <FormControlLabel
+                        value="https://hoydia-bucket.s3.ap-northeast-2.amazonaws.com/bgm/City+Key.mp3"
+                        control={<Radio />}
+                        label="Cit+key"
+                      />
+                      <FormControlLabel
+                        value="https://hoydia-bucket.s3.ap-northeast-2.amazonaws.com/bgm/Cloud.mp3"
+                        control={<Radio />}
+                        label="Cloud"
+                      />
+                      <FormControlLabel
+                        value="https://hoydia-bucket.s3.ap-northeast-2.amazonaws.com/bgm/Dreams.mp3"
+                        control={<Radio />}
+                        label="Dreams"
+                      />
+                      <FormControlLabel
+                        value="https://hoydia-bucket.s3.ap-northeast-2.amazonaws.com/bgm/Gloomy.mp3"
+                        control={<Radio />}
+                        label="Gloomy"
+                      />
+                      <FormControlLabel
+                        value="https://hoydia-bucket.s3.ap-northeast-2.amazonaws.com/bgm/HOW+ARE+YOU.mp3"
+                        control={<Radio />}
+                        label="HOW+ARE+YOU"
+                      />
+                      <FormControlLabel
+                        value="https://hoydia-bucket.s3.ap-northeast-2.amazonaws.com/bgm/Like+a+dream.mp3"
+                        control={<Radio />}
+                        label="Like+a+dream"
+                      />
+                      <FormControlLabel
+                        value="https://hoydia-bucket.s3.ap-northeast-2.amazonaws.com/bgm/Morning+Kiss.mp3"
+                        control={<Radio />}
+                        label="Moring+Kiss"
+                      />
+                      <FormControlLabel
+                        value="https://hoydia-bucket.s3.ap-northeast-2.amazonaws.com/bgm/PIANO+MAN.mp3"
+                        control={<Radio />}
+                        label="PIANO+MAN"
+                      />
+                    </RadioGroup>
+                  </FormControl>
                 </div>
               ) : null}
             </ShowDiv>
