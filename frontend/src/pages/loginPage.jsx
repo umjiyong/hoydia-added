@@ -17,9 +17,9 @@ const Main = styled.img`
   height: 766px;
   z-index: -1;
 `;
+
 const Hoydia = styled.h1`
   margin: 0px;
-  font-style: normal;
   font-weight: 700;
   font-size: 96px;
   color: #ff8960;
@@ -27,17 +27,17 @@ const Hoydia = styled.h1`
 
 const Slogan = styled.p`
   margin: 0px;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 25px;
+  font-weight: 500;
+  font-size: 27px;
   color: #000000;
   margin-bottom: 30px;
 `;
 
 const KakaoBtn = styled.img`
-  width: 300px;
-  height: 90px;
+  width: 280px;
+  height: auto;
   border-radius: 100px;
+  margin-top: 21px;
 `;
 
 const Container = styled.div`
