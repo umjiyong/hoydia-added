@@ -20,13 +20,12 @@ const StyledModal = Modal.styled`
   transition : all 0.05s ease-in-out;;`;
 
 const Title = styled.span`
-  font-family: 'Noto Sans KR';
-  font-style: normal;
-  font-weight: 700;
+  font-weight: 800;
   font-size: 50px;
   justify-content: center;
   align-items: center;
   color: #ff8960;
+  margin-bottom: 10px;
 `;
 
 const Atag = styled.a`
@@ -66,8 +65,7 @@ const ExitDiv = styled.div`
 const DetailKakaoBtn = styled.div`
   position: absolute;
   bottom: 25%;
-  left: 1.35%;
-  // left: 14.3%;
+  left: 12%;
   z-index: 2;
   width: 60px;
   height: 90px;
