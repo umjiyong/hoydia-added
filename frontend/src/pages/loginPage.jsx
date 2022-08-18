@@ -5,7 +5,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Logo from 'components/Logo';
-import kakaoLogin from 'assets/kakao_login.png';
+import kakaoLogin from 'assets/kakaoLogin.png';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -14,13 +14,13 @@ import mainBack from 'assets/Mainbackground.png';
 const Main = styled.img`
   position: absolute;
   width: 1536px; //빡빡하게 맞춰야함 안에 컴포 움직이면 필수 수정
-  height: 806px;
+  height: 766px;
   z-index: -1;
 `;
 const Hoydia = styled.h1`
   margin: 0px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 700;
   font-size: 96px;
   color: #ff8960;
 `;
@@ -29,14 +29,14 @@ const Slogan = styled.p`
   margin: 0px;
   font-style: normal;
   font-weight: 400;
-  font-size: 30px;
+  font-size: 25px;
   color: #000000;
   margin-bottom: 30px;
 `;
 
 const KakaoBtn = styled.img`
   width: 300px;
-  height: 45px;
+  height: 90px;
   border-radius: 100px;
 `;
 
@@ -69,7 +69,7 @@ function loginPage() {
           <Logo />
         </div>
         <BtnContainer>
-          <GoogleOAuthProvider
+          {/* <GoogleOAuthProvider
             clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
           >
             <GoogleLogin
@@ -113,7 +113,7 @@ function loginPage() {
               theme="filled_blue"
               shape="circle"
             />
-          </GoogleOAuthProvider>
+          </GoogleOAuthProvider> */}
           <a href={KAKAO_AUTH_URI}>
             <KakaoBtn src={kakaoLogin} />
           </a>
