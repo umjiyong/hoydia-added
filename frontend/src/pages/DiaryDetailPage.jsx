@@ -348,7 +348,7 @@ function DetailPage() {
         </ButtonDiv>
         <CaretLeftBtn
           onClick={() => {
-            pageOverRight();
+            pageOverLeft();
           }}
           onMouseOver={() => setOverLeft(true)}
           onMouseLeave={() => setOverLeft(false)}
@@ -403,7 +403,7 @@ function DetailPage() {
         </DiaryContainer>
         <CaretRightBtn
           onClick={() => {
-            pageOverLeft();
+            pageOverRight();
           }}
           onMouseOver={() => setOverRight(true)}
           onMouseLeave={() => setOverRight(false)}
