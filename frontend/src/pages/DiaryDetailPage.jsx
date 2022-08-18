@@ -18,12 +18,17 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 10px;
 `;
+
 const ButtonDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 5px;
+  gap: 10px;
+  position: absolute;
+  top: 64px;
+  left: 950px;
 `;
 
 const DetailSendBtn = styled.img`
@@ -31,8 +36,8 @@ const DetailSendBtn = styled.img`
   // top: 9.8%;
   // right: 39%;
   z-index: 2;
-  width: 70px;
-  height: 47px;
+  width: 68px;
+  height: 40px;
   cursor: pointer;
 `;
 
@@ -43,8 +48,8 @@ const DetailCreateBtn = styled.img`
   // top: 9.8%;
   // right: 34%;
   z-index: 2;
-  width: 70px;
-  height: 47px;
+  width: 68px;
+  height: 40px;
   cursor: pointer;
 `;
 
@@ -53,8 +58,8 @@ const DetailEditBtn = styled.img`
   // top: 9.8%;
   // right: 29%;
   z-index: 2;
-  width: 70px;
-  height: 47px;
+  width: 68px;
+  height: 40px;
   cursor: pointer;
 `;
 
@@ -63,8 +68,8 @@ const DetailUpdateBtn = styled.img`
   // top: 9.8%;
   // right: 24%;
   // z-index: 2;
-  width: 70px;
-  height: 47px;
+  width: 68px;
+  height: 40px;
   cursor: pointer;
 `;
 
@@ -100,6 +105,7 @@ const DiaryPaperImg = styled.img`
 
 const MainDiv = styled.div`
   display: flex;
+  height: 600px;
 `;
 
 const LeftDiv = styled.div`
@@ -111,15 +117,16 @@ const LeftDiv = styled.div`
   // height: 100%;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
-  margin-top: 80px;
+  gap: 60px;
+  // justify-content: space-around;
+  margin-top: 30px;
   margin-left: 15px;
 `;
 
 const RightDiv = styled.div`
   // background-color: blue;
   width: 50%;
-  height: 650px;
+  height: 500px;
   // position: relative;
   // display: flex;
   // height: 100%;
@@ -134,7 +141,7 @@ const ImageBox = styled.img`
   // position: absolute;
   // top: 10%;
   // left: 18%;
-  // margin-top: 50px;
+  margin-top: 65px;
   width: 400px;
   height: 300px;
   // border: solid 1px red;
@@ -142,26 +149,27 @@ const ImageBox = styled.img`
 
 const MusicPlayer = styled.div`
   width: 400px;
-  height: 250px;
-  margin-top: 40px;
+  height: 180px;
 `;
 
 const CaretLeftBtn = styled.div`
-  position: absolute;
+  // position: absolute;
   width: 48px;
   height: 96px;
-  top: 45%;
-  left: 8%;
+  // top: 45%;
+  // left: 8%;
   cursor: pointer;
 `;
+
 const CaretRightBtn = styled.div`
-  position: absolute;
+  // position: absolute;
   width: 48px;
   height: 96px;
-  top: 45%;
-  right: 8%;
+  // top: 45%;
+  // right: 8%;
   cursor: pointer;
 `;
+
 const TitleDiv = styled.textarea`
   margin-left: 70px;
   margin-bottom: 10px;
@@ -178,13 +186,14 @@ const TitleDiv = styled.textarea`
   padding-left: 10px;
   overflow: hidden;
 `;
+
 const ContentDiv = styled.textarea`
   margin-left: 70px;
   width: 400px;
   height: 400px;
   border: 2px solid #dfba88;
   border-radius: 16px;
-  margin-top: 20px;
+  margin-top: 5px;
   resize: none;
   &:active,
   &:focus {
@@ -219,7 +228,7 @@ function DetailPage() {
   const sendDiary = () => {
     axios({
       method: 'put',
-      url: `http://localhost:8080/api/page/send/${params.pageId}`,
+      url: `/page/send/${params.pageId}`,
       headers: {
         'access-token': accessToken,
       },
@@ -243,7 +252,7 @@ function DetailPage() {
   const pageListLoading = () => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/api/page/diary/${params.diaryId}`,
+      url: `/page/diary/${params.diaryId}`,
       headers: {
         'access-token': accessToken,
       },
@@ -258,7 +267,7 @@ function DetailPage() {
   const pageLoading = () => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/api/page/${params.pageId}`,
+      url: `/page/${params.pageId}`,
       headers: {
         'access-token': accessToken,
       },
@@ -283,7 +292,7 @@ function DetailPage() {
   const diaryLoading = () => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/api/diary/${params.diaryId}`,
+      url: `/diary/${params.diaryId}`,
       headers: {
         'access-token': accessToken,
       },
@@ -320,22 +329,23 @@ function DetailPage() {
   return (
     <div className="diaryDetailPage">
       <Navbar />
+      <KakaoMapModal propLocation={location} />
       <Container>
         <ButtonDiv>
           <DetailSendBtn onClick={sendDiary} src={sendbtn} alt="sendbtn" />
           <DetailCreateBtn
             onClick={createDiary}
+            s
             src={createpagebtn}
             alt="createpagebtn"
           />
-          <DetailEditBtn onClick={editDiary} src={editbtn} alt="editbtn" />
           <DetailUpdateBtn
             onClick={updatePage}
             src={updatebtn}
             alt="updatebtn"
           />
+          <DetailEditBtn onClick={editDiary} src={editbtn} alt="editbtn" />
         </ButtonDiv>
-        <KakaoMapModal propLocation={location} />
         <CaretLeftBtn
           onClick={() => {
             pageOverLeft();
@@ -356,11 +366,10 @@ function DetailPage() {
               <ImageBox src={imageUrl} onerror="this.style.display='none'" />
               <MusicPlayer>
                 <AudioPlayer
-                  // autoPlay
+                  autoPlay
                   loop
-                  onPlay={(e) => console.log('onPlay')}
                   volume={0.1}
-                  src="https://hoydia-bucket.s3.ap-northeast-2.amazonaws.com/test/%EB%85%B9%EC%9D%8C_1660283408316.m4a"
+                  src={bgmPath}
                   showJumpControls={false}
                 />
               </MusicPlayer>
@@ -374,7 +383,7 @@ function DetailPage() {
                 style={{ fontFamily: titleFontStyle, fontSize: titleFontSize }}
               >
                 {/* {title} */}
-                일기장
+                {/* 일기장 */}
               </TitleDiv>
               <ContentDiv
                 type="text"
@@ -386,7 +395,7 @@ function DetailPage() {
                   fontSize: contentFontSize,
                 }}
               >
-                일기장 내용~!
+                {/* 일기장 내용~! */}
                 {/* {content} */}
               </ContentDiv>
             </RightDiv>
