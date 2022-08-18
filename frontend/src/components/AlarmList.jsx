@@ -90,7 +90,7 @@ function AlarmList() {
         headers: {
           'access-token': `${localStorage.getItem('access-token')}`,
         },
-        url: `http://i7a103.p.ssafy.io:8080/api/match/${item.substring(12)}`,
+        url: `/match/${item.substring(12)}`,
         method: 'GET',
       })
         .then((res) => {
@@ -113,7 +113,7 @@ function AlarmList() {
       headers: {
         'access-token': `${localStorage.getItem('access-token')}`,
       },
-      url: 'http://i7a103.p.ssafy.io:8080/api/notice',
+      url: '/notice',
       method: 'GET',
     })
       .then((res) => {

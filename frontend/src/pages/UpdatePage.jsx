@@ -219,7 +219,7 @@ function updatePage() {
 
   function fileSubmit(event) {
     event.preventDefault();
-    const url = `http://i7a103.p.ssafy.io:8080/api/page/image/${params.pageId}`;
+    const url = `/page/image/${params.pageId}`;
     const formData = new FormData();
     if (fileImage) {
       formData.append('file', fileImage);
@@ -237,7 +237,7 @@ function updatePage() {
     event.preventDefault();
     axios({
       method: 'put',
-      url: `http://i7a103.p.ssafy.io:8080/api/page/update/${params.pageId}`,
+      url: `/page/update/${params.pageId}`,
       headers: {
         'access-token': accessToken,
       },
@@ -333,9 +333,8 @@ function updatePage() {
               {fontbutton ? <FontMenu parentFunction={parentFunction} /> : null}
 
               {mapbutton ? (
-                <Map // 지도를 표시할 Container
+                <Map
                   center={{
-                    // 지도의 중심좌표
                     lat: position.lat,
                     lng: position.lng,
                   }}
@@ -343,7 +342,7 @@ function updatePage() {
                     width: '70%',
                     height: '300px',
                   }}
-                  level={3} // 지도의 확대 레벨
+                  level={3}
                   onClick={(_t, mouseEvent) => {
                     setPosition({
                       lat: mouseEvent.latLng.getLat(),

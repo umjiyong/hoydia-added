@@ -55,7 +55,7 @@ function DrawerPage() {
   const DiaryAsync = () => {
     axios({
       method: 'get',
-      url: `http://i7a103.p.ssafy.io:8080/api/diary/user/${userId}/notdrawn`,
+      url: `/diary/user/${userId}/notdrawn`,
       headers: {
         'access-token': accessToken,
       },
@@ -66,7 +66,7 @@ function DrawerPage() {
   const DiaryDetailBtn = (diaryId) => {
     axios({
       method: 'get',
-      url: `http://i7a103.p.ssafy.io:8080/api/page/diary/${diaryId}`,
+      url: `/page/diary/${diaryId}`,
       headers: {
         'access-token': accessToken,
       },
@@ -115,7 +115,7 @@ function DrawerPage() {
     ) {
       axios({
         method: 'PUT',
-        url: `http://i7a103.p.ssafy.io:8080/api/diary/${dragItemContent.id}`,
+        url: `/diary/${dragItemContent.id}`,
         headers: {
           'access-token': accessToken,
         },

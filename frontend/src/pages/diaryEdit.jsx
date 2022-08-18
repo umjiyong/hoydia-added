@@ -177,7 +177,7 @@ function diaryEdit() {
     event.preventDefault();
     axios({
       method: 'put',
-      url: `http://i7a103.p.ssafy.io:8080/api/diary/${params.diaryId}`,
+      url: `/diary/${params.diaryId}`,
       headers: {
         'access-token': accessToken,
       },
@@ -266,7 +266,7 @@ function diaryEdit() {
   useEffect(() => {
     axios({
       method: 'get',
-      url: `http://i7a103.p.ssafy.io:8080/api/diary/${params.diaryId}`,
+      url: `/diary/${params.diaryId}`,
       headers: {
         'access-token': accessToken,
       },

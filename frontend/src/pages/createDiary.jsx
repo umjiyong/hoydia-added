@@ -226,7 +226,7 @@ function createPage() {
 
     axios({
       method: 'post',
-      url: 'http://i7a103.p.ssafy.io:8080/api/page',
+      url: '/page',
       headers: {
         'access-token': accessToken,
       },
@@ -244,7 +244,7 @@ function createPage() {
       },
     }).then((res) => {
       console.log(res);
-      const url = `http://i7a103.p.ssafy.io:8080/api/page/image/${res.data.id}`;
+      const url = `/image/${res.data.id}`;
       const formData = new FormData();
       formData.append('file', fileImage);
       if (fileImage) {
