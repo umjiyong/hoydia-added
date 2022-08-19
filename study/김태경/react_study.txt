@@ -1,7 +1,0 @@
-1. react state
-2. react props
-3. react basic
-4. react hook
-5. react router
-6. react useEffect
-7. react useRef
