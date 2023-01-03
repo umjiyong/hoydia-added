@@ -21,6 +21,10 @@
 
 SSAFY 7기 2 학기 공통 프로젝트 - HOYDIA
 
+2022.01.03(화)~
+
+Refactoring
+
 
 
 ## 배경
