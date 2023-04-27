@@ -202,7 +202,7 @@ FRONTEND
   ![감성 페어 찾기.gjf](readme.assets/감성%20페어%20찾기%20gif-16679796256149.gif)
 
 
-![감성 페어와 매칭 성공 모달](readme.assets/감성 페어와 매칭 성공 모달.png)
+![감성 페어와 매칭 성공 모달](readme.assets/감성%20페어와%20매칭%20성공%20모달.png)
 
 
 
@@ -210,7 +210,7 @@ FRONTEND
 
 - 친구와 일기 만들기
 
-  ![친구랑 일기 만들기 gif](readme.assets/친구랑 일기 만들기 gif.gif)
+  ![친구랑 일기 만들기 gif](readme.assets/친구랑%20일기%20만들기%20gif.gif)
 
   
 
@@ -248,7 +248,7 @@ FRONTEND
 
 - 다이어리 드레그 앤 드롭
 
-  ![다이어리 드래그앤드롭 gif](readme.assets/다이어리 드래그앤드롭 gif.gif)
+  ![다이어리 드래그앤드롭 gif](readme.assets/다이어리%20드래그앤드롭%20gif.gif)
 
 
 
