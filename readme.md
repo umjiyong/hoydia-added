@@ -11,9 +11,7 @@
 
 
 
-## HOYDIA 링크 [HOYDIA](http://i7a103.p.ssafy.io:3000/)
-
-
+## HOYDIA
 
 ## 프로젝트 진행 기간
 
@@ -197,13 +195,11 @@ FRONTEND
   ![로그인](readme.assets/로그인.gif)
 
   
-![로그인2](readme.assets/감성 페어 찾기 gif-16679796256149.gif)
-  
 
 - 감성 페어 찾기
 
 
-  ![감성 페어 찾기.gjf](readme.assets/감성 페어 찾기 gif-16679796256149.gif)
+  ![감성 페어 찾기.gjf](readme.assets/감성%20페어%20찾기%20gif-16679796256149.gif)
 
 
 ![감성 페어와 매칭 성공 모달](readme.assets/감성 페어와 매칭 성공 모달.png)
