@@ -197,7 +197,7 @@ FRONTEND
   ![로그인](readme.assets/로그인.gif)
 
   
-
+![로그인2](readme.assets/감성 페어 찾기 gif-16679796256149.gif)
   
 
 - 감성 페어 찾기
