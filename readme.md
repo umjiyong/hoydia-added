@@ -202,7 +202,8 @@ FRONTEND
 
 - 감성 페어 찾기
 
-  ![감성 페어 찾기](readme.assets/감성 페어 찾기 gif-16679796256149.gif)
+
+  ![감성 페어 찾기.gjf](readme.assets/감성 페어 찾기 gif-16679796256149.gif)
 
 
 ![감성 페어와 매칭 성공 모달](readme.assets/감성 페어와 매칭 성공 모달.png)
