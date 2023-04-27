@@ -218,31 +218,23 @@ FRONTEND
 
 - 다이어리 작성
 
-  ![다이어리 작성 gif](readme.assets/다이어리 작성 gif.gif)
-
-  
-
+  ![다이어리 작성 gif](readme.assets/다이어리%20작성%20gif.gif)
 
 
 - 다이어리 꾸미기
 
-  ![다이어리 커버 꾸미기 gif](readme.assets/다이어리 커버 꾸미기 gif.gif)
-
-  
-
+  ![다이어리 커버 꾸미기 gif](readme.assets/다이어리%20커버%20꾸미기%20gif.gif)
 
 
 - 다이어리 전송
 
-  ![다이어리 전송 gif](readme.assets/다이어리 전송 gif.gif)
+  ![다이어리 전송 gif](readme.assets/다이어리%20전송%20gif.gif)
 
 
 
 - 일기장 도착 알람
 
-  ![일기장 도착 알람](readme.assets/일기장 도착 알람.PNG)
-
-
+  ![일기장 도착 알람](readme.assets/일기장%20도착%20알람.PNG)
 
 
 
@@ -251,17 +243,11 @@ FRONTEND
   ![다이어리 드래그앤드롭 gif](readme.assets/다이어리%20드래그앤드롭%20gif.gif)
 
 
-
-
-
 - 마이페이지 닉네임 변경
 
-  ![마이페이지_닉네임 변경 gif](readme.assets/마이페이지_닉네임 변경 gif.gif)
-
-
-
+  ![마이페이지_닉네임 변경 gif](readme.assets/마이페이지_닉네임%20변경%20gif.gif)
 
 
 - 로그아웃
 
-  ![로그아웃 gif](readme.assets/로그아웃 gif.gif)
+  ![로그아웃 gif](readme.assets/로그아웃%20gif.gif)
