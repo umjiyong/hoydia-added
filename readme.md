@@ -21,10 +21,6 @@
 
 SSAFY 7기 2 학기 공통 프로젝트 - HOYDIA
 
-2022.01.03(화)~
-
-Refactoring
-
 
 
 ## 배경
@@ -191,3 +187,85 @@ FRONTEND
 - 아키텍처
 - 컨벤션
 - 스토리보드
+
+
+
+## 시연 GIF 및 사진
+
+- 로그인
+
+  ![로그인](readme.assets/로그인.gif)
+
+  
+
+  
+
+- 감성 페어 찾기
+
+  ![감성 페어 찾기 gif](readme.assets/감성 페어 찾기 gif-16679796256149.gif)
+
+
+
+![감성 페어와 매칭 성공 모달](readme.assets/감성 페어와 매칭 성공 모달.png)
+
+
+
+
+
+- 친구와 일기 만들기
+
+  ![친구랑 일기 만들기 gif](readme.assets/친구랑 일기 만들기 gif.gif)
+
+  
+
+
+
+- 다이어리 작성
+
+  ![다이어리 작성 gif](readme.assets/다이어리 작성 gif.gif)
+
+  
+
+
+
+- 다이어리 꾸미기
+
+  ![다이어리 커버 꾸미기 gif](readme.assets/다이어리 커버 꾸미기 gif.gif)
+
+  
+
+
+
+- 다이어리 전송
+
+  ![다이어리 전송 gif](readme.assets/다이어리 전송 gif.gif)
+
+
+
+- 일기장 도착 알람
+
+  ![일기장 도착 알람](readme.assets/일기장 도착 알람.PNG)
+
+
+
+
+
+- 다이어리 드레그 앤 드롭
+
+  ![다이어리 드래그앤드롭 gif](readme.assets/다이어리 드래그앤드롭 gif.gif)
+
+
+
+
+
+- 마이페이지 닉네임 변경
+
+  ![마이페이지_닉네임 변경 gif](readme.assets/마이페이지_닉네임 변경 gif.gif)
+
+
+
+
+
+- 로그아웃
+
+  ![로그아웃 gif](readme.assets/로그아웃 gif.gif)
